@@ -253,6 +253,35 @@ button, select {
 .btn.secondary:hover { border-color: var(--accent); }
 .btn.sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn.danger-hover:hover { border-color: #ef4444; color: #ef4444; }
+.btn-bookmark {
+  background: var(--opt-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-muted);
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-bookmark:hover {
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+.btn-bookmark.active {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.actions-row {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
 .select-pill {
   background: var(--opt-bg);
@@ -732,9 +761,76 @@ code.code-inline {
   .shell { padding: 16px; }
   .q-stem { font-size: 17px; }
 }
-@media (max-width: 600px) {
-  .stages-grid { grid-template-columns: 1fr; }
-  .stats-line { grid-template-columns: 1fr; }
+.rev-choice-item {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: var(--opt-bg);
+  margin: 6px 0;
+  font-size: 14px;
+}
+.rev-choice-item.rev-correct {
+  border-color: var(--opt-cor-b);
+  background: var(--opt-cor);
+}
+.rev-choice-item.rev-wrong {
+  border-color: var(--opt-wro-b);
+  background: var(--opt-wro);
+}
+.rev-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 8px;
+  text-transform: uppercase;
+}
+.rev-badge.user-ans {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+.rev-badge.correct-ans {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .header-bar, .top-controls, .roadmap-container, .hero-layout, .sidebar-panel, .footer-bar, .q-nav-grid, .progress-bar-wrap, .timer-pill, button.btn, .btn-bookmark {
+    display: none !important;
+  }
+  .shell {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  .content-grid {
+    display: block !important;
+  }
+  .work-panel, .panel {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+  .q-stem {
+    color: #000 !important;
+    font-size: 16px !important;
+  }
+  .opt-btn {
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    color: #000 !important;
+    break-inside: avoid;
+  }
+  .print-page-break {
+    page-break-before: always;
+  }
 }
 </style>
 </head>
@@ -764,6 +860,8 @@ code.code-inline {
       </select>
       <!-- Option Shuffle Toggle -->
       <button id="shuffleToggle" class="btn secondary sm" type="button" title="Randomize choice order">🎲 Shuffle: ON</button>
+      <!-- Paper Exam Print Button -->
+      <button id="btnPrint" class="btn secondary sm" type="button" title="Print paper exam or save to PDF">🖨️ <span id="lblBtnPrint">Print</span></button>
       <!-- Language Switcher -->
       <button id="langBtn" class="btn secondary sm" type="button">🇨🇳 中文</button>
     </div>
@@ -814,6 +912,7 @@ code.code-inline {
         <div style="display:flex;gap:8px;">
           <button class="btn secondary sm" id="btnExport">Export JSON</button>
           <button class="btn secondary sm" id="btnImport">Import</button>
+          <button class="btn secondary sm danger-hover" id="btnReset">Reset</button>
           <input type="file" id="fileInput" accept="application/json" hidden>
         </div>
       </div>
@@ -847,6 +946,9 @@ code.code-inline {
 
       <button class="btn secondary" id="btnReviewMistakes" style="width:100%;margin-top:4px;">
         🎯 Mistake Killer (<span id="mistakeBadge">0</span>)
+      </button>
+      <button class="btn secondary" id="btnReviewBookmarks" style="width:100%;margin-top:6px;">
+        ⭐ Bookmarked (<span id="bookmarkBadge">0</span>)
       </button>
     </aside>
 
@@ -943,7 +1045,21 @@ const I18N = {
     yourChoice: 'Your Selection',
     correctChoice: 'Correct Answer',
     addToMistakes: 'Add to Mistakes',
-    inMistakes: 'In Mistake Bank'
+    inMistakes: 'In Mistake Bank',
+    printExam: 'Print Paper Exam',
+    reset: 'Reset Records',
+    confirmReset: 'Are you sure you want to reset all learning records, mistakes, and bookmarks on this device? This action cannot be undone.',
+    resetOk: 'All local learning progress has been reset.',
+    bookmark: 'Bookmark',
+    bookmarked: 'Bookmarked',
+    noBookmarks: 'No bookmarked questions yet! Bookmark key questions during practice.',
+    drillWeakest: '🎯 Drill Weakest Domain: ',
+    attackMistakes: '🔥 Clear Mistakes (',
+    practiceAgain: '🔄 Practice Again',
+    paperExamTitle: 'Paper Mock Exam',
+    paperCandidateName: 'Candidate: __________________   Date: ____________   Score: ______ / ______',
+    printInstructions: 'Use your browser print dialog (Cmd+P / Ctrl+P) to save as PDF or print paper copies. An answer key is provided at the bottom.',
+    answerKey: 'Answer Key & Concept Explanations'
   },
   zh: {
     heroTitle: '更高效掌握考点，更从容通过考试。',
@@ -990,9 +1106,43 @@ const I18N = {
     yourChoice: '您的作答',
     correctChoice: '正确答案',
     addToMistakes: '加入错题本',
-    inMistakes: '已在错题本'
+    inMistakes: '已在错题本',
+    printExam: '打印试卷 / PDF',
+    reset: '清空重置',
+    confirmReset: '确定要清空此设备上的所有做题记录、错题本和收藏夹吗？此操作无法撤销。',
+    resetOk: '所有本地学习记录已重置。',
+    bookmark: '收藏',
+    bookmarked: '已收藏',
+    noBookmarks: '当前暂无收藏题目！答题时点击“收藏”即可收录重点难点。',
+    drillWeakest: '🎯 针对最薄弱模块专项攻坚: ',
+    attackMistakes: '🔥 错题攻坚清零 (',
+    practiceAgain: '🔄 再次练习',
+    paperExamTitle: '纸质模拟试卷',
+    paperCandidateName: '考生姓名: __________________   考试日期: ____________   成绩: ______ / ______',
+    printInstructions: '可直接调用浏览器打印功能（Cmd+P / Ctrl+P）保存为 PDF 或纸质打印。卷尾附参考答案及错因精讲。',
+    answerKey: '参考答案与核心考点解析'
   }
 };
+
+const TOPIC_I18N = {
+  'Finance': '财务金融与核算',
+  'Marketing': '市场营销与获客',
+  'Strategy': '战略与商业模式',
+  'Operations': '运营流程与算法',
+  'STEM Math': '数理统计与模型',
+  'Business Law': '商业法规与合规',
+  'Economics': '经济学原理',
+  'Accounting': '财务会计',
+  'Management': '组织与管理'
+};
+
+function getTopicDisplayName(topic) {
+  if (state.lang === 'zh') {
+    if (META.topic_i18n && META.topic_i18n[topic]) return META.topic_i18n[topic];
+    if (TOPIC_I18N[topic]) return TOPIC_I18N[topic];
+  }
+  return topic;
+}
 
 const t = (k) => (I18N[state.lang] && I18N[state.lang][k]) || k;
 const $ = (id) => document.getElementById(id);
@@ -1145,6 +1295,38 @@ let timerInterval = null;
 let userAnswers = {}; // { question_index: selected_choice_index_or_array }
 let questionOptionPermutations = {}; // cached randomized choice indices per question instance
 
+function toggleBookmark(qid, btnElem) {
+  const idx = state.bookmarks.indexOf(qid);
+  if (idx > -1) {
+    state.bookmarks.splice(idx, 1);
+  } else {
+    state.bookmarks.push(qid);
+  }
+  saveState();
+  const badge = $('bookmarkBadge');
+  if (badge) badge.textContent = state.bookmarks.length;
+
+  if (btnElem) {
+    const isNow = state.bookmarks.includes(qid);
+    btnElem.className = 'btn-bookmark' + (isNow ? ' active' : '');
+    btnElem.innerHTML = isNow ? '★ ' + t('bookmarked') : '☆ ' + t('bookmark');
+  }
+}
+
+function syncTimedMockSessionStorage() {
+  if (!activeSession || !activeSession.isTimed) return;
+  try {
+    sessionStorage.setItem('exam_forge_mock_session', JSON.stringify({
+      questionIds: activeSession.questions.map(q => q.id),
+      modeName: activeSession.modeName,
+      startTime: sessionStartTime,
+      durationMins: META.mock_duration_mins || 60,
+      userAnswers: userAnswers,
+      currentQuestionIndex: currentQuestionIndex
+    }));
+  } catch(e) {}
+}
+
 function startSession(questions, isTimed, modeName) {
   if (!questions || !questions.length) {
     alert('No questions available for this selection.');
@@ -1157,7 +1339,8 @@ function startSession(questions, isTimed, modeName) {
     isTimed: isTimed,
     modeName: modeName || 'Practice',
     total: questions.length,
-    isSubmitted: false
+    isSubmitted: false,
+    practiceLogs: []
   };
   currentQuestionIndex = 0;
   userAnswers = {};
@@ -1175,6 +1358,7 @@ function startSession(questions, isTimed, modeName) {
   });
 
   if (isTimed) {
+    syncTimedMockSessionStorage();
     const mockMins = META.mock_duration_mins || 60;
     const mockTotal = META.mock_questions_count || questions.length;
     const totalSeconds = Math.max(60, Math.ceil(mockMins * 60 * (questions.length / Math.max(1, mockTotal))));
@@ -1246,6 +1430,7 @@ function renderQuestionView() {
       dot.textContent = idx + 1;
       dot.onclick = () => {
         currentQuestionIndex = idx;
+        syncTimedMockSessionStorage();
         renderQuestionView();
       };
       navGrid.appendChild(dot);
@@ -1253,12 +1438,21 @@ function renderQuestionView() {
     work.appendChild(navGrid);
   }
 
-  // Chips
+  // Chips Row with Bookmark Toggle
   const chips = document.createElement('div');
   chips.className = 'chips-row';
-  chips.innerHTML = '<span class="chip">' + q.topic + '</span>' +
+  chips.innerHTML = '<span class="chip">' + getTopicDisplayName(q.topic) + '</span>' +
     '<span class="chip">' + '★'.repeat(q.difficulty) + ' Level ' + q.difficulty + '</span>' +
     '<span class="chip qtype">' + (qType === 'multiple' ? 'MULTIPLE CHOICE' : (qType === 'boolean' ? 'TRUE / FALSE' : 'SINGLE CHOICE')) + '</span>';
+
+  const isBm = state.bookmarks.includes(q.id);
+  const bmBtn = document.createElement('button');
+  bmBtn.type = 'button';
+  bmBtn.className = 'btn-bookmark' + (isBm ? ' active' : '');
+  bmBtn.innerHTML = isBm ? '★ ' + t('bookmarked') : '☆ ' + t('bookmark');
+  bmBtn.onclick = () => toggleBookmark(q.id, bmBtn);
+  chips.appendChild(bmBtn);
+
   work.appendChild(chips);
 
   // Question Stem
@@ -1338,6 +1532,7 @@ function renderQuestionView() {
           btn.querySelector('.opt-indicator').textContent = '☑';
         }
       }
+      if (isTimed) syncTimedMockSessionStorage();
     };
 
     optionButtons.push({ btn: btn, origIdx: origIdx, displayIdx: displayIdx });
@@ -1347,10 +1542,7 @@ function renderQuestionView() {
 
   // Footer Actions
   const actionsRow = document.createElement('div');
-  actionsRow.style.marginTop = '24px';
-  actionsRow.style.display = 'flex';
-  actionsRow.style.gap = '10px';
-  actionsRow.style.flexWrap = 'wrap';
+  actionsRow.className = 'actions-row';
 
   if (isTimed) {
     // Timed Mock Controls: Prev, Next, Submit
@@ -1360,6 +1552,7 @@ function renderQuestionView() {
       prevBtn.textContent = t('prev');
       prevBtn.onclick = () => {
         currentQuestionIndex--;
+        syncTimedMockSessionStorage();
         renderQuestionView();
       };
       actionsRow.appendChild(prevBtn);
@@ -1368,9 +1561,11 @@ function renderQuestionView() {
     if (currentQuestionIndex < activeSession.total - 1) {
       const nextBtn = document.createElement('button');
       nextBtn.className = 'btn';
+      nextBtn.id = 'actionPrimaryBtn';
       nextBtn.textContent = t('next');
       nextBtn.onclick = () => {
         currentQuestionIndex++;
+        syncTimedMockSessionStorage();
         renderQuestionView();
       };
       actionsRow.appendChild(nextBtn);
@@ -1378,6 +1573,9 @@ function renderQuestionView() {
 
     const submitExamBtn = document.createElement('button');
     submitExamBtn.className = 'btn secondary';
+    if (currentQuestionIndex === activeSession.total - 1) {
+      submitExamBtn.id = 'actionPrimaryBtn';
+    }
     submitExamBtn.textContent = t('submitExam');
     submitExamBtn.onclick = () => {
       const answeredCount = Object.keys(userAnswers).length;
@@ -1393,6 +1591,7 @@ function renderQuestionView() {
     activeSession.isChecked = false;
     const checkBtn = document.createElement('button');
     checkBtn.className = 'btn';
+    checkBtn.id = 'actionPrimaryBtn';
     checkBtn.textContent = t('checkAnswer');
 
     checkBtn.onclick = () => {
@@ -1414,6 +1613,14 @@ function renderQuestionView() {
         const userSet = new Set(selected);
         isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
       }
+
+      // Log in session
+      activeSession.practiceLogs.push({
+        q: q,
+        isCorrect: isCorrect,
+        chosen: selected,
+        origPerm: questionOptionPermutations[currentQuestionIndex]
+      });
 
       // Record result
       state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
@@ -1471,6 +1678,7 @@ function renderQuestionView() {
       // Next / Finish button
       const nextBtn = document.createElement('button');
       nextBtn.className = 'btn';
+      nextBtn.id = 'actionPrimaryBtn';
       const isLast = (currentQuestionIndex === activeSession.total - 1);
       nextBtn.textContent = isLast ? t('finish') : t('next');
       nextBtn.onclick = () => {
@@ -1495,6 +1703,7 @@ function renderQuestionView() {
 function finishTimedMock() {
   if (timerInterval) clearInterval(timerInterval);
   timerInterval = null;
+  try { sessionStorage.removeItem('exam_forge_mock_session'); } catch(e) {}
 
   const s = activeSession;
   if (!s) return;
@@ -1566,11 +1775,11 @@ function finishTimedMock() {
     Object.keys(topicStats).map(tp => {
       const st = topicStats[tp];
       const rate = Math.round((st.correct / st.total) * 100);
-      return '<tr><td>' + tp + '</td><td>' + st.correct + ' / ' + st.total + '</td><td>' + rate + '%</td></tr>';
+      return '<tr><td>' + getTopicDisplayName(tp) + '</td><td>' + st.correct + ' / ' + st.total + '</td><td>' + rate + '%</td></tr>';
     }).join('') + '</tbody>';
   banner.appendChild(table);
 
-  // Full Question Review
+  // Full Question Review with Options, Distractor Reasoning, and Bookmarking
   const revHeader = document.createElement('h3');
   revHeader.style.marginTop = '28px';
   revHeader.textContent = t('reviewHeader');
@@ -1585,16 +1794,58 @@ function finishTimedMock() {
     const stemText = state.lang === 'zh' ? q.zh : q.en;
     const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
     const choices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+    const distList = state.lang === 'zh' ? q.why_wrong_zh : q.why_wrong_en;
+    const qType = q.type || 'single';
+    const isBookmarked = state.bookmarks.includes(q.id);
 
-    card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-      '<strong>#' + (idx + 1) + ' [' + q.topic + ']</strong>' +
-      '<span class="chip ' + (item.isCorrect ? 'correct' : 'wrong') + '">' + (item.isCorrect ? '✓ Correct' : '✗ Incorrect') + '</span>' +
+    let cardHtml = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">' +
+      '<div><strong>#' + (idx + 1) + ' [' + getTopicDisplayName(q.topic) + ']</strong> ' +
+      '<span class="chip ' + (item.isCorrect ? 'correct' : 'wrong') + '">' + (item.isCorrect ? '✓ ' + (state.lang === 'zh' ? '回答正确' : 'Correct') : '✗ ' + (state.lang === 'zh' ? '回答错误' : 'Incorrect')) + '</span></div>' +
+      '<button type="button" class="btn-bookmark' + (isBookmarked ? ' active' : '') + '" onclick="toggleBookmark(\'' + q.id + '\', this)">' +
+      (isBookmarked ? '★ ' + t('bookmarked') : '☆ ' + t('bookmark')) + '</button>' +
       '</div>' +
-      '<p style="margin:8px 0;font-weight:600;">' + renderRichText(stemText) + '</p>' +
-      '<div style="font-size:13px;color:var(--text-muted);">' +
-      '<p><strong>' + t('explanation') + ':</strong> ' + renderRichText(expText) + '</p>' +
+      '<p style="margin:10px 0 14px;font-weight:600;font-size:15px;">' + renderRichText(stemText) + '</p>' +
+      '<div style="margin:10px 0;">';
+
+    const perm = item.origPerm || choices.map((_, i) => i);
+    perm.forEach((origIdx, displayIdx) => {
+      const letter = String.fromCharCode(65 + displayIdx);
+      const choiceTxt = choices[origIdx];
+      const isAns = (qType === 'multiple') ? q.answer.includes(origIdx) : (origIdx === q.answer);
+      const isChosen = (qType === 'multiple') ? (Array.isArray(item.chosen) && item.chosen.includes(origIdx)) : (item.chosen === origIdx);
+
+      let itemCls = 'rev-choice-item';
+      let tagHtml = '';
+      if (isAns) {
+        itemCls += ' rev-correct';
+        tagHtml += '<span class="rev-badge correct-ans">✓ ' + t('correctChoice') + '</span>';
+      }
+      if (isChosen) {
+        if (!isAns) itemCls += ' rev-wrong';
+        tagHtml += '<span class="rev-badge ' + (isAns ? 'correct-ans' : 'user-ans') + '">' + (isAns ? '✓ ' : '✗ ') + t('yourChoice') + '</span>';
+      }
+
+      cardHtml += '<div class="' + itemCls + '">' +
+        '<div style="display:flex;align-items:flex-start;gap:8px;">' +
+        '<strong>' + letter + '.</strong>' +
+        '<div style="flex:1;">' + renderRichText(choiceTxt) + '</div>' +
+        tagHtml +
+        '</div>';
+
+      if (distList && distList[origIdx]) {
+        cardHtml += '<div class="why-wrong-item" style="margin-top:6px;">' +
+          '<strong>' + t('distractors') + ':</strong> ' + renderRichText(distList[origIdx]) +
+          '</div>';
+      }
+      cardHtml += '</div>';
+    });
+
+    cardHtml += '</div>' +
+      '<div style="font-size:13px;background:var(--opt-bg);border:1px solid var(--panel-border);border-radius:10px;padding:12px;margin-top:10px;">' +
+      '<p style="margin:0;"><strong>' + t('explanation') + ':</strong> ' + renderRichText(expText) + '</p>' +
       '</div>';
 
+    card.innerHTML = cardHtml;
     banner.appendChild(card);
   });
 
@@ -1611,25 +1862,204 @@ function finishTimedMock() {
 
 function finishPracticeSession() {
   const s = activeSession;
+  if (!s) return;
   activeSession = null;
   const work = $('workArea');
   work.innerHTML = '';
   work.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+  const logs = s.practiceLogs || [];
+  const total = logs.length || s.total;
+  const correctCount = logs.filter(item => item.isCorrect).length;
+  const accuracyPct = total ? Math.round((correctCount / total) * 100) : 0;
+
+  const topicStats = {};
+  logs.forEach(item => {
+    const tp = item.q.topic;
+    if (!topicStats[tp]) topicStats[tp] = { total: 0, correct: 0 };
+    topicStats[tp].total++;
+    if (item.isCorrect) topicStats[tp].correct++;
+  });
+
+  // Identify lowest performing topic
+  let weakestTopic = null;
+  let lowestRate = 101;
+  Object.keys(topicStats).forEach(tp => {
+    const rate = Math.round((topicStats[tp].correct / topicStats[tp].total) * 100);
+    if (rate < lowestRate) {
+      lowestRate = rate;
+      weakestTopic = tp;
+    }
+  });
+
   const banner = document.createElement('div');
   banner.className = 'result-banner';
-  banner.innerHTML = '<div class="panel-eyebrow">PRACTICE COMPLETED</div>' +
-    '<h2>Session Finished</h2>' +
-    '<p style="color:var(--text-muted);">Learning records and mistake bank updated on this device.</p>';
+  banner.innerHTML = '<div class="panel-eyebrow">' + s.modeName.toUpperCase() + ' SUMMARY</div>' +
+    '<h2 style="margin:8px 0;">' + (state.lang === 'zh' ? '本轮练习已完成' : 'Session Completed') + '</h2>' +
+    '<div class="result-score">' + correctCount + ' / ' + total + ' (' + accuracyPct + '%)</div>' +
+    '<p style="color:var(--text-muted);margin-bottom:20px;">' +
+      (state.lang === 'zh' ? '答题记录已更新，自适应算法已动态调整薄弱点权重。' : 'Performance recorded and local mastery weights updated.') +
+    '</p>';
+
+  if (Object.keys(topicStats).length > 0) {
+    const tableHeader = document.createElement('h3');
+    tableHeader.style.marginTop = '20px';
+    tableHeader.textContent = t('scoreMatrixHeader');
+    banner.appendChild(tableHeader);
+
+    const table = document.createElement('table');
+    table.className = 'table-matrix';
+    table.innerHTML = '<thead><tr><th>Domain</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody>' +
+      Object.keys(topicStats).map(tp => {
+        const st = topicStats[tp];
+        const rate = Math.round((st.correct / st.total) * 100);
+        return '<tr><td>' + getTopicDisplayName(tp) + '</td><td>' + st.correct + ' / ' + st.total + '</td><td>' + rate + '%</td></tr>';
+      }).join('') + '</tbody>';
+    banner.appendChild(table);
+  }
+
+  // Next steps recommendation
+  const recBox = document.createElement('div');
+  recBox.style.margin = '24px 0';
+  recBox.style.padding = '18px';
+  recBox.style.borderRadius = '14px';
+  recBox.style.background = 'var(--chip-bg)';
+  recBox.style.border = '1px solid var(--chip-border)';
+  recBox.style.textAlign = 'left';
+
+  let recHtml = '<div class="panel-eyebrow">✦ ' + (state.lang === 'zh' ? '下一步智能备考建议' : 'Recommended Next Step') + '</div>';
+  if (weakestTopic && lowestRate < 80) {
+    recHtml += '<p style="margin:6px 0 14px;font-size:14px;">' +
+      (state.lang === 'zh'
+        ? '在本次测试中，您在 <strong>' + getTopicDisplayName(weakestTopic) + '</strong> 模块正确率为 ' + lowestRate + '%。建议立即开展专项突破！'
+        : 'Your accuracy was lowest in <strong>' + weakestTopic + '</strong> (' + lowestRate + '%). We recommend a targeted topic drill.') +
+      '</p>';
+  } else {
+    recHtml += '<p style="margin:6px 0 14px;font-size:14px;">' +
+      (state.lang === 'zh'
+        ? '知识掌握扎实！建议继续挑战全真限时模考或清空剩余错题。'
+        : 'Strong performance! Proceed to a full Timed Mock or eliminate remaining mistakes.') +
+      '</p>';
+  }
+
+  recHtml += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">';
+  if (weakestTopic) {
+    recHtml += '<button class="btn sm" id="btnRecDrill">' + t('drillWeakest') + getTopicDisplayName(weakestTopic) + '</button>';
+  }
+  if (state.mistakes.length > 0) {
+    recHtml += '<button class="btn secondary sm" id="btnRecMistakes">' + t('attackMistakes') + state.mistakes.length + ')</button>';
+  }
+  recHtml += '<button class="btn secondary sm" id="btnRecAgain">' + t('practiceAgain') + '</button>';
+  recHtml += '</div>';
+
+  recBox.innerHTML = recHtml;
+  banner.appendChild(recBox);
 
   const backBtn = document.createElement('button');
   backBtn.className = 'btn';
+  backBtn.style.marginTop = '14px';
   backBtn.textContent = t('backHome');
   backBtn.onclick = () => { renderWelcomeState(); };
   banner.appendChild(backBtn);
 
   work.appendChild(banner);
   renderDashboardStats();
+
+  // Bind recommendation buttons
+  if ($('btnRecDrill') && weakestTopic) {
+    $('btnRecDrill').onclick = () => {
+      $('selTopic').value = weakestTopic;
+      const pool = BANK.filter(q => q.topic === weakestTopic);
+      startSession(shuffle(pool).slice(0, Number($('selSize').value)), false, 'Topic: ' + weakestTopic);
+    };
+  }
+  if ($('btnRecMistakes')) {
+    $('btnRecMistakes').onclick = () => triggerStageAction('mistakes');
+  }
+  if ($('btnRecAgain')) {
+    $('btnRecAgain').onclick = () => {
+      startSession(s.questions, false, s.modeName);
+    };
+  }
+}
+
+/* ================= PAPER EXAM PRINT MODE ================= */
+function renderPrintablePaperExam() {
+  const work = $('workArea');
+  work.innerHTML = '';
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const container = document.createElement('div');
+  container.className = 'paper-exam-wrapper';
+
+  const titleText = META.title + ' - ' + t('paperExamTitle');
+  container.innerHTML = '<div style="border-bottom:2px solid #444;padding-bottom:14px;margin-bottom:20px;">' +
+    '<h1 style="margin:0 0 8px;font-size:24px;">' + titleText + '</h1>' +
+    '<p style="margin:4px 0;font-size:13px;color:var(--text-muted);">' + t('paperCandidateName') + '</p>' +
+    '<p style="margin:4px 0;font-size:12px;color:var(--text-muted);">' + t('durationTag') + ' · ' + t('passBenchmark') + '</p>' +
+    '<p style="margin:6px 0 0;font-size:12px;font-style:italic;">' + t('printInstructions') + '</p>' +
+    '</div>';
+
+  BANK.forEach((q, idx) => {
+    const qDiv = document.createElement('div');
+    qDiv.style.marginBottom = '22px';
+    qDiv.style.breakInside = 'avoid';
+
+    const stemText = state.lang === 'zh' ? q.zh : q.en;
+    const choices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+
+    qDiv.innerHTML = '<div style="font-weight:700;margin-bottom:8px;font-size:15px;line-height:1.45;">' +
+      (idx + 1) + '. [' + getTopicDisplayName(q.topic) + '] ' + renderRichText(stemText) +
+      '</div>';
+
+    const optsDiv = document.createElement('div');
+    optsDiv.style.paddingLeft = '14px';
+    choices.forEach((ch, cIdx) => {
+      const letter = String.fromCharCode(65 + cIdx);
+      const row = document.createElement('div');
+      row.style.margin = '4px 0';
+      row.style.fontSize = '14px';
+      row.innerHTML = '<strong>(' + letter + ')</strong> [ &nbsp; ] ' + renderRichText(ch);
+      optsDiv.appendChild(row);
+    });
+    qDiv.appendChild(optsDiv);
+    container.appendChild(qDiv);
+  });
+
+  // Appendix: Answer Key & Explanations with print page break
+  const keySection = document.createElement('div');
+  keySection.className = 'print-page-break';
+  keySection.style.marginTop = '40px';
+  keySection.style.borderTop = '2px dashed #888';
+  keySection.style.paddingTop = '24px';
+
+  keySection.innerHTML = '<h2 style="margin-bottom:16px;">✦ ' + t('answerKey') + '</h2>';
+  BANK.forEach((q, idx) => {
+    const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
+    const qType = q.type || 'single';
+
+    let ansLetters = '';
+    if (qType === 'multiple') {
+      ansLetters = q.answer.map(i => String.fromCharCode(65 + i)).join(', ');
+    } else {
+      ansLetters = String.fromCharCode(65 + q.answer);
+    }
+
+    const row = document.createElement('div');
+    row.style.marginBottom = '12px';
+    row.style.fontSize = '13px';
+    row.style.breakInside = 'avoid';
+    row.innerHTML = '<strong>#' + (idx + 1) + ' [' + ansLetters + ']:</strong> ' +
+      renderRichText(expText);
+    keySection.appendChild(row);
+  });
+  container.appendChild(keySection);
+
+  work.appendChild(container);
+
+  setTimeout(() => {
+    window.print();
+  }, 300);
 }
 
 /* ================= 5-STAGE ROADMAP RENDERER ================= */
@@ -1735,6 +2165,7 @@ function renderDashboardStats() {
     $('statAccuracy').textContent = '—';
   }
   $('mistakeBadge').textContent = state.mistakes.length;
+  if ($('bookmarkBadge')) $('bookmarkBadge').textContent = state.bookmarks.length;
 
   const list = $('topicList');
   list.innerHTML = '';
@@ -1742,12 +2173,12 @@ function renderDashboardStats() {
     const stat = getTopicStats(tp);
     const item = document.createElement('div');
     item.className = 'topic-item';
-    item.innerHTML = '<span>' + tp + '</span><span class="topic-rate">' + (stat.rawRate !== null ? stat.rawRate + '%' : '—') + '</span>';
+    item.innerHTML = '<span>' + getTopicDisplayName(tp) + '</span><span class="topic-rate">' + (stat.rawRate !== null ? stat.rawRate + '%' : '—') + '</span>';
     item.onclick = () => {
       if (activeSession && !confirm(t('confirmExit'))) return;
       $('selTopic').value = tp;
       const pool = BANK.filter(q => q.topic === tp);
-      startSession(shuffle(pool).slice(0, Number($('selSize').value)), false, 'Topic: ' + tp);
+      startSession(shuffle(pool).slice(0, Number($('selSize').value)), false, 'Topic: ' + getTopicDisplayName(tp));
     };
     list.appendChild(item);
   });
@@ -1757,7 +2188,7 @@ function renderDashboardStats() {
   getUniqueTopics().forEach(tp => {
     const opt = document.createElement('option');
     opt.value = tp;
-    opt.textContent = tp;
+    opt.textContent = getTopicDisplayName(tp);
     $('selTopic').appendChild(opt);
   });
   if (currentSel) $('selTopic').value = currentSel;
@@ -1769,7 +2200,7 @@ function renderWelcomeState() {
     '<h2 style="margin:10px 0 6px;" id="lblWelcome">' + t('backHome') + '</h2>' +
     '<p style="color:var(--text-muted);" id="lblWelcomeHelp">' +
       (state.lang === 'zh'
-        ? '请在上方五阶路线中选择阶段，或从侧边栏按模块开展专项精练。支持公式渲染、选项乱序与离线记录。'
+        ? '请在上方五阶路线中选择阶段，或从侧边栏按模块开展专项精练。支持公式渲染、选项乱序、错因剖析与本地离线持久化。'
         : 'Choose a stage from the 5-Stage Roadmap above or launch a topic drill from the sidebar.') +
     '</p>';
 }
@@ -1792,7 +2223,12 @@ function updateUILanguage() {
   $('lblPrivacyNote').textContent = t('privacy');
   $('btnExport').textContent = t('export');
   $('btnImport').textContent = t('import');
+  if ($('btnReset')) $('btnReset').textContent = t('reset');
+  if ($('lblBtnPrint')) $('lblBtnPrint').textContent = t('printExam');
   $('btnReviewMistakes').innerHTML = '🎯 ' + (state.lang === 'zh' ? '错题攻坚清零' : 'Mistake Killer') + ' (<span id="mistakeBadge">' + state.mistakes.length + '</span>)';
+  if ($('btnReviewBookmarks')) {
+    $('btnReviewBookmarks').innerHTML = '⭐ ' + (state.lang === 'zh' ? '重点收藏夹' : 'Bookmarked') + ' (<span id="bookmarkBadge">' + state.bookmarks.length + '</span>)';
+  }
   $('lblTopicsHeader').textContent = state.lang === 'zh' ? '考纲知识模块' : 'Syllabus Domains';
   $('lblFilterTopic').textContent = state.lang === 'zh' ? '模块筛选' : 'Topic Filter';
   $('lblBatchSize').textContent = state.lang === 'zh' ? '单次练习题量' : 'Session Size';
@@ -1815,7 +2251,8 @@ document.addEventListener('keydown', (e) => {
   if (optIndex >= 0 && optIndex < optionBtns.length) {
     optionBtns[optIndex].click();
   } else if (e.key === 'Enter') {
-    const primaryBtn = document.querySelector('#workArea .actionsRow .btn, #workArea button.btn');
+    e.preventDefault();
+    const primaryBtn = $('actionPrimaryBtn') || document.querySelector('#workArea .actions-row .btn, #workArea button.btn');
     if (primaryBtn) primaryBtn.click();
   }
 });
@@ -1849,10 +2286,40 @@ $('shuffleToggle').onclick = () => {
 };
 $('shuffleToggle').textContent = state.shuffleChoices ? '🎲 Shuffle: ON' : '🎲 Shuffle: OFF';
 
+if ($('btnPrint')) {
+  $('btnPrint').onclick = () => renderPrintablePaperExam();
+}
+
 $('btnStartPractice').onclick = () => triggerStageAction('drilling');
 $('btnTimedMock').onclick = () => triggerStageAction('mock');
 $('btnAdaptivePlans').onclick = () => triggerStageAction('sprint');
 $('btnReviewMistakes').onclick = () => triggerStageAction('mistakes');
+if ($('btnReviewBookmarks')) {
+  $('btnReviewBookmarks').onclick = () => {
+    const pool = BANK.filter(q => state.bookmarks.includes(q.id));
+    if (!pool.length) {
+      alert(t('noBookmarks'));
+      return;
+    }
+    startSession(shuffle(pool), false, state.lang === 'zh' ? '重点收藏题目' : 'Bookmarked Questions');
+  };
+}
+
+// Reset Learning Progress
+if ($('btnReset')) {
+  $('btnReset').onclick = () => {
+    if (confirm(t('confirmReset'))) {
+      state.records = {};
+      state.mistakes = [];
+      state.bookmarks = [];
+      saveState();
+      updateUILanguage();
+      renderDashboardStats();
+      renderWelcomeState();
+      alert(t('resetOk'));
+    }
+  };
+}
 
 // Export & Import Progress
 $('btnExport').onclick = () => {
@@ -1884,11 +2351,42 @@ $('fileInput').onchange = async (e) => {
   }
 };
 
+function checkPendingTimedMock() {
+  try {
+    const raw = sessionStorage.getItem('exam_forge_mock_session');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (!data.questionIds || !data.questionIds.length) return;
+    const elapsed = Math.floor((Date.now() - data.startTime) / 1000);
+    const totalSecs = (data.durationMins || 60) * 60;
+    if (elapsed >= totalSecs) {
+      sessionStorage.removeItem('exam_forge_mock_session');
+      return;
+    }
+    const msg = state.lang === 'zh'
+      ? '检测到您刚才有一场未完成的全真限时模考，是否恢复作答？'
+      : 'An ongoing timed mock exam was detected. Would you like to resume where you left off?';
+    if (confirm(msg)) {
+      const qs = data.questionIds.map(id => BANK.find(q => q.id === id)).filter(Boolean);
+      if (qs.length) {
+        startSession(qs, true, data.modeName);
+        userAnswers = data.userAnswers || {};
+        currentQuestionIndex = data.currentQuestionIndex || 0;
+        sessionStartTime = data.startTime;
+        renderQuestionView();
+      }
+    } else {
+      sessionStorage.removeItem('exam_forge_mock_session');
+    }
+  } catch(e) {}
+}
+
 // Initial Render
 updateUILanguage();
 renderRoadmap();
 renderDashboardStats();
 renderWelcomeState();
+checkPendingTimedMock();
 </script>
 </body>
 </html>'''

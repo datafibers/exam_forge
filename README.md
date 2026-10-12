@@ -25,7 +25,13 @@
 5. **Multi-Question Types & Anti-Memorization Choice Shuffling**
    - Supports Single Choice (`single`), Multiple Choice (`multiple`), and True/False (`boolean`).
    - Toggleable **🎲 Choice Shuffling**: randomizes option order while maintaining strict 1:1 synchronization with answer keys and **in-depth distractor explanations (`why_wrong_en/zh`)**.
-6. **Zero-Bank Autonomous Search & Redesign Pipeline (Mode B)**
+6. **In-Depth Post-Mock Review & Distractor Breakdown**
+   - Upon submitting a timed mock or completing a practice set, cards render all choices A–D, highlight your selection vs. the correct answer, and explain why each distractor is wrong.
+7. **Exam Resilience, Bookmarking, & Paper Print Mode**
+   - **Session Recovery**: Timed mock state auto-persists in `sessionStorage` against accidental browser refreshes.
+   - **Key Items Bookmark (`⭐`)**: Bookmark tricky problems during practice or review to practice in a targeted folder.
+   - **🖨️ Printable Paper Mode (`@media print`)**: Outputs clean paper exam sheets with candidate header and an answer key appendix for offline classrooms.
+8. **Zero-Bank Autonomous Search & Redesign Pipeline (Mode B)**
    - When no past papers or files are supplied, the Agent autonomously retrieves official curriculum blueprints (e.g., College Board CED, DECA Guide), maps competency weights, and authors 100% original, copyright-compliant scenario problems up to the target quantity.
 
 ---
