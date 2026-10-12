@@ -147,7 +147,7 @@ exam_forge/
 │   ├── exam_profile.json     # Exam metadata profile (benchmark template)
 │   ├── questions.json        # Verified bilingual test bank with Math, Code, & distractors
 │   └── resources.json        # External resource tracking & licensing configuration
-└── practice.html             # Ready-to-use standalone offline mock testing portal
+└── practice.html             # Generated standalone offline mock testing portal (after build)
 ```
 
 ---

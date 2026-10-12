@@ -147,7 +147,7 @@ exam_forge/
 │   ├── exam_profile.json     # 考试元数据档案模板（标准基准示例）
 │   ├── questions.json        # 经严格校验含公式、代码、多选、判断题的高质量题库范例
 │   └── resources.json        # 外部考资追踪与授权记录
-└── practice.html             # 生成的开箱即用单文件离线模拟考试网站
+└── practice.html             # 编译后生成的开箱即用单文件离线模拟考试网站
 ```
 
 ---
