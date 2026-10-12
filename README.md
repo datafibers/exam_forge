@@ -22,6 +22,9 @@ Zero external dependencies — pure standard Python 3. Works 100% offline with z
 5. **多题型与动态防死记硬背 (Multi-types & Choice Shuffling)**：
    - 支持单选题 (`single`)、多选题 (`multiple`)、判断题 (`boolean`)。
    - 可一键开启 **🎲 选项动态乱序 (Shuffle Choices)**，打乱选项同时精准保持答案与每项错因分析（`why_wrong`）的 1:1 映射。
+6. **零题库自主搜索与原创重构 (Autonomous Search & Redesign)**：
+   - 当用户不提供任何现成题目或文件时，仅凭考试名称与目标题量，Agent 会自主联网检索官方考纲蓝图（CED / Syllabus），按考纲权重拆解微知识点矩阵，靶向原创重构高仿真试题与干扰项深度错因，严守版权合规并达标指定题量。
+
 
 ---
 
