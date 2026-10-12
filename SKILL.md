@@ -61,9 +61,10 @@ The survey allows the user to quickly align requirements, or click **Skip** / ch
    - `English Only`
    - `Chinese Only`
 
-**Handling the Survey Outcome:**
-- **If User Submits Answers:** Apply the chosen settings directly to `exam_profile.json` and bank generation parameters.
-- **If User Clicks "Skip" (or says "let AI decide"):** The Agent immediately proceeds with **AI Autonomous Defaults**: searches official blueprints via `search_web`, extracts authentic syllabus weights, sets official standard duration/cutoff, and generates a standard 20–25 item bilingual bank.
+**Handling Survey Outcomes & "Skip Remaining":**
+- **Skip Entirely:** The user clicks Skip without answering ➔ The Agent automatically prompts for the exam topic (if not yet provided), then applies full AI Autonomous Defaults (Mode B, official timing/passing score, 20–25 questions, bilingual parity).
+- **Skip All Remaining Questions (Once Topic is Given):** As soon as the exam topic is identified, the user can answer any single question they care about (e.g. only specify question count or only specify source documents) and **skip all remaining questions** (or say *"skip remaining / rest decided by AI"*). Any unanswered question seamlessly adopts AI smart defaults.
+- **Customized Submissions:** The Agent preserves all explicit user preferences and fills any remaining unstated parameters via autonomous web research.
 
 ---
 

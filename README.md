@@ -75,7 +75,7 @@ flowchart LR
 
 ## 🤖 Dual Operating Modes & Usage Workflow
 
-> 📋 **Intake Survey on Invocation:** Whenever the skill is triggered, the Agent initiates an interactive survey to confirm your source mode, target question count, timer/passing benchmark, and format preferences. You can always click **Skip** (or tell the AI *"let AI decide"*) to let the Agent autonomously research official blueprints and apply optimal defaults.
+> 📋 **Intake Survey on Invocation:** Whenever the skill is triggered, the Agent initiates an interactive survey to align requirements. You can click **Skip** at any time, or provide the exam topic and choose **Skip all remaining questions**—the Agent will autonomously research official blueprints and fill all remaining parameters with optimal defaults.
 
 ![Exam Forge Pipeline & Usage Architecture](assets/workflow.svg)
 
