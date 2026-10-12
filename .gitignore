@@ -4,3 +4,7 @@ __pycache__/
 .DS_Store
 *.swp
 *.swo
+
+# Generated site output
+*.html
+*-progress.json
