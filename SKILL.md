@@ -52,6 +52,7 @@ The survey allows the user to quickly align requirements, or click **Skip** / ch
    - `(Recommended) Quick Sample / Standard Mock (20–25 questions)`
    - `Full Competition / Comprehensive Exam (40–50 questions)`
    - `Deep Domain Bank (80–100+ questions)`
+   - `Custom Count: User specifies exact number (e.g. 15, 30, 60, 120 questions)`
 3. **Timer & Passing Benchmark:**
    - `(Recommended) Autonomous Research: Auto-detect official MAA/CollegeBoard/DECA duration and pass cutoff`
    - `Custom: 60 minutes, 75% passing mark`
