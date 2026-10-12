@@ -38,22 +38,77 @@
 
 ## 📈 5-Stage Progressive Learning Roadmap
 
-```
-[Stage 1: Diagnostic] ──► [Stage 2: Topic Drill] ──► [Stage 3: Mistake Killer] ──► [Stage 4: Timed Mock] ──► [Stage 5: Adaptive Sprint]
- (Stratified 20 Qs)       (Domain Mastery)         (Bayesian-Smoothed Zero)     (Official Limits/Pass Line)  (Multi-test Certification)
+![5-Stage Progressive Mastery Roadmap](assets/roadmap.svg)
+
+```mermaid
+flowchart LR
+  classDef stage fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+  classDef goal fill:#0f172a,stroke:#10b981,stroke-width:2.5px,color:#34d399;
+
+  S1["🎯 <b>Stage 1: Diagnostic</b><br/>Baseline Stratified Sample"]:::stage
+  S2["📚 <b>Stage 2: Topic Drill</b><br/>Domain Deep-Dive"]:::stage
+  S3["🔥 <b>Stage 3: Mistake Killer</b><br/>Bayesian Zero Pitfalls"]:::stage
+  S4["⏱️ <b>Stage 4: Timed Mock</b><br/>Official Time & Pass Line"]:::stage
+  S5["🏆 <b>Stage 5: Adaptive Sprint</b><br/>Certification Mastery"]:::goal
+
+  S1 -->|Baseline detected| S2
+  S2 -->|Pitfalls logged| S3
+  S3 -->|Mistakes resolved| S4
+  S4 -->|Benchmark verified| S5
 ```
 
 1. **Stage 1 (Diagnostic Baseline):** Stratified sample across all topics to diagnose strengths and weaknesses.
-2. **Stage 2 (Topic Competency Drilling):** Laser-focused domain training with bilingual stems and distractor reasoning.
+2. **Stage 2 (Topic Competency Drilling):** Laser-focused domain training with bilingual stems, distractor reasoning, and visual diagram support.
 3. **Stage 3 (Targeted Mistake Elimination):** Bayesian-smoothed review algorithm prioritizing recurrent misconceptions until cleared.
-4. **Stage 4 (Real-world Timed Simulation):** Strict exam timer and full item load with Pass/Fail benchmark verdict.
+4. **Stage 4 (Real-world Timed Simulation):** Strict exam timer and full item load with Pass/Fail benchmark verdict and session auto-recovery.
 5. **Stage 5 (Adaptive Sprint to Success):** Generates 5–10 personalized test sets (60% weak domains, 25% unattempted, 15% retention review).
+
+---
+
+## 🤖 Dual Operating Modes & Usage Workflow
+
+![Exam Forge Pipeline & Usage Architecture](assets/workflow.svg)
+
+```mermaid
+flowchart TD
+  subgraph Inputs["1. Exam Resources / Prompts"]
+    M1["📄 <b>Mode A: User Resources</b><br/>PDFs, Syllabi, Past Papers"]
+    M2["🔍 <b>Mode B: Autonomous Search</b><br/>Web Blueprint & CED Retrieval"]
+  end
+
+  subgraph Engine["2. Exam Forge Pipeline (Standard Python)"]
+    E1["⚙️ <b>Concept Extraction & Deduplication</b><br/>100% Original Scenario Authoring"]
+    E2["🎲 <b>Option Shuffling & Distractor Logic</b><br/>Strict why_wrong Reasoning (A-D)"]
+    E3["🛡️ <b>Quality Gate Validator</b><br/><code>scripts/validate_bank.py</code>"]
+    E4["⚡ <b>Zero-Dependency Compiler</b><br/><code>scripts/build_site.py</code>"]
+  end
+
+  subgraph Output["3. Standalone Client: practice.html"]
+    O1["🌐 <b>100% Offline Single-File Website</b><br/>Cyber / Light / Navy / Forest Themes"]
+    O2["📈 <b>5-Stage Visual Learning Progression</b><br/>Interactive Timeline & Diagram Figures"]
+    O3["🖨️ <b>PDF & Paper Print Mode</b><br/>Offline Exam Sheets with Answer Keys"]
+  end
+
+  M1 --> E1
+  M2 --> E1
+  E1 --> E2 --> E3 --> E4 --> O1
+  O1 --> O2
+  O1 --> O3
+```
+
+### Mode A: User-Provided Resources
+Use when you have PDFs, URLs, syllabi, or question documents.
+> *"Use the exam-practice-builder skill to convert the attached exam PDFs into a bilingual adaptive study site. Curate distinct high-value concepts, generate distractor explanations for all options, and output practice.html."*
+
+### Mode B: Autonomous Search & Redesign (Zero Initial Bank)
+Use when you only have an exam title and a target question count.
+> *"Use the exam-practice-builder skill to create a bilingual practice site for AP Microeconomics. I have no reference question bank: search the official College Board CED blueprint, author 30 original scenario questions covering Elasticity, Market Structures, and Factor Markets, configure a 60-minute timer and 75% benchmark, and compile practice.html."*
 
 ---
 
 ## 🚀 Quick Start
 
-Requires only standard Python 3. No `pip install` required:
+Requires only standard Python 3. Zero `pip install` required:
 
 ```bash
 # 1. Validate question bank integrity and exam profile
@@ -64,18 +119,6 @@ python3 scripts/build_site.py examples/questions.json --profile examples/exam_pr
 ```
 
 Double-click `practice.html` in Chrome, Safari, or Edge to begin practicing immediately. All user learning progress is saved locally in browser `localStorage` and can be exported/imported as JSON.
-
----
-
-## 🤖 Dual Operating Modes & Prompts
-
-### Mode A: User-Provided Resources
-Use when you have PDFs, URLs, syllabi, or question documents.
-> *"Use the exam-practice-builder skill to convert the attached exam PDFs into a bilingual adaptive study site. Curate distinct high-value concepts, generate distractor explanations for all options, and output practice.html."*
-
-### Mode B: Autonomous Search & Redesign (Zero Initial Bank)
-Use when you only have an exam title and a target question count.
-> *"Use the exam-practice-builder skill to create a bilingual practice site for AP Microeconomics. I have no reference question bank: search the official College Board CED blueprint, author 30 original scenario questions covering Elasticity, Market Structures, and Factor Markets, configure a 60-minute timer and 75% benchmark, and compile practice.html."*
 
 ---
 

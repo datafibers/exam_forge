@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="wfBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="accentCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="accentPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="accentGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <filter id="glowWf" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1060" height="380" rx="18" fill="url(#wfBgGrad)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Top Title Bar -->
+  <g transform="translate(30, 32)">
+    <circle cx="6" cy="6" r="4" fill="#38bdf8" filter="url(#glowWf)"/>
+    <text x="20" y="10" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="800" letter-spacing="1.5">EXAM FORGE PIPELINE &amp; USAGE ARCHITECTURE · 运行流程与架构设计</text>
+  </g>
+
+  <!-- Flow connecting arrows in background -->
+  <path d="M 320 200 L 370 200" stroke="#38bdf8" stroke-width="3" stroke-dasharray="5 5"/>
+  <polygon points="375,200 367,195 367,205" fill="#38bdf8"/>
+
+  <path d="M 690 200 L 740 200" stroke="#10b981" stroke-width="3" stroke-dasharray="5 5"/>
+  <polygon points="745,200 737,195 737,205" fill="#10b981"/>
+
+  <!-- COLUMN 1: INPUT MODES -->
+  <g transform="translate(30, 60)">
+    <rect width="280" height="290" rx="14" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="14" y="14" width="90" height="20" rx="6" fill="#0369a1" fill-opacity="0.35"/>
+    <text x="22" y="28" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800">1. INPUT MODES</text>
+
+    <!-- Mode A Box -->
+    <rect x="14" y="46" width="252" height="104" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="26" y="68" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="750">Mode A: Existing Resources</text>
+    <text x="26" y="84" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">提供真题/考纲文件</text>
+    <text x="26" y="104" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">📄 Past Exam PDFs / Web URLs</text>
+    <text x="26" y="122" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">🎯 Verified Blueprints &amp; Official Rules</text>
+    <text x="26" y="140" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="10" font-weight="700">➜ Curate concepts &amp; distractor logic</text>
+
+    <!-- Mode B Box -->
+    <rect x="14" y="162" width="252" height="110" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="26" y="184" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="750">Mode B: Autonomous Search</text>
+    <text x="26" y="200" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">无题库全自主检索与命题</text>
+    <text x="26" y="220" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">🔍 Search official CED / syllabus</text>
+    <text x="26" y="238" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✍️ Redesign original scenarios (100 Qs)</text>
+    <text x="26" y="256" fill="#818cf8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="10" font-weight="700">➜ Anti-hallucination guardrails</text>
+  </g>
+
+  <!-- COLUMN 2: EXAM FORGE ENGINE -->
+  <g transform="translate(380, 60)">
+    <rect width="300" height="290" rx="14" fill="url(#cardGrad)" stroke="#818cf8" stroke-width="1.5"/>
+    <rect x="14" y="14" width="115" height="20" rx="6" fill="#4338ca" fill-opacity="0.35"/>
+    <text x="22" y="28" fill="#a5b4fc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800">2. FORGE ENGINE</text>
+
+    <!-- Engine Step 1 -->
+    <rect x="14" y="46" width="272" height="66" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="26" y="68" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="750">Pedagogical Generation</text>
+    <text x="26" y="86" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Bilingual Stems (EN / ZH)</text>
+    <text x="26" y="102" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ LaTeX Formula \( ... \) &amp; Code Blocks</text>
+
+    <!-- Engine Step 2 -->
+    <rect x="14" y="122" width="272" height="66" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="26" y="144" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="750">Distractor &amp; Shuffle Sync</text>
+    <text x="26" y="162" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Strict why_wrong explanations for all choices</text>
+    <text x="26" y="178" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Permutation remapping (anti-memorization)</text>
+
+    <!-- Engine Step 3 -->
+    <rect x="14" y="198" width="272" height="74" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="26" y="220" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="750">Zero-Dependency Compiler</text>
+    <text x="26" y="238" fill="#a5b4fc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11"><code>validate_bank.py</code>: Schema &amp; Deduplication</text>
+    <text x="26" y="254" fill="#a5b4fc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11"><code>build_site.py</code>: Single-File HTML Compiler</text>
+  </g>
+
+  <!-- COLUMN 3: STANDALONE CLIENT & LEARNING -->
+  <g transform="translate(750, 60)">
+    <rect width="280" height="290" rx="14" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.8"/>
+    <rect x="14" y="14" width="115" height="20" rx="6" fill="#047857" fill-opacity="0.35"/>
+    <text x="22" y="28" fill="#34d399" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800">3. PRACTICE.HTML</text>
+
+    <!-- Output Box 1 -->
+    <rect x="14" y="46" width="252" height="104" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="26" y="68" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="750">100% Offline Single File</text>
+    <text x="26" y="86" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Zero CDNs, zero servers, zero npm</text>
+    <text x="26" y="104" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ 4 Themes (Cyber, Light, Navy, Forest)</text>
+    <text x="26" y="122" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ High-Res SVG crest &amp; local progress</text>
+    <text x="26" y="140" fill="#10b981" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="10" font-weight="700">✦ Privacy-first localStorage persistence</text>
+
+    <!-- Output Box 2 -->
+    <rect x="14" y="162" width="252" height="110" rx="10" fill="#0f172a" stroke="#047857" stroke-width="1"/>
+    <text x="26" y="184" fill="#34d399" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="750">5-Stage Mastery Experience</text>
+    <text x="26" y="202" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">🎯 Diagnostic ➔ 📚 Drill ➔ 🔥 Mistakes</text>
+    <text x="26" y="220" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">⏱️ Timed Mock with Session Auto-Recovery</text>
+    <text x="26" y="238" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">⭐ Bookmarking &amp; 🖨️ Paper Print Mode</text>
+    <text x="26" y="256" fill="#10b981" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="10" font-weight="800">🏆 Pass Benchmark Certification Line</text>
+  </g>
+</svg>

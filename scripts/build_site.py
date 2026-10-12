@@ -512,6 +512,27 @@ button, select {
   line-height: 1.55;
   margin: 18px 0;
 }
+.q-figure {
+  margin: 14px 0 18px;
+  padding: 12px;
+  background: var(--opt-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  text-align: center;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.q-figure svg {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+.q-figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: inline-block;
+}
 
 /* MATH FORMULAS & CODE BLOCKS */
 .math-inline {
@@ -1462,6 +1483,19 @@ function renderQuestionView() {
   stem.innerHTML = renderRichText(stemText);
   work.appendChild(stem);
 
+  // Question Figure / Diagram (if present)
+  if (q.figure_svg) {
+    const fig = document.createElement('div');
+    fig.className = 'q-figure';
+    fig.innerHTML = q.figure_svg;
+    work.appendChild(fig);
+  } else if (q.image_url) {
+    const fig = document.createElement('div');
+    fig.className = 'q-figure';
+    fig.innerHTML = '<img src="' + q.image_url + '" alt="Figure">';
+    work.appendChild(fig);
+  }
+
   if (qType === 'multiple') {
     const tip = document.createElement('p');
     tip.style.fontSize = '12px';
@@ -1805,6 +1839,7 @@ function finishTimedMock() {
       (isBookmarked ? '★ ' + t('bookmarked') : '☆ ' + t('bookmark')) + '</button>' +
       '</div>' +
       '<p style="margin:10px 0 14px;font-weight:600;font-size:15px;">' + renderRichText(stemText) + '</p>' +
+      (q.figure_svg ? '<div class="q-figure">' + q.figure_svg + '</div>' : (q.image_url ? '<div class="q-figure"><img src="' + q.image_url + '" alt="Figure"></div>' : '')) +
       '<div style="margin:10px 0;">';
 
     const perm = item.origPerm || choices.map((_, i) => i);
@@ -2010,7 +2045,8 @@ function renderPrintablePaperExam() {
 
     qDiv.innerHTML = '<div style="font-weight:700;margin-bottom:8px;font-size:15px;line-height:1.45;">' +
       (idx + 1) + '. [' + getTopicDisplayName(q.topic) + '] ' + renderRichText(stemText) +
-      '</div>';
+      '</div>' +
+      (q.figure_svg ? '<div class="q-figure">' + q.figure_svg + '</div>' : (q.image_url ? '<div class="q-figure"><img src="' + q.image_url + '" alt="Figure"></div>' : ''));
 
     const optsDiv = document.createElement('div');
     optsDiv.style.paddingLeft = '14px';
@@ -2196,13 +2232,45 @@ function renderDashboardStats() {
 
 function renderWelcomeState() {
   const work = $('workArea');
+  const isZh = state.lang === 'zh';
+
+  let stagesVisualHtml = '<div style="margin:20px 0;padding:16px;background:var(--opt-bg);border:1px solid var(--panel-border);border-radius:16px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;">' +
+      '<span class="panel-eyebrow" style="margin:0;">✦ ' + (isZh ? '五阶闯关备考路线' : '5-Stage Learning Progression') + '</span>' +
+      '<span style="font-size:11px;color:var(--text-muted);">' + (isZh ? '点击任意阶段直接进入' : 'Click any milestone to launch') + '</span>' +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;">';
+
+  const stagesData = [
+    { id: 'diagnostic', idx: '01', icon: '🎯', name: isZh ? '摸底诊断' : 'Diagnostic', tag: isZh ? '抽样摸底' : 'Sample 20' },
+    { id: 'drilling',   idx: '02', icon: '📚', name: isZh ? '专题精练' : 'Topic Drill', tag: isZh ? '分项突破' : 'Domain Drills' },
+    { id: 'mistakes',   idx: '03', icon: '🔥', name: isZh ? '错题清零' : 'Mistake Killer', tag: isZh ? '贝叶斯加权' : 'Zero Pitfalls' },
+    { id: 'mock',       idx: '04', icon: '⏱️', name: isZh ? '全真模考' : 'Timed Mock', tag: isZh ? '限时及格线' : 'Pass Verdict' },
+    { id: 'sprint',     idx: '05', icon: '🏆', name: isZh ? '冲刺达标' : 'Adaptive Sprint', tag: isZh ? '5套强化卷' : 'Mastery Ready' }
+  ];
+
+  stagesData.forEach(st => {
+    stagesVisualHtml += '<div style="background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:transform 0.15s,border-color 0.15s;" ' +
+      'onmouseover="this.style.borderColor=\'var(--accent)\';this.style.transform=\'translateY(-2px)\'" ' +
+      'onmouseout="this.style.borderColor=\'var(--chip-border)\';this.style.transform=\'none\'" ' +
+      'onclick="triggerStageAction(\'' + st.id + '\')">' +
+      '<div style="font-size:10px;font-weight:800;color:var(--accent);letter-spacing:1px;">STAGE ' + st.idx + '</div>' +
+      '<div style="font-size:22px;margin:4px 0;">' + st.icon + '</div>' +
+      '<div style="font-weight:750;font-size:13px;color:var(--text-main);">' + st.name + '</div>' +
+      '<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">' + st.tag + '</div>' +
+      '</div>';
+  });
+
+  stagesVisualHtml += '</div></div>';
+
   work.innerHTML = '<div class="panel-eyebrow">READY</div>' +
     '<h2 style="margin:10px 0 6px;" id="lblWelcome">' + t('backHome') + '</h2>' +
     '<p style="color:var(--text-muted);" id="lblWelcomeHelp">' +
-      (state.lang === 'zh'
-        ? '请在上方五阶路线中选择阶段，或从侧边栏按模块开展专项精练。支持公式渲染、选项乱序、错因剖析与本地离线持久化。'
-        : 'Choose a stage from the 5-Stage Roadmap above or launch a topic drill from the sidebar.') +
-    '</p>';
+      (isZh
+        ? '请在下方备考路线中选择阶段，或从侧边栏按模块开展专项精练。支持公式渲染、图表展示、选项乱序、错因剖析与本地离线持久化。'
+        : 'Choose a stage from the progression roadmap below or launch a topic drill from the sidebar.') +
+    '</p>' +
+    stagesVisualHtml;
 }
 
 function updateUILanguage() {

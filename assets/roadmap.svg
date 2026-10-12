@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="passGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1060" height="280" rx="18" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Top Title Bar -->
+  <g transform="translate(30, 32)">
+    <circle cx="6" cy="6" r="4" fill="#06b6d4" filter="url(#glow)"/>
+    <text x="20" y="10" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="800" letter-spacing="1.5">5-STAGE PROGRESSIVE MASTERY ROADMAP · 循序渐进备考进阶体系</text>
+  </g>
+
+  <!-- Stage Connecting Flow Line -->
+  <path d="M 120 150 L 940 150" stroke="#334155" stroke-width="3" stroke-dasharray="6 6"/>
+
+  <!-- STAGE 1 -->
+  <g transform="translate(30, 60)">
+    <rect width="175" height="190" rx="14" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="12" y="14" width="70" height="20" rx="6" fill="#0369a1" fill-opacity="0.35"/>
+    <text x="20" y="28" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800" letter-spacing="0.5">STAGE 01</text>
+    <text x="145" y="28" font-size="18">🎯</text>
+    <text x="14" y="62" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="750">Diagnostic</text>
+    <text x="14" y="80" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600">摸底诊断测试</text>
+    <line x1="14" y1="96" x2="161" y2="96" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="118" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Cross-domain sample</text>
+    <text x="14" y="136" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Reveal weak areas</text>
+    <text x="14" y="154" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Establish baseline</text>
+    <rect x="14" y="165" width="147" height="15" rx="4" fill="#0f172a"/>
+    <text x="87" y="176" text-anchor="middle" fill="#06b6d4" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="9" font-weight="700">BASELINE SCORE</text>
+  </g>
+
+  <!-- Connector 1 -->
+  <path d="M 215 150 L 235 150" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <polygon points="237,150 231,146 231,154" fill="#06b6d4"/>
+
+  <!-- STAGE 2 -->
+  <g transform="translate(245, 60)">
+    <rect width="175" height="190" rx="14" fill="url(#cardGrad)" stroke="#6366f1" stroke-width="1.5"/>
+    <rect x="12" y="14" width="70" height="20" rx="6" fill="#4338ca" fill-opacity="0.35"/>
+    <text x="20" y="28" fill="#818cf8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800" letter-spacing="0.5">STAGE 02</text>
+    <text x="145" y="28" font-size="18">📚</text>
+    <text x="14" y="62" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="750">Topic Drilling</text>
+    <text x="14" y="80" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600">专题分项精练</text>
+    <line x1="14" y1="96" x2="161" y2="96" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="118" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Domain-by-domain</text>
+    <text x="14" y="136" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Distractor analysis</text>
+    <text x="14" y="154" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Concept mastery</text>
+    <rect x="14" y="165" width="147" height="15" rx="4" fill="#0f172a"/>
+    <text x="87" y="176" text-anchor="middle" fill="#818cf8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="9" font-weight="700">DEEP REASONING</text>
+  </g>
+
+  <!-- Connector 2 -->
+  <polygon points="432,150 426,146 426,154" fill="#818cf8"/>
+
+  <!-- STAGE 3 -->
+  <g transform="translate(440, 60)">
+    <rect width="175" height="190" rx="14" fill="url(#cardGrad)" stroke="#f59e0b" stroke-width="1.5"/>
+    <rect x="12" y="14" width="70" height="20" rx="6" fill="#b45309" fill-opacity="0.35"/>
+    <text x="20" y="28" fill="#fbbf24" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800" letter-spacing="0.5">STAGE 03</text>
+    <text x="145" y="28" font-size="18">🔥</text>
+    <text x="14" y="62" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="750">Mistake Killer</text>
+    <text x="14" y="80" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600">错题靶向清零</text>
+    <line x1="14" y1="96" x2="161" y2="96" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="118" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Bayesian smoothing</text>
+    <text x="14" y="136" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Adaptive repetition</text>
+    <text x="14" y="154" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Eliminate blind spots</text>
+    <rect x="14" y="165" width="147" height="15" rx="4" fill="#0f172a"/>
+    <text x="87" y="176" text-anchor="middle" fill="#fbbf24" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="9" font-weight="700">ZERO MISTAKES</text>
+  </g>
+
+  <!-- Connector 3 -->
+  <polygon points="627,150 621,146 621,154" fill="#fbbf24"/>
+
+  <!-- STAGE 4 -->
+  <g transform="translate(635, 60)">
+    <rect width="175" height="190" rx="14" fill="url(#cardGrad)" stroke="#ec4899" stroke-width="1.5"/>
+    <rect x="12" y="14" width="70" height="20" rx="6" fill="#be185d" fill-opacity="0.35"/>
+    <text x="20" y="28" fill="#f472b6" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800" letter-spacing="0.5">STAGE 04</text>
+    <text x="145" y="28" font-size="18">⏱️</text>
+    <text x="14" y="62" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="750">Timed Mock</text>
+    <text x="14" y="80" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600">全真限时模考</text>
+    <line x1="14" y1="96" x2="161" y2="96" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="118" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Official time limit</text>
+    <text x="14" y="136" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Hidden answer leaks</text>
+    <text x="14" y="154" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ Pass line benchmark</text>
+    <rect x="14" y="165" width="147" height="15" rx="4" fill="#0f172a"/>
+    <text x="87" y="176" text-anchor="middle" fill="#f472b6" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="9" font-weight="700">PASS SCORECARD</text>
+  </g>
+
+  <!-- Connector 4 -->
+  <polygon points="822,150 816,146 816,154" fill="#10b981"/>
+
+  <!-- STAGE 5 -->
+  <g transform="translate(830, 60)">
+    <rect width="200" height="190" rx="14" fill="url(#cardGrad)" stroke="#10b981" stroke-width="2"/>
+    <rect x="12" y="14" width="70" height="20" rx="6" fill="#047857" fill-opacity="0.35"/>
+    <text x="20" y="28" fill="#34d399" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800" letter-spacing="0.5">STAGE 05</text>
+    <text x="168" y="28" font-size="18">🏆</text>
+    <text x="14" y="62" fill="#34d399" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="800">Adaptive Sprint</text>
+    <text x="14" y="80" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600">冲刺达标认证</text>
+    <line x1="14" y1="96" x2="186" y2="96" stroke="#047857" stroke-width="1"/>
+    <text x="14" y="118" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ 5-10 Tailored tests</text>
+    <text x="14" y="136" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ 60% weak domain ratio</text>
+    <text x="14" y="154" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11">✦ High-confidence pass</text>
+    <rect x="14" y="165" width="172" height="15" rx="4" fill="url(#passGrad)"/>
+    <text x="100" y="176" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="9" font-weight="850">EXAM READY ✓</text>
+  </g>
+</svg>

@@ -38,16 +38,71 @@
 
 ## 📈 五阶循序渐进备考体系 (5-Stage Roadmap)
 
-```
-[阶段 1: 摸底诊断] ──► [阶段 2: 专题精练] ──► [阶段 3: 错题清零] ──► [阶段 4: 全真模考] ──► [阶段 5: 冲刺达标]
- (20题抽样摸底)         (分模块各个击破)       (贝叶斯加权清零)       (限时限分仿真)        (连续达标发证)
+![5-Stage Progressive Mastery Roadmap](assets/roadmap.svg)
+
+```mermaid
+flowchart LR
+  classDef stage fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+  classDef goal fill:#0f172a,stroke:#10b981,stroke-width:2.5px,color:#34d399;
+
+  S1["🎯 <b>阶段一：摸底诊断</b><br/>跨模块分层抽样测基准"]:::stage
+  S2["📚 <b>阶段二：专题精练</b><br/>模块逐项突破与图表考点"]:::stage
+  S3["🔥 <b>阶段三：错题清零</b><br/>贝叶斯加权消灭易错盲区"]:::stage
+  S4["⏱️ <b>阶段四：全真模考</b><br/>官方限时仿真与及格认证"]:::stage
+  S5["🏆 <b>阶段五：冲刺达标</b><br/>5-10套自适应套卷通关"]:::goal
+
+  S1 -->|基线短板捕获| S2
+  S2 -->|易混淆考点入库| S3
+  S3 -->|错题全面扫除| S4
+  S4 -->|及格分数线验证| S5
 ```
 
 1. **阶段一（摸底诊断）：** 跨知识模块分层抽样，测出初始知识短板与基准掌握度。
-2. **阶段二（专题精练）：** 针对特定薄弱模块靶向训练，结合双语解析与错因分析吃透考点。
+2. **阶段二（专题精练）：** 针对特定薄弱模块靶向训练，结合双语解析、图表直观展示与错因剖析吃透考点。
 3. **阶段三（错题清零）：** 贝叶斯平滑算法动态加权，优先推送高频混淆题，直至错题本清零。
-4. **阶段四（全真模考）：** 官方限时倒计时与全量题量仿真，对比及格基准线给出 Pass/Fail 判定。
+4. **阶段四（全真模考）：** 官方限时倒计时与全量题量仿真，具备作答防刷新自恢复，并对比及格基准线给出 Pass/Fail 判定。
 5. **阶段五（冲刺达标）：** 生成 5–10 套自适应套卷（60% 薄弱模块 + 25% 未见题 + 15% 巩固复习）。
+
+---
+
+## 🤖 双运行模式与使用流程架构 (Usage Workflow)
+
+![Exam Forge Pipeline & Usage Architecture](assets/workflow.svg)
+
+```mermaid
+flowchart TD
+  subgraph Inputs["1. 考试输入来源 / 提示词需求"]
+    M1["📄 <b>模式 A：用户已有资料</b><br/>真题 PDF、考纲网页、样卷笔记"]
+    M2["🔍 <b>模式 B：零题库自主检索</b><br/>官方 Blueprint 与 CED 考纲自动抓取"]
+  end
+
+  subgraph Engine["2. Exam Forge 引擎管线 (标准 Python 零依赖)"]
+    E1["⚙️ <b>考点矩阵提取与去重</b><br/>100% 原创场景化题目设计"]
+    E2["🎲 <b>动态乱序与选项深度错因</b><br/>全选项 (A-D) 严格 why_wrong 剖析"]
+    E3["🛡️ <b>质量门禁自动化校验</b><br/><code>scripts/validate_bank.py</code>"]
+    E4["⚡ <b>单文件客户端轻量编译器</b><br/><code>scripts/build_site.py</code>"]
+  end
+
+  subgraph Output["3. 交付物与离线备考体验: practice.html"]
+    O1["🌐 <b>100% 离线单文件站点</b><br/>四套精美主题 + SVG 动态盾徽"]
+    O2["📈 <b>五阶闯关路线与交互图表</b><br/>诊断 ➔ 专题 ➔ 错题 ➔ 全真模考"]
+    O3["🖨️ <b>纸质试卷与 PDF 打印模式</b><br/>带考生署名栏与卷尾标准答案解析"]
+  end
+
+  M1 --> E1
+  M2 --> E1
+  E1 --> E2 --> E3 --> E4 --> O1
+  O1 --> O2
+  O1 --> O3
+```
+
+### 模式 A：用户提供资料 (Resource-Guided)
+适用于手头有 PDF、样卷、大纲文档或网页链接时：
+> *“使用 exam-practice-builder 技能，将附件的考试 PDF 转为中英双语自适应练习网站。提炼高价值独立考点，为每个选项生成错因分析，输出 practice.html。”*
+
+### 模式 B：零题库自主搜索重构 (Autonomous Search & Redesign)
+适用于手里没有现成题库，仅有考试名称和目标题量时：
+> *“使用 exam-practice-builder 技能，为我制作 AP 微观经济学线上练习站。我手里没有参考题库：请联网搜索官方 College Board CED 考纲分值比例，原创重构 30 道涵盖供需弹性、市场结构和要素市场的深度情境题，配置 60 分钟倒计时与 75% 及格线，生成 practice.html。”*
 
 ---
 
@@ -64,18 +119,6 @@ python3 scripts/build_site.py examples/questions.json --profile examples/exam_pr
 ```
 
 在 Chrome、Safari 或 Edge 等现代浏览器双击打开生成的 `practice.html` 即可立即开始做题。学习记录完全保存在本地 `localStorage`，支持 JSON 导入/导出跨设备迁移。
-
----
-
-## 🤖 双运行模式与 Agent 提示词示例
-
-### 模式 A：用户提供资料 (Resource-Guided)
-适用于手头有 PDF、样卷、大纲文档或网页链接时：
-> *“使用 exam-practice-builder 技能，将附件的考试 PDF 转为中英双语自适应练习网站。提炼高价值独立考点，为每个选项生成错因分析，输出 practice.html。”*
-
-### 模式 B：零题库自主搜索重构 (Autonomous Search & Redesign)
-适用于手里没有现成题库，仅有考试名称和目标题量时：
-> *“使用 exam-practice-builder 技能，为我制作 AP 微观经济学线上练习站。我手里没有参考题库：请联网搜索官方 College Board CED 考纲分值比例，原创重构 30 道涵盖供需弹性、市场结构和要素市场的深度情境题，配置 60 分钟倒计时与 75% 及格线，生成 practice.html。”*
 
 ---
 
