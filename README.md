@@ -69,7 +69,7 @@ Use when you have PDFs, URLs, syllabi, or question documents.
 
 ### Mode B: Autonomous Search & Redesign (Zero Initial Bank)
 Use when you only have an exam title and a target question count.
-> *"Use the exam-practice-builder skill to create a bilingual practice site for Ontario DECA EIP Online Exam. I have no reference question bank: search the official DECA blueprint, author 20 original scenario questions covering Financial Analysis, Marketing, and Law, configure a 70-minute timer and 75% pass mark, and compile practice.html."*
+> *"Use the exam-practice-builder skill to create a bilingual practice site for AP Microeconomics. I have no reference question bank: search the official College Board CED blueprint, author 30 original scenario questions covering Elasticity, Market Structures, and Factor Markets, configure a 60-minute timer and 75% benchmark, and compile practice.html."*
 
 ---
 
@@ -85,8 +85,8 @@ exam_forge/
 │   ├── validate_bank.py      # Schema, translation, deduplication, & profile validator
 │   └── build_site.py         # Multi-theme single-file HTML website compiler
 ├── examples/
-│   ├── exam_profile.json     # Exam metadata profile (DECA EIP benchmark template)
-│   ├── questions.json        # 20-question bilingual test bank with Math, Code, & distractors
+│   ├── exam_profile.json     # Exam metadata profile (benchmark template)
+│   ├── questions.json        # Verified bilingual test bank with Math, Code, & distractors
 │   └── resources.json        # External resource tracking & licensing configuration
 └── practice.html             # Ready-to-use standalone offline mock testing portal
 ```

@@ -1,51 +1,52 @@
 {
-  "exam_name": "Ontario DECA EIP Regional Online Exam",
-  "exam_code": "DECA-EIP",
-  "exam_category": "Business & Entrepreneurship",
-  "description": "Ontario DECA Entrepreneurship Innovation Plan (EIP) Regional Qualifying Online Multiple Choice Exam. Rigorous assessment covering Financial Analysis, Marketing Strategy, Unit Economics, and Venture Operations.",
-  "official_url": "https://www.deca.ca/competitive-events",
+  "exam_name": "Innovation & Quantitative Competency Practice",
+  "exam_code": "IQCP",
+  "exam_category": "Business, Quantitative & Technology",
+  "description": "Adaptive practice system evaluating quantitative financial modeling, product validation, unit economics, data ethics, and algorithmic operational logic.",
+  "official_url": "https://example.org/exam-blueprint",
   "passing_score_pct": 75,
-  "exam_duration_mins": 70,
-  "mock_questions_count": 100,
-  "target_bank_size": 300,
-  "target_mock_tests": 8,
-  "logo_monogram": "DECA",
+  "exam_duration_mins": 60,
+  "mock_questions_count": 20,
+  "target_bank_size": 100,
+  "target_mock_tests": 5,
+  "logo_monogram": "IQCP",
   "theme_default": "cyber",
+  "verified_rules": false,
   "stages": [
     {
       "id": "diagnostic",
       "name_en": "Diagnostic Baseline",
       "name_zh": "阶段一：摸底诊断",
-      "desc_en": "20-question stratified diagnostic across all domains to establish baseline competency.",
-      "desc_zh": "跨模块20题抽样摸底，测出初始知识短板与基线正确率。"
+      "desc_en": "Stratified cross-topic sampling to detect knowledge blind spots and baseline accuracy.",
+      "desc_zh": "跨模块分层抽样摸底，测出初始知识长短板与基线正确率。"
     },
     {
       "id": "drilling",
       "name_en": "Topic Competency Drill",
       "name_zh": "阶段二：专题精练",
-      "desc_en": "Deep-dive into specific weak topics with bilingual explanations and distractor reasoning.",
-      "desc_zh": "逐个模块靶向突破，结合双语选项错因深度掌握核心概念。"
+      "desc_en": "Targeted domain drills with bilingual stems and in-depth distractor reasoning.",
+      "desc_zh": "按知识模块专项突破，结合双语解析与错因剖析吃透考点。"
     },
     {
       "id": "mistakes",
       "name_en": "Mistake Elimination",
       "name_zh": "阶段三：错题清零",
-      "desc_en": "Bayesian-smoothed mistake bank targeting high-frequency pitfalls until 100% resolved.",
-      "desc_zh": "错题本贝叶斯加权攻坚，消灭高频混淆项直到完全掌握。"
+      "desc_en": "Bayesian-smoothed review targeting historical misconceptions until 100% resolved.",
+      "desc_zh": "错题本贝叶斯加权攻坚，消灭易混淆项直到完全掌握。"
     },
     {
       "id": "mock",
-      "name_en": "Real-world Timed Mock",
+      "name_en": "Timed Simulation Mock",
       "name_zh": "阶段四：全真模考",
-      "desc_en": "Official 70-minute, 100-question timed simulation under real benchmark pressure (75% pass line).",
-      "desc_zh": "官方70分钟/100题闭卷全真模拟，以75%及格线检验应考能力。"
+      "desc_en": "Strict timed mock exam without answer leakage; full scorecard and review upon submission.",
+      "desc_zh": "严格倒计时全真模考，答题中不泄露答案，交卷后统一生成成绩单与考后复盘。"
     },
     {
       "id": "sprint",
       "name_en": "Adaptive Sprint to Ready",
       "name_zh": "阶段五：冲刺达标",
-      "desc_en": "5-10 personalized adaptive test sets (60% weak, 25% new, 15% review) for final exam readiness.",
-      "desc_zh": "5-10套自适应个性化模考，全面巩固薄弱点，冲刺达标认证。"
+      "desc_en": "Tailored adaptive test sets balancing weak domains, unattempted items, and spaced review.",
+      "desc_zh": "自适应个性化套卷，针对薄弱点靶向攻坚，冲刺达标认证。"
     }
   ]
 }

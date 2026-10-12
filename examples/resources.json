@@ -1,14 +1,19 @@
 {
-  "exam": "Ontario DECA EIP regional online exam",
+  "exam": "Quantitative & Technical Benchmark Assessment",
   "year": "2026-2027",
   "languages": ["en", "zh"],
-  "exam_rules": {"questions": 100, "minutes": 70, "verified": false, "note": "Verify current Ontario DECA requirements before publishing."},
+  "exam_rules": {
+    "questions": 60,
+    "minutes": 60,
+    "verified": false,
+    "note": "Verify official jurisdiction requirements before publishing."
+  },
   "resources": [
-    {"type":"official_blueprint", "url":"REPLACE_WITH_OFFICIAL_URL", "rights":"link_only", "priority":1},
-    {"type":"historical_exam", "url":"REPLACE_WITH_PAST_EXAM_URL", "rights":"check_before_reuse", "priority":2},
-    {"type":"user_provided_pdf", "path":"resources/my-sample.pdf", "rights":"check_before_reuse", "priority":3}
+    {"type": "official_blueprint", "url": "REPLACE_WITH_OFFICIAL_URL", "rights": "link_only", "priority": 1},
+    {"type": "historical_exam", "url": "REPLACE_WITH_PAST_EXAM_URL", "rights": "check_before_reuse", "priority": 2},
+    {"type": "user_provided_pdf", "path": "resources/sample-handout.pdf", "rights": "check_before_reuse", "priority": 3}
   ],
-  "target_distinct_concepts": 200,
-  "target_questions": 1000,
-  "generation_policy": "Prefer 200 independently reviewed concepts over numerous superficial variants. Publish item and concept counts separately."
+  "target_distinct_concepts": 100,
+  "target_questions": 300,
+  "generation_policy": "Prefer independently reviewed concepts over superficial variants. Track concept_id and variant_of distinctly."
 }

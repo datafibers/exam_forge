@@ -69,7 +69,7 @@ python3 scripts/build_site.py examples/questions.json --profile examples/exam_pr
 
 ### 模式 B：零题库自主搜索重构 (Autonomous Search & Redesign)
 适用于手里没有现成题库，仅有考试名称和目标题量时：
-> *“使用 exam-practice-builder 技能，为我制作 Ontario DECA EIP 线上考试的双语练习站。我手里没有参考题库：请联网搜索官方 DECA 考纲分值比例，原创重构 20 道涵盖财务分析、营销策略和商业法的深度情境题，配置 70 分钟倒计时与 75% 及格线，生成 practice.html。”*
+> *“使用 exam-practice-builder 技能，为我制作 AP 微观经济学线上练习站。我手里没有参考题库：请联网搜索官方 College Board CED 考纲分值比例，原创重构 30 道涵盖供需弹性、市场结构和要素市场的深度情境题，配置 60 分钟倒计时与 75% 及格线，生成 practice.html。”*
 
 ---
 
@@ -85,8 +85,8 @@ exam_forge/
 │   ├── validate_bank.py      # 题库格式、双语对称、查重与 Profile 校验器
 │   └── build_site.py         # 多主题、动态徽标的单文件 HTML 网页编译器
 ├── examples/
-│   ├── exam_profile.json     # 考试元数据档案模板（含 DECA EIP 配置）
-│   ├── questions.json        # 20 道含公式、代码、多选、判断题的高质量题库范例
+│   ├── exam_profile.json     # 考试元数据档案模板（标准基准示例）
+│   ├── questions.json        # 经严格校验含公式、代码、多选、判断题的高质量题库范例
 │   └── resources.json        # 外部考资追踪与授权记录
 └── practice.html             # 生成的开箱即用单文件离线模拟考试网站
 ```

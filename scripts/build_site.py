@@ -15,27 +15,23 @@ def get_args():
     p.add_argument('--url', default=None, help="Override official URL")
     return p.parse_args()
 
-def generate_logo_svg(monogram="EXAM", color="#63ded0"):
+def generate_logo_svg(monogram="EXAM"):
     mono = (monogram or "EXAM")[:4].upper()
-    font_size = "20" if len(mono) > 3 else "23"
+    font_size = "19" if len(mono) > 3 else "22"
     return f'''<svg class="exam-crest" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="crestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="{color}" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#4db4eb" stop-opacity="0.6"/>
+      <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="var(--accent-alt)" stop-opacity="0.6"/>
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="glow"/>
-      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
-    </filter>
   </defs>
-  <circle cx="50" cy="50" r="46" fill="#0d1b33" stroke="url(#crestGrad)" stroke-width="3" filter="url(#glow)"/>
-  <circle cx="50" cy="50" r="40" fill="none" stroke="{color}" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
-  <polygon points="50,14 80,34 80,68 50,86 20,68 20,34" fill="none" stroke="{color}" stroke-width="1.5" opacity="0.4"/>
-  <path d="M 30,38 Q 50,28 70,38" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round"/>
-  <path d="M 30,62 Q 50,72 70,62" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round"/>
-  <text x="50" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="{font_size}" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" letter-spacing="-0.5">{mono}</text>
-  <polygon points="50,22 53,28 59,28 54,32 56,38 50,34 44,38 46,32 41,28 47,28" fill="{color}"/>
+  <circle cx="50" cy="50" r="46" fill="var(--panel-bg)" stroke="url(#crestGrad)" stroke-width="2.5"/>
+  <circle cx="50" cy="50" r="40" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+  <polygon points="50,14 80,34 80,68 50,86 20,68 20,34" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.4"/>
+  <path d="M 30,38 Q 50,28 70,38" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 30,62 Q 50,72 70,62" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+  <text x="50" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="{font_size}" text-anchor="middle" dominant-baseline="middle" fill="var(--text-main)" letter-spacing="-0.5">{mono}</text>
+  <polygon points="50,22 53,28 59,28 54,32 56,38 50,34 44,38 46,32 41,28 47,28" fill="var(--accent)"/>
 </svg>'''
 
 HTML_PAGE = r'''<!doctype html>
@@ -43,13 +39,13 @@ HTML_PAGE = r'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>__EXAM_TITLE__ — Adaptive Mastery</title>
+<title>__EXAM_TITLE__ — Adaptive Practice Engine</title>
 <style>
 /* ================= THEME DEFINITIONS ================= */
 :root[data-theme="cyber"] {
   --bg-main: #07101e;
   --bg-gradient: radial-gradient(ellipse at 8% 0%, #17325c 0%, transparent 50%), radial-gradient(ellipse at 92% 100%, #0e2942 0%, #07101e 60%);
-  --panel-bg: rgba(16, 32, 58, 0.88);
+  --panel-bg: rgba(16, 32, 58, 0.9);
   --panel-border: #24426b;
   --panel-shadow: 0 16px 40px rgba(0, 4, 15, 0.45);
   --accent: #64e8d3;
@@ -69,37 +65,41 @@ HTML_PAGE = r'''<!doctype html>
   --opt-wro-b: #ff7f7f;
   --feedback-bg: #12374e;
   --code-bg: #091525;
+  --code-text: #a7e2ff;
+  --code-border: #1e395b;
 }
 
 :root[data-theme="light"] {
-  --bg-main: #f4f7fb;
-  --bg-gradient: radial-gradient(ellipse at 5% 0%, #e2ecfa 0%, transparent 55%), #f4f7fb;
-  --panel-bg: rgba(255, 255, 255, 0.94);
-  --panel-border: #cbd7e6;
-  --panel-shadow: 0 12px 30px rgba(45, 75, 115, 0.08);
+  --bg-main: #f8fafc;
+  --bg-gradient: radial-gradient(ellipse at 5% 0%, #e2ecfa 0%, transparent 55%), #f8fafc;
+  --panel-bg: rgba(255, 255, 255, 0.96);
+  --panel-border: #cbd5e1;
+  --panel-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
   --accent: #0f766e;
   --accent-alt: #0284c7;
   --accent-btn-text: #ffffff;
-  --text-main: #132438;
-  --text-muted: #4e6580;
-  --chip-bg: #e6eef8;
-  --chip-border: #b8cde3;
-  --opt-bg: #f9fbfe;
-  --opt-border: #c8d8ec;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --chip-bg: #f1f5f9;
+  --chip-border: #cbd5e1;
+  --opt-bg: #ffffff;
+  --opt-border: #cbd5e1;
   --opt-hover: #0f766e;
   --opt-sel: #e0f2fe;
-  --opt-cor: #e6f9f0;
+  --opt-cor: #ecfdf5;
   --opt-cor-b: #10b981;
-  --opt-wro: #feebe8;
+  --opt-wro: #fef2f2;
   --opt-wro-b: #ef4444;
-  --feedback-bg: #eaf6fa;
-  --code-bg: #e9eef5;
+  --feedback-bg: #f0fdf4;
+  --code-bg: #f1f5f9;
+  --code-text: #0f172a;
+  --code-border: #cbd5e1;
 }
 
 :root[data-theme="navy"] {
   --bg-main: #0a1329;
   --bg-gradient: radial-gradient(ellipse at 10% 5%, #182a52 0%, transparent 50%), #0a1329;
-  --panel-bg: rgba(17, 30, 61, 0.9);
+  --panel-bg: rgba(17, 30, 61, 0.92);
   --panel-border: #2c4780;
   --panel-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
   --accent: #f59e0b;
@@ -119,12 +119,14 @@ HTML_PAGE = r'''<!doctype html>
   --opt-wro-b: #f87171;
   --feedback-bg: #17375a;
   --code-bg: #0d1936;
+  --code-text: #fed7aa;
+  --code-border: #2a4175;
 }
 
 :root[data-theme="forest"] {
   --bg-main: #071612;
   --bg-gradient: radial-gradient(ellipse at 15% 0%, #13392f 0%, transparent 50%), #071612;
-  --panel-bg: rgba(13, 37, 30, 0.9);
+  --panel-bg: rgba(13, 37, 30, 0.92);
   --panel-border: #215545;
   --panel-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
   --accent: #34d399;
@@ -144,6 +146,8 @@ HTML_PAGE = r'''<!doctype html>
   --opt-wro-b: #f87171;
   --feedback-bg: #144336;
   --code-bg: #091f19;
+  --code-text: #a7f3d0;
+  --code-border: #1a4d3e;
 }
 
 * { box-sizing: border-box; }
@@ -182,7 +186,7 @@ body {
   width: 58px;
   height: 58px;
   flex-shrink: 0;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
 }
 .title-group h1 {
   margin: 0;
@@ -229,14 +233,14 @@ button, select {
   background: linear-gradient(135deg, var(--accent), var(--accent-alt));
   color: var(--accent-btn-text);
   font-weight: 750;
-  padding: 11px 18px;
+  padding: 10px 18px;
   border: 0;
   border-radius: 12px;
   transition: transform 0.15s, opacity 0.15s, box-shadow 0.2s;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
 }
 .btn:hover { transform: translateY(-1px); opacity: 0.94; }
 .btn:active { transform: translateY(0); }
@@ -356,7 +360,7 @@ button, select {
   margin-bottom: 6px;
 }
 .hero-title {
-  font-size: clamp(26px, 3.8vw, 36px);
+  font-size: clamp(24px, 3.6vw, 34px);
   font-weight: 850;
   letter-spacing: -1.2px;
   line-height: 1.15;
@@ -474,7 +478,7 @@ button, select {
 }
 
 .q-stem {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 650;
   line-height: 1.55;
   margin: 18px 0;
@@ -494,30 +498,46 @@ button, select {
   text-align: center;
   font-family: "Cambria Math", "Latin Modern Math", KaTeX_Math, STIX, "Times New Roman", serif;
   font-style: italic;
-  padding: 10px 0;
+  padding: 12px 0;
   font-size: 1.15em;
   color: var(--accent);
 }
+.math-frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.9em;
+  padding: 0 2px;
+}
+.math-frac .num {
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 1px;
+}
+.math-frac .denom {
+  padding-top: 1px;
+}
+
 pre.code-block {
   background: var(--code-bg);
-  border: 1px solid var(--panel-border);
+  border: 1px solid var(--code-border);
+  color: var(--code-text);
   border-radius: 10px;
   padding: 12px 16px;
   overflow-x: auto;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 14px;
   line-height: 1.45;
-  color: #a7e2ff;
   margin: 14px 0;
 }
 code.code-inline {
   background: var(--code-bg);
-  border: 1px solid var(--panel-border);
+  border: 1px solid var(--code-border);
+  color: var(--code-text);
   padding: 2px 6px;
   border-radius: 6px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.9em;
-  color: var(--accent);
 }
 
 /* OPTIONS */
@@ -530,10 +550,10 @@ code.code-inline {
   background: var(--opt-bg);
   border: 1.5px solid var(--opt-border);
   color: var(--text-main);
-  padding: 15px 18px;
+  padding: 14px 18px;
   border-radius: 14px;
   margin: 10px 0;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.45;
   transition: all 0.15s;
 }
@@ -555,16 +575,51 @@ code.code-inline {
   background: var(--opt-wro) !important;
 }
 .opt-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 24px;
   height: 24px;
-  line-height: 24px;
-  text-align: center;
   border-radius: 6px;
   background: var(--chip-bg);
   font-weight: 800;
   font-size: 13px;
   flex-shrink: 0;
+}
+.opt-indicator {
+  font-size: 15px;
+  margin-right: 2px;
+}
+
+/* QUESTION NAVIGATOR GRID (MOCK MODE) */
+.q-nav-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 20px;
+}
+.q-nav-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: var(--opt-bg);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.q-nav-dot.answered {
+  background: var(--chip-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.q-nav-dot.current {
+  outline: 2px solid var(--accent);
+  color: #fff;
 }
 
 .feedback-card {
@@ -594,25 +649,25 @@ code.code-inline {
 
 /* TIMED CLOCK */
 .timer-pill {
-  background: #ff5252;
+  background: #ef4444;
   color: #fff;
   font-weight: 850;
-  font-size: 15px;
-  padding: 6px 14px;
+  font-size: 14px;
+  padding: 5px 12px;
   border-radius: 20px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 0 12px rgba(255, 82, 82, 0.4);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.35);
 }
 
 /* SCORECARD & RESULT */
 .result-banner {
   text-align: center;
-  padding: 30px 10px;
+  padding: 24px 10px;
 }
 .result-score {
-  font-size: 48px;
+  font-size: 44px;
   font-weight: 900;
   letter-spacing: -1.5px;
   margin: 10px 0;
@@ -622,8 +677,8 @@ code.code-inline {
   padding: 8px 24px;
   border-radius: 30px;
   font-weight: 900;
-  font-size: 16px;
-  letter-spacing: 1px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
   margin-bottom: 20px;
 }
 .verdict-stamp.pass {
@@ -635,6 +690,23 @@ code.code-inline {
   background: #ef4444;
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.table-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  text-align: left;
+  font-size: 13px;
+}
+.table-matrix th, .table-matrix td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--panel-border);
+}
+.table-matrix th {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 11px;
 }
 
 .footer-bar {
@@ -658,7 +730,7 @@ code.code-inline {
   .hero-layout, .content-grid { grid-template-columns: 1fr; }
   .stages-grid { grid-template-columns: repeat(2, 1fr); }
   .shell { padding: 16px; }
-  .q-stem { font-size: 18px; }
+  .q-stem { font-size: 17px; }
 }
 @media (max-width: 600px) {
   .stages-grid { grid-template-columns: 1fr; }
@@ -676,8 +748,8 @@ code.code-inline {
       <div class="title-group">
         <h1 id="examTitle">__EXAM_TITLE__</h1>
         <p>
-          <span class="pass-target-tag">🎯 Pass Benchmark: __PASS_BENCHMARK__%</span>
-          <span>⏱ Official: __MOCK_DURATION__ mins</span>
+          <span class="pass-target-tag" id="headerBenchmarkTag">🎯 Pass Benchmark: __PASS_BENCHMARK__%</span>
+          <span id="headerDurationTag">⏱ Duration: __MOCK_DURATION__ mins</span>
           __OFFICIAL_LINK_HTML__
         </p>
       </div>
@@ -691,7 +763,7 @@ code.code-inline {
         <option value="forest">🌲 Forest Green</option>
       </select>
       <!-- Option Shuffle Toggle -->
-      <button id="shuffleToggle" class="btn secondary sm" type="button" title="Randomize choice order to prevent memorizing position">🎲 Shuffle: ON</button>
+      <button id="shuffleToggle" class="btn secondary sm" type="button" title="Randomize choice order">🎲 Shuffle: ON</button>
       <!-- Language Switcher -->
       <button id="langBtn" class="btn secondary sm" type="button">🇨🇳 中文</button>
     </div>
@@ -716,7 +788,7 @@ code.code-inline {
       </p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <button class="btn" id="btnStartPractice">▶ Start Practice</button>
-        <button class="btn secondary" id="btnTimedMock">⏱ Official Mock (__MOCK_DURATION__m)</button>
+        <button class="btn secondary" id="btnTimedMock">⏱ Timed Mock (__MOCK_DURATION__m)</button>
         <button class="btn secondary" id="btnAdaptivePlans">✦ Adaptive Tests</button>
       </div>
     </div>
@@ -799,7 +871,7 @@ code.code-inline {
 <script>
 const BANK = __BANK_JSON__;
 const META = __META_JSON__;
-const STORAGE_KEY = 'exam_forge_v3:' + (META.code || document.title);
+const STORAGE_KEY = 'exam_forge_v4:' + (META.code || document.title);
 
 let state = {
   lang: 'en',
@@ -827,8 +899,10 @@ function saveState() {
 // UI DICTIONARY
 const I18N = {
   en: {
+    heroTitle: 'Master Concepts. Pass with Confidence.',
+    heroDesc: META.description || 'Bilingual adaptive practice with verified reasoning and realistic mocks.',
     startPractice: '▶ Start Practice',
-    timedMock: '⏱ Official Mock (' + META.mock_duration_mins + 'm)',
+    timedMock: '⏱ Timed Mock (' + META.mock_duration_mins + 'm)',
     adaptivePlans: '✦ Adaptive Tests',
     bankSize: 'Bank Size',
     answered: 'Answered',
@@ -839,11 +913,12 @@ const I18N = {
     mistakeKiller: '🎯 Mistake Killer',
     checkAnswer: 'Check Answer',
     next: 'Next Question →',
+    prev: '← Previous Question',
+    submitExam: 'Submit Exam ✓',
     finish: 'Finish Session',
     explanation: 'Detailed Concept Explanation',
     distractors: 'Why Distractors Fail (错因分析)',
-    selectMulti: 'Select all correct options',
-    multiPrompt: 'Multiple Choice: Select all matching answers and click Check.',
+    selectMulti: 'Multiple Choice: Select all correct options, then click Check Answer.',
     verdictPassed: 'BENCHMARK PASSED 🏆',
     verdictFailed: 'BENCHMARK NOT YET MET ⚠️',
     timeRemaining: 'Remaining',
@@ -858,11 +933,23 @@ const I18N = {
     allTopics: 'All Domains',
     importedOk: 'Learning progress imported successfully.',
     importedBad: 'Invalid progress data file.',
-    noMistakes: 'No saved mistakes! Great job, continue practicing.'
+    noMistakes: 'No saved mistakes! Great job, continue practicing.',
+    passBenchmark: 'Pass Benchmark: ' + META.passing_score + '%',
+    durationTag: 'Duration: ' + META.mock_duration_mins + ' mins',
+    confirmExit: 'An active session is in progress. Are you sure you want to exit and abandon current progress?',
+    confirmSubmitUnfinished: 'You have unfinished questions. Are you sure you want to submit now?',
+    scoreMatrixHeader: 'Performance Breakdown by Domain',
+    reviewHeader: 'Comprehensive Post-Mock Review',
+    yourChoice: 'Your Selection',
+    correctChoice: 'Correct Answer',
+    addToMistakes: 'Add to Mistakes',
+    inMistakes: 'In Mistake Bank'
   },
   zh: {
+    heroTitle: '更高效掌握考点，更从容通过考试。',
+    heroDesc: META.description || '中英双语解析、全真模拟、薄弱点靶向攻坚，数据仅保留于本地。',
     startPractice: '▶ 开始综合练习',
-    timedMock: '⏱ 官方限时模考 (' + META.mock_duration_mins + '分钟)',
+    timedMock: '⏱ 限时全真模考 (' + META.mock_duration_mins + '分钟)',
     adaptivePlans: '✦ 自适应强化套卷',
     bankSize: '题库题量',
     answered: '已答题次',
@@ -873,11 +960,12 @@ const I18N = {
     mistakeKiller: '🎯 错题攻坚清零',
     checkAnswer: '提交并校验',
     next: '下一题 →',
+    prev: '← 上一题',
+    submitExam: '交卷并评估 ✓',
     finish: '完成练习',
     explanation: '核心考点详细解析',
     distractors: '干扰项错因剖析 (Why Wrong)',
-    selectMulti: '多选题（请勾选所有正确项）',
-    multiPrompt: '多选题：请选择所有符合题意的选项，然后点击提交。',
+    selectMulti: '多选题：请选择所有符合题意的选项，然后点击提交。',
     verdictPassed: '考核达标 🏆 (达到合格线)',
     verdictFailed: '尚未达标 ⚠️ (距离及格线仍需加强)',
     timeRemaining: '剩余时间',
@@ -892,12 +980,32 @@ const I18N = {
     allTopics: '全部知识模块',
     importedOk: '学习进度导入成功！',
     importedBad: '导入文件格式不合法。',
-    noMistakes: '当前暂无错题记录！非常棒，请继续保持。'
+    noMistakes: '当前暂无错题记录！非常棒，请继续保持。',
+    passBenchmark: '及格达标线: ' + META.passing_score + '%',
+    durationTag: '考试时长: ' + META.mock_duration_mins + ' 分钟',
+    confirmExit: '当前测试正在进行中，确定要退出并放弃当前作答吗？',
+    confirmSubmitUnfinished: '您还有尚未作答的题目，确定现在交卷吗？',
+    scoreMatrixHeader: '各知识模块能力得分清单',
+    reviewHeader: '考后全卷复盘与错因精讲',
+    yourChoice: '您的作答',
+    correctChoice: '正确答案',
+    addToMistakes: '加入错题本',
+    inMistakes: '已在错题本'
   }
 };
 
 const t = (k) => (I18N[state.lang] && I18N[state.lang][k]) || k;
 const $ = (id) => document.getElementById(id);
+
+// True Fisher-Yates shuffle
+function shuffle(array) {
+  const a = [...array];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 /* ================= LATEX & CODE FORMATTER ================= */
 function renderRichText(text) {
@@ -915,13 +1023,21 @@ function renderRichText(text) {
   // Inline code
   escaped = escaped.replace(/`([^`]+)`/g, '<code class="code-inline">$1</code>');
 
-  // Block math $$...$$
-  escaped = escaped.replace(/\$\$([\s\S]+?)\$\$/g, function(m, formula) {
-    return '<div class="math-block">' + formatMathString(formula) + '</div>';
+  // Block math: \[ ... \] or $$ ... $$
+  escaped = escaped.replace(/(?:\\\[([\s\S]+?)\\\]|\$\$([\s\S]+?)\$\$)/g, function(m, p1, p2) {
+    return '<div class="math-block">' + formatMathString(p1 || p2) + '</div>';
   });
 
-  // Inline math $...$
-  escaped = escaped.replace(/\$([^\$\n]+?)\$/g, function(m, formula) {
+  // Protect escaped dollar signs: \$ -> &#36;
+  escaped = escaped.replace(/\\\$/g, '&#36;');
+
+  // Inline LaTeX \( ... \)
+  escaped = escaped.replace(/\\\(([\s\S]+?)\\\)/g, function(m, formula) {
+    return '<span class="math-inline">' + formatMathString(formula) + '</span>';
+  });
+
+  // Inline $...$ math: opening $ must not be followed by digit or whitespace
+  escaped = escaped.replace(/\$([^\$\s\d][^\$\n]*?)\$/g, function(m, formula) {
     return '<span class="math-inline">' + formatMathString(formula) + '</span>';
   });
 
@@ -932,7 +1048,7 @@ function renderRichText(text) {
 
 function formatMathString(f) {
   return f
-    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)')
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="math-frac"><span class="num">$1</span><span class="denom">$2</span></span>')
     .replace(/\\sqrt\{([^}]+)\}/g, '√($1)')
     .replace(/\\Delta/g, 'Δ')
     .replace(/\\alpha/g, 'α')
@@ -945,8 +1061,8 @@ function formatMathString(f) {
     .replace(/\\ge/g, '≥')
     .replace(/\\neq/g, '≠')
     .replace(/\\in/g, '∈')
-    .replace(/\^([0-9a-zA-Z]+)/g, '<sup>$1</sup>')
-    .replace(/_([0-9a-zA-Z]+)/g, '<sub>$1</sub>');
+    .replace(/\^\{?([0-9a-zA-Z+\-]+)\}?/g, '<sup>$1</sup>')
+    .replace(/_\{?([0-9a-zA-Z+\-]+)\}?/g, '<sub>$1</sub>');
 }
 
 /* ================= ADAPTIVE MASTERY ALGORITHM ================= */
@@ -973,40 +1089,61 @@ function computeQuestionWeight(q) {
   w += (1.0 - topStat.smoothed) * 3.0;
   if (rec.length > 0) {
     const lastResult = rec[rec.length - 1];
-    w += (lastResult === false ? 2.5 : 0.2);
+    w += (lastResult === false ? 3.0 : 0.2);
   } else {
-    w += 1.8;
+    w += 2.0;
   }
   if (q.difficulty === 3) w *= 1.2;
   return w;
 }
 
-function getWeightedSample(pool, n) {
-  const ranked = pool.map(q => ({
-    q: q,
-    weight: computeQuestionWeight(q) * (0.7 + Math.random() * 0.6)
-  })).sort((a, b) => b.weight - a.weight);
+function getStratifiedSample(pool, n) {
+  const byTopic = {};
+  getUniqueTopics().forEach(tp => { byTopic[tp] = []; });
+  pool.forEach(q => { if (byTopic[q.topic]) byTopic[q.topic].push(q); });
 
-  const seen = new Set();
   const picked = [];
-  for (const item of ranked) {
-    if (picked.length >= n) break;
-    if (!seen.has(item.q.id)) {
-      picked.push(item.q);
-      seen.add(item.q.id);
+  const topics = Object.keys(byTopic);
+  let idx = 0;
+  while (picked.length < n && picked.length < pool.length) {
+    const tp = topics[idx % topics.length];
+    if (byTopic[tp] && byTopic[tp].length > 0) {
+      picked.push(byTopic[tp].shift());
     }
+    idx++;
   }
-  return picked;
+  return shuffle(picked);
+}
+
+function getAdaptiveSample(pool, n) {
+  const mistakes = pool.filter(q => state.mistakes.includes(q.id));
+  const unattempted = pool.filter(q => !(state.records[q.id] && state.records[q.id].length));
+  const others = pool.filter(q => !state.mistakes.includes(q.id) && (state.records[q.id] && state.records[q.id].length));
+
+  const countMistakes = Math.min(mistakes.length, Math.ceil(n * 0.6));
+  const countUnattempted = Math.min(unattempted.length, Math.ceil(n * 0.25));
+  const remaining = n - countMistakes - countUnattempted;
+
+  const picked = [
+    ...shuffle(mistakes).slice(0, countMistakes),
+    ...shuffle(unattempted).slice(0, countUnattempted),
+    ...shuffle(others).slice(0, remaining)
+  ];
+
+  if (picked.length < n) {
+    const remainingPool = pool.filter(q => !picked.some(x => x.id === q.id));
+    picked.push(...shuffle(remainingPool).slice(0, n - picked.length));
+  }
+  return shuffle(picked);
 }
 
 /* ================= SESSION RUNTIME ================= */
 let activeSession = null;
 let currentQuestionIndex = 0;
-let userSelection = null;
-let isQuestionChecked = false;
 let sessionStartTime = 0;
 let timerInterval = null;
-let generatedPlans = [];
+let userAnswers = {}; // { question_index: selected_choice_index_or_array }
+let questionOptionPermutations = {}; // cached randomized choice indices per question instance
 
 function startSession(questions, isTimed, modeName) {
   if (!questions || !questions.length) {
@@ -1020,20 +1157,30 @@ function startSession(questions, isTimed, modeName) {
     isTimed: isTimed,
     modeName: modeName || 'Practice',
     total: questions.length,
-    correctCount: 0,
-    answersLog: []
+    isSubmitted: false
   };
   currentQuestionIndex = 0;
+  userAnswers = {};
+  questionOptionPermutations = {};
   sessionStartTime = Date.now();
 
+  // Pre-generate choice permutations
+  questions.forEach((q, idx) => {
+    const rawLen = (state.lang === 'zh' ? q.choices_zh : q.choices_en).length;
+    let indices = Array.from({ length: rawLen }, (_, i) => i);
+    if (state.shuffleChoices && q.type !== 'boolean') {
+      indices = shuffle(indices);
+    }
+    questionOptionPermutations[idx] = indices;
+  });
+
   if (isTimed) {
-    const mockMins = META.mock_duration_mins || 70;
-    const mockTotal = META.mock_questions_count || 100;
-    const totalSeconds = Math.ceil(mockMins * 60 * (questions.length / mockTotal));
-    const duration = Math.max(60, totalSeconds);
+    const mockMins = META.mock_duration_mins || 60;
+    const mockTotal = META.mock_questions_count || questions.length;
+    const totalSeconds = Math.max(60, Math.ceil(mockMins * 60 * (questions.length / Math.max(1, mockTotal))));
     timerInterval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
-      const remaining = Math.max(0, duration - elapsed);
+      const remaining = Math.max(0, totalSeconds - elapsed);
       const clock = $('activeClock');
       if (clock) {
         const m = Math.floor(remaining / 60);
@@ -1042,24 +1189,27 @@ function startSession(questions, isTimed, modeName) {
       }
       if (remaining === 0) {
         clearInterval(timerInterval);
-        finishSession();
+        finishTimedMock();
       }
     }, 1000);
   }
 
-  renderCurrentQuestion();
+  renderQuestionView();
 }
 
-function renderCurrentQuestion() {
+function renderQuestionView() {
   const work = $('workArea');
   work.innerHTML = '';
   if (!activeSession) return;
 
   const q = activeSession.questions[currentQuestionIndex];
   const qType = q.type || 'single';
-  userSelection = qType === 'multiple' ? [] : null;
-  isQuestionChecked = false;
+  const isTimed = activeSession.isTimed;
 
+  // Auto smooth scroll to work area
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Header row
   const header = document.createElement('div');
   header.className = 'q-header';
   
@@ -1068,7 +1218,7 @@ function renderCurrentQuestion() {
   progressText.textContent = (currentQuestionIndex + 1) + ' / ' + activeSession.total + ' · ' + activeSession.modeName;
   header.appendChild(progressText);
 
-  if (activeSession.isTimed) {
+  if (isTimed) {
     const clockBadge = document.createElement('div');
     clockBadge.className = 'timer-pill';
     clockBadge.innerHTML = '⏱ <span id="activeClock">--:--</span>';
@@ -1076,22 +1226,42 @@ function renderCurrentQuestion() {
   }
   work.appendChild(header);
 
+  // Progress bar
   const barWrap = document.createElement('div');
   barWrap.className = 'progress-bar-wrap';
   const barFill = document.createElement('div');
   barFill.className = 'progress-fill';
-  barFill.style.width = ((currentQuestionIndex / activeSession.total) * 100) + '%';
+  barFill.style.width = (((currentQuestionIndex + 1) / activeSession.total) * 100) + '%';
   barWrap.appendChild(barFill);
   work.appendChild(barWrap);
 
+  // Mock Question Navigation Grid
+  if (isTimed) {
+    const navGrid = document.createElement('div');
+    navGrid.className = 'q-nav-grid';
+    activeSession.questions.forEach((_, idx) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'q-nav-dot' + (idx === currentQuestionIndex ? ' current' : '') + (userAnswers[idx] !== undefined ? ' answered' : '');
+      dot.textContent = idx + 1;
+      dot.onclick = () => {
+        currentQuestionIndex = idx;
+        renderQuestionView();
+      };
+      navGrid.appendChild(dot);
+    });
+    work.appendChild(navGrid);
+  }
+
+  // Chips
   const chips = document.createElement('div');
   chips.className = 'chips-row';
   chips.innerHTML = '<span class="chip">' + q.topic + '</span>' +
     '<span class="chip">' + '★'.repeat(q.difficulty) + ' Level ' + q.difficulty + '</span>' +
-    '<span class="chip qtype">' + qType.toUpperCase() + '</span>' +
-    (q.concept_id ? '<span class="chip">ID: ' + q.concept_id + '</span>' : '');
+    '<span class="chip qtype">' + (qType === 'multiple' ? 'MULTIPLE CHOICE' : (qType === 'boolean' ? 'TRUE / FALSE' : 'SINGLE CHOICE')) + '</span>';
   work.appendChild(chips);
 
+  // Question Stem
   const stem = document.createElement('div');
   stem.className = 'q-stem';
   const stemText = state.lang === 'zh' ? q.zh : q.en;
@@ -1103,18 +1273,21 @@ function renderCurrentQuestion() {
     tip.style.fontSize = '12px';
     tip.style.color = 'var(--accent)';
     tip.style.margin = '-8px 0 14px';
-    tip.textContent = t('multiPrompt');
+    tip.textContent = t('selectMulti');
     work.appendChild(tip);
   }
 
-  let rawChoices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
-  let optionIndices = rawChoices.map((_, i) => i);
-  if (state.shuffleChoices && qType !== 'boolean') {
-    optionIndices.sort(() => Math.random() - 0.5);
-  }
+  // Choices Handling
+  const rawChoices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+  const optionIndices = questionOptionPermutations[currentQuestionIndex] || rawChoices.map((_, i) => i);
 
   const choicesContainer = document.createElement('div');
   const optionButtons = [];
+
+  let currentSelected = userAnswers[currentQuestionIndex];
+  if (qType === 'multiple' && !Array.isArray(currentSelected)) {
+    currentSelected = [];
+  }
 
   optionIndices.forEach((origIdx, displayIdx) => {
     const btn = document.createElement('button');
@@ -1123,22 +1296,46 @@ function renderCurrentQuestion() {
     const letter = String.fromCharCode(65 + displayIdx);
     const choiceText = rawChoices[origIdx];
 
-    btn.innerHTML = '<span class="opt-tag">' + letter + '</span> <div style="flex:1;">' + renderRichText(choiceText) + '</div>';
+    const isSelected = (qType === 'multiple')
+      ? (Array.isArray(currentSelected) && currentSelected.includes(origIdx))
+      : (currentSelected === origIdx);
+
+    if (isSelected) btn.classList.add('selected');
+
+    const indicator = (qType === 'multiple')
+      ? (isSelected ? '☑' : '☐')
+      : (isSelected ? '◉' : '○');
+
+    btn.innerHTML = '<span class="opt-tag">' + letter + '</span>' +
+      '<span class="opt-indicator">' + indicator + '</span>' +
+      '<div style="flex:1;">' + renderRichText(choiceText) + '</div>';
 
     btn.onclick = () => {
-      if (isQuestionChecked) return;
+      if (!isTimed && activeSession.isChecked) return;
+
       if (qType === 'single' || qType === 'boolean') {
-        userSelection = origIdx;
-        optionButtons.forEach(b => b.btn.classList.remove('selected'));
+        userAnswers[currentQuestionIndex] = origIdx;
+        currentSelected = origIdx;
+        optionButtons.forEach(b => {
+          b.btn.classList.remove('selected');
+          b.btn.querySelector('.opt-indicator').textContent = '○';
+        });
         btn.classList.add('selected');
+        btn.querySelector('.opt-indicator').textContent = '◉';
       } else if (qType === 'multiple') {
-        const pos = userSelection.indexOf(origIdx);
+        if (!Array.isArray(userAnswers[currentQuestionIndex])) {
+          userAnswers[currentQuestionIndex] = [];
+        }
+        const arr = userAnswers[currentQuestionIndex];
+        const pos = arr.indexOf(origIdx);
         if (pos > -1) {
-          userSelection.splice(pos, 1);
+          arr.splice(pos, 1);
           btn.classList.remove('selected');
+          btn.querySelector('.opt-indicator').textContent = '☐';
         } else {
-          userSelection.push(origIdx);
+          arr.push(origIdx);
           btn.classList.add('selected');
+          btn.querySelector('.opt-indicator').textContent = '☑';
         }
       }
     };
@@ -1148,58 +1345,101 @@ function renderCurrentQuestion() {
   });
   work.appendChild(choicesContainer);
 
+  // Footer Actions
   const actionsRow = document.createElement('div');
-  actionsRow.style.marginTop = '20px';
+  actionsRow.style.marginTop = '24px';
   actionsRow.style.display = 'flex';
   actionsRow.style.gap = '10px';
+  actionsRow.style.flexWrap = 'wrap';
 
-  const submitBtn = document.createElement('button');
-  submitBtn.className = 'btn';
-  submitBtn.textContent = t('checkAnswer');
-
-  submitBtn.onclick = () => {
-    if (qType === 'single' || qType === 'boolean') {
-      if (userSelection === null) return;
-    } else if (qType === 'multiple') {
-      if (!userSelection || userSelection.length === 0) return;
+  if (isTimed) {
+    // Timed Mock Controls: Prev, Next, Submit
+    if (currentQuestionIndex > 0) {
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'btn secondary';
+      prevBtn.textContent = t('prev');
+      prevBtn.onclick = () => {
+        currentQuestionIndex--;
+        renderQuestionView();
+      };
+      actionsRow.appendChild(prevBtn);
     }
 
-    isQuestionChecked = true;
-    submitBtn.remove();
-
-    let isCorrect = false;
-    if (qType === 'single' || qType === 'boolean') {
-      isCorrect = (userSelection === q.answer);
-    } else if (qType === 'multiple') {
-      const targetSet = new Set(q.answer);
-      const userSet = new Set(userSelection);
-      isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+    if (currentQuestionIndex < activeSession.total - 1) {
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'btn';
+      nextBtn.textContent = t('next');
+      nextBtn.onclick = () => {
+        currentQuestionIndex++;
+        renderQuestionView();
+      };
+      actionsRow.appendChild(nextBtn);
     }
 
-    if (isCorrect) activeSession.correctCount++;
-    activeSession.answersLog.push({ id: q.id, correct: isCorrect });
-
-    state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
-    if (!isCorrect && !state.mistakes.includes(q.id)) {
-      state.mistakes.push(q.id);
-    } else if (isCorrect && state.mistakes.includes(q.id)) {
-      state.mistakes = state.mistakes.filter(x => x !== q.id);
-    }
-    saveState();
-
-    optionButtons.forEach(item => {
-      item.btn.disabled = true;
-      const isAns = (qType === 'multiple') ? q.answer.includes(item.origIdx) : (item.origIdx === q.answer);
-      const isChosen = (qType === 'multiple') ? userSelection.includes(item.origIdx) : (item.origIdx === userSelection);
-
-      if (isAns) {
-        item.btn.classList.add('correct');
-      } else if (isChosen && !isAns) {
-        item.btn.classList.add('wrong');
+    const submitExamBtn = document.createElement('button');
+    submitExamBtn.className = 'btn secondary';
+    submitExamBtn.textContent = t('submitExam');
+    submitExamBtn.onclick = () => {
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount < activeSession.total) {
+        if (!confirm(t('confirmSubmitUnfinished'))) return;
       }
-    });
+      finishTimedMock();
+    };
+    actionsRow.appendChild(submitExamBtn);
 
-    if (!activeSession.isTimed) {
+  } else {
+    // Practice Mode Controls: Check Answer -> Next
+    activeSession.isChecked = false;
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'btn';
+    checkBtn.textContent = t('checkAnswer');
+
+    checkBtn.onclick = () => {
+      const selected = userAnswers[currentQuestionIndex];
+      if (selected === undefined || (qType === 'multiple' && (!selected || selected.length === 0))) {
+        alert(t('selectMulti'));
+        return;
+      }
+
+      activeSession.isChecked = true;
+      checkBtn.remove();
+
+      // Check correctness
+      let isCorrect = false;
+      if (qType === 'single' || qType === 'boolean') {
+        isCorrect = (selected === q.answer);
+      } else if (qType === 'multiple') {
+        const targetSet = new Set(q.answer);
+        const userSet = new Set(selected);
+        isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+      }
+
+      // Record result
+      state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
+      if (!isCorrect && !state.mistakes.includes(q.id)) {
+        state.mistakes.push(q.id);
+      } else if (isCorrect && state.mistakes.includes(q.id)) {
+        state.mistakes = state.mistakes.filter(x => x !== q.id);
+      }
+      saveState();
+
+      // Colorize options with accessible icons
+      optionButtons.forEach(item => {
+        item.btn.disabled = true;
+        const isAns = (qType === 'multiple') ? q.answer.includes(item.origIdx) : (item.origIdx === q.answer);
+        const isChosen = (qType === 'multiple') ? (selected && selected.includes(item.origIdx)) : (item.origIdx === selected);
+
+        if (isAns) {
+          item.btn.classList.add('correct');
+          item.btn.querySelector('.opt-indicator').textContent = '✓';
+        } else if (isChosen && !isAns) {
+          item.btn.classList.add('wrong');
+          item.btn.querySelector('.opt-indicator').textContent = '✗';
+        }
+      });
+
+      // Show Feedback
       const feedback = document.createElement('div');
       feedback.className = 'feedback-card';
       const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
@@ -1227,29 +1467,32 @@ function renderCurrentQuestion() {
         });
       }
       work.appendChild(feedback);
-    }
 
-    const isLast = (currentQuestionIndex === activeSession.total - 1);
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'btn';
-    nextBtn.textContent = isLast ? t('finish') : t('next');
-    nextBtn.onclick = () => {
-      currentQuestionIndex++;
-      if (currentQuestionIndex >= activeSession.total) {
-        finishSession();
-      } else {
-        renderCurrentQuestion();
-      }
+      // Next / Finish button
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'btn';
+      const isLast = (currentQuestionIndex === activeSession.total - 1);
+      nextBtn.textContent = isLast ? t('finish') : t('next');
+      nextBtn.onclick = () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= activeSession.total) {
+          finishPracticeSession();
+        } else {
+          renderQuestionView();
+        }
+      };
+      actionsRow.appendChild(nextBtn);
+      renderDashboardStats();
     };
-    actionsRow.appendChild(nextBtn);
-    renderDashboardStats();
-  };
 
-  actionsRow.appendChild(submitBtn);
+    actionsRow.appendChild(checkBtn);
+  }
+
   work.appendChild(actionsRow);
 }
 
-function finishSession() {
+// Complete Timed Mock Examination
+function finishTimedMock() {
   if (timerInterval) clearInterval(timerInterval);
   timerInterval = null;
 
@@ -1259,44 +1502,125 @@ function finishSession() {
 
   const work = $('workArea');
   work.innerHTML = '';
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const accuracyPct = Math.round((s.correctCount / s.total) * 100);
+  let correctCount = 0;
+  const topicStats = {};
+  const questionLogs = [];
+
+  s.questions.forEach((q, idx) => {
+    const qType = q.type || 'single';
+    const chosen = userAnswers[idx];
+    let isCorrect = false;
+
+    if (chosen !== undefined) {
+      if (qType === 'single' || qType === 'boolean') {
+        isCorrect = (chosen === q.answer);
+      } else if (qType === 'multiple') {
+        const targetSet = new Set(q.answer);
+        const userSet = new Set(chosen);
+        isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+      }
+    }
+
+    if (isCorrect) correctCount++;
+
+    // Update records & mistakes
+    state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
+    if (!isCorrect && !state.mistakes.includes(q.id)) {
+      state.mistakes.push(q.id);
+    } else if (isCorrect && state.mistakes.includes(q.id)) {
+      state.mistakes = state.mistakes.filter(x => x !== q.id);
+    }
+
+    // Topic aggregation
+    if (!topicStats[q.topic]) topicStats[q.topic] = { total: 0, correct: 0 };
+    topicStats[q.topic].total++;
+    if (isCorrect) topicStats[q.topic].correct++;
+
+    questionLogs.push({ q: q, chosen: chosen, isCorrect: isCorrect, origPerm: questionOptionPermutations[idx] });
+  });
+
+  saveState();
+
+  const accuracyPct = Math.round((correctCount / s.total) * 100);
   const isPassed = accuracyPct >= (META.passing_score || 75);
 
   const banner = document.createElement('div');
   banner.className = 'result-banner';
-  banner.innerHTML = '<div class="panel-eyebrow">' + s.modeName.toUpperCase() + ' RESULTS</div>' +
-    '<div class="result-score">' + s.correctCount + ' / ' + s.total + ' (' + accuracyPct + '%)</div>' +
+  banner.innerHTML = '<div class="panel-eyebrow">' + s.modeName.toUpperCase() + ' SCORECARD</div>' +
+    '<div class="result-score">' + correctCount + ' / ' + s.total + ' (' + accuracyPct + '%)</div>' +
     '<div class="verdict-stamp ' + (isPassed ? 'pass' : 'fail') + '">' +
       (isPassed ? t('verdictPassed') : t('verdictFailed')) +
-    '</div>' +
-    '<p style="color:var(--text-muted);max-width:540px;margin:0 auto 24px;">' +
-      (isPassed
-        ? (state.lang === 'zh' ? '恭喜达到官方达标线！可进入阶段五进行高阶自适应冲刺。' : 'Outstanding work! You met the benchmark. Proceed to Stage 5 adaptive drills.')
-        : (state.lang === 'zh' ? '目前得分暂未达到及格线（' + META.passing_score + '%）。建议通过阶段二专题精练或阶段三错题攻坚补强。' : 'Score is below benchmark (' + META.passing_score + '%). Target weak areas in Stage 2 or 3.')) +
-    '</p>';
+    '</div>';
 
-  if (s.isTimed) {
-    const missed = s.answersLog.filter(a => !a.correct);
-    if (missed.length) {
-      const missedHeader = document.createElement('h3');
-      missedHeader.style.marginTop = '24px';
-      missedHeader.textContent = state.lang === 'zh' ? '考后错题复盘与深度解析' : 'Missed Questions Review';
-      banner.appendChild(missedHeader);
+  // Topic Matrix Table
+  const tableHeader = document.createElement('h3');
+  tableHeader.style.marginTop = '20px';
+  tableHeader.textContent = t('scoreMatrixHeader');
+  banner.appendChild(tableHeader);
 
-      missed.forEach(m => {
-        const q = BANK.find(x => x.id === m.id);
-        if (q) {
-          const itemDiv = document.createElement('div');
-          itemDiv.className = 'feedback-card';
-          itemDiv.style.textAlign = 'left';
-          itemDiv.innerHTML = '<strong>' + q.topic + ' [' + q.id + ']</strong>: ' + renderRichText(state.lang === 'zh' ? q.zh : q.en) +
-            '<p style="margin:8px 0 0;color:var(--text-muted);">' + renderRichText(state.lang === 'zh' ? q.explanation_zh : q.explanation_en) + '</p>';
-          banner.appendChild(itemDiv);
-        }
-      });
-    }
-  }
+  const table = document.createElement('table');
+  table.className = 'table-matrix';
+  table.innerHTML = '<thead><tr><th>Domain</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody>' +
+    Object.keys(topicStats).map(tp => {
+      const st = topicStats[tp];
+      const rate = Math.round((st.correct / st.total) * 100);
+      return '<tr><td>' + tp + '</td><td>' + st.correct + ' / ' + st.total + '</td><td>' + rate + '%</td></tr>';
+    }).join('') + '</tbody>';
+  banner.appendChild(table);
+
+  // Full Question Review
+  const revHeader = document.createElement('h3');
+  revHeader.style.marginTop = '28px';
+  revHeader.textContent = t('reviewHeader');
+  banner.appendChild(revHeader);
+
+  questionLogs.forEach((item, idx) => {
+    const q = item.q;
+    const card = document.createElement('div');
+    card.className = 'feedback-card';
+    card.style.textAlign = 'left';
+
+    const stemText = state.lang === 'zh' ? q.zh : q.en;
+    const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
+    const choices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+
+    card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+      '<strong>#' + (idx + 1) + ' [' + q.topic + ']</strong>' +
+      '<span class="chip ' + (item.isCorrect ? 'correct' : 'wrong') + '">' + (item.isCorrect ? '✓ Correct' : '✗ Incorrect') + '</span>' +
+      '</div>' +
+      '<p style="margin:8px 0;font-weight:600;">' + renderRichText(stemText) + '</p>' +
+      '<div style="font-size:13px;color:var(--text-muted);">' +
+      '<p><strong>' + t('explanation') + ':</strong> ' + renderRichText(expText) + '</p>' +
+      '</div>';
+
+    banner.appendChild(card);
+  });
+
+  const backBtn = document.createElement('button');
+  backBtn.className = 'btn';
+  backBtn.style.marginTop = '24px';
+  backBtn.textContent = t('backHome');
+  backBtn.onclick = () => { renderWelcomeState(); };
+  banner.appendChild(backBtn);
+
+  work.appendChild(banner);
+  renderDashboardStats();
+}
+
+function finishPracticeSession() {
+  const s = activeSession;
+  activeSession = null;
+  const work = $('workArea');
+  work.innerHTML = '';
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const banner = document.createElement('div');
+  banner.className = 'result-banner';
+  banner.innerHTML = '<div class="panel-eyebrow">PRACTICE COMPLETED</div>' +
+    '<h2>Session Finished</h2>' +
+    '<p style="color:var(--text-muted);">Learning records and mistake bank updated on this device.</p>';
 
   const backBtn = document.createElement('button');
   backBtn.className = 'btn';
@@ -1321,6 +1645,7 @@ function renderRoadmap() {
       '<div class="stage-name">' + name + '</div>' +
       '<div class="stage-desc">' + desc + '</div>';
     card.onclick = () => {
+      if (activeSession && !confirm(t('confirmExit'))) return;
       state.currentStage = stg.id;
       document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('active'));
       card.classList.add('active');
@@ -1331,24 +1656,27 @@ function renderRoadmap() {
 }
 
 function triggerStageAction(stageId) {
+  if (activeSession && !confirm(t('confirmExit'))) return;
+
   if (stageId === 'diagnostic') {
-    const sample = getWeightedSample(BANK, Math.min(20, BANK.length));
+    const sample = getStratifiedSample(BANK, Math.min(20, BANK.length));
     startSession(sample, false, 'Diagnostic Baseline');
   } else if (stageId === 'drilling') {
     const top = $('selTopic').value;
     const pool = top === 'all' ? BANK : BANK.filter(q => q.topic === top);
-    startSession(pool.slice(0, 20), false, 'Topic Drilling');
+    const size = Number($('selSize').value) || 20;
+    startSession(shuffle(pool).slice(0, size), false, 'Topic Drilling');
   } else if (stageId === 'mistakes') {
     const pool = BANK.filter(q => state.mistakes.includes(q.id));
     if (!pool.length) {
       alert(t('noMistakes'));
       return;
     }
-    startSession(pool, false, 'Mistake Elimination');
+    startSession(shuffle(pool), false, 'Mistake Elimination');
   } else if (stageId === 'mock') {
-    const count = META.mock_questions_count || 100;
-    const pool = [...BANK].sort(() => Math.random() - 0.5).slice(0, count);
-    startSession(pool, true, 'Official Timed Mock');
+    const count = META.mock_questions_count || 20;
+    const pool = shuffle(BANK).slice(0, count);
+    startSession(pool, true, 'Timed Simulation Mock');
   } else if (stageId === 'sprint') {
     renderAdaptivePlansHub();
   }
@@ -1357,10 +1685,11 @@ function triggerStageAction(stageId) {
 function renderAdaptivePlansHub() {
   const work = $('workArea');
   work.innerHTML = '';
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const n = 6;
+  const n = 5;
   const size = Number($('selSize').value) || 20;
-  generatedPlans = Array.from({ length: n }, () => getWeightedSample(BANK, size));
+  const plans = Array.from({ length: n }, () => getAdaptiveSample(BANK, size));
 
   const eyebrow = document.createElement('div');
   eyebrow.className = 'panel-eyebrow';
@@ -1379,7 +1708,7 @@ function renderAdaptivePlansHub() {
     : 'Engine-balanced ratio: 60% historically weak domains, 25% unattempted items, 15% retention review.';
   work.appendChild(desc);
 
-  generatedPlans.forEach((plan, i) => {
+  plans.forEach((plan, i) => {
     const row = document.createElement('div');
     row.className = 'topic-item';
     row.style.margin = '10px 0';
@@ -1415,9 +1744,10 @@ function renderDashboardStats() {
     item.className = 'topic-item';
     item.innerHTML = '<span>' + tp + '</span><span class="topic-rate">' + (stat.rawRate !== null ? stat.rawRate + '%' : '—') + '</span>';
     item.onclick = () => {
+      if (activeSession && !confirm(t('confirmExit'))) return;
       $('selTopic').value = tp;
       const pool = BANK.filter(q => q.topic === tp);
-      startSession(pool.slice(0, Number($('selSize').value)), false, 'Topic: ' + tp);
+      startSession(shuffle(pool).slice(0, Number($('selSize').value)), false, 'Topic: ' + tp);
     };
     list.appendChild(item);
   });
@@ -1444,15 +1774,61 @@ function renderWelcomeState() {
     '</p>';
 }
 
+function updateUILanguage() {
+  document.documentElement.lang = state.lang;
+  $('langBtn').textContent = state.lang === 'en' ? '🇨🇳 中文' : '🇬🇧 English';
+  $('lblHeroTitle').textContent = t('heroTitle');
+  $('lblHeroDesc').textContent = t('heroDesc');
+  $('btnStartPractice').textContent = t('startPractice');
+  $('btnTimedMock').textContent = t('timedMock');
+  $('btnAdaptivePlans').textContent = t('adaptivePlans');
+  $('lblRoadmapTitle').textContent = t('roadmapTitle');
+  $('lblRoadmapGoal').textContent = t('roadmapGoal');
+  $('headerBenchmarkTag').textContent = '🎯 ' + t('passBenchmark');
+  $('headerDurationTag').textContent = '⏱ ' + t('durationTag');
+  $('lblStatBank').textContent = t('bankSize');
+  $('lblStatAttempts').textContent = t('answered');
+  $('lblStatAccuracy').textContent = t('accuracy');
+  $('lblPrivacyNote').textContent = t('privacy');
+  $('btnExport').textContent = t('export');
+  $('btnImport').textContent = t('import');
+  $('btnReviewMistakes').innerHTML = '🎯 ' + (state.lang === 'zh' ? '错题攻坚清零' : 'Mistake Killer') + ' (<span id="mistakeBadge">' + state.mistakes.length + '</span>)';
+  $('lblTopicsHeader').textContent = state.lang === 'zh' ? '考纲知识模块' : 'Syllabus Domains';
+  $('lblFilterTopic').textContent = state.lang === 'zh' ? '模块筛选' : 'Topic Filter';
+  $('lblBatchSize').textContent = state.lang === 'zh' ? '单次练习题量' : 'Session Size';
+}
+
+/* ================= KEYBOARD SHORTCUTS ================= */
+document.addEventListener('keydown', (e) => {
+  if (!activeSession) return;
+  if (['input', 'textarea', 'select'].includes(document.activeElement.tagName.toLowerCase())) return;
+
+  const key = e.key.toUpperCase();
+  let optIndex = -1;
+  if (['A', 'B', 'C', 'D'].includes(key)) {
+    optIndex = key.charCodeAt(0) - 65;
+  } else if (['1', '2', '3', '4'].includes(key)) {
+    optIndex = parseInt(key, 10) - 1;
+  }
+
+  const optionBtns = document.querySelectorAll('#workArea .opt-btn');
+  if (optIndex >= 0 && optIndex < optionBtns.length) {
+    optionBtns[optIndex].click();
+  } else if (e.key === 'Enter') {
+    const primaryBtn = document.querySelector('#workArea .actionsRow .btn, #workArea button.btn');
+    if (primaryBtn) primaryBtn.click();
+  }
+});
+
 /* ================= GLOBAL CONTROLS & BINDINGS ================= */
 $('langBtn').onclick = () => {
   state.lang = state.lang === 'en' ? 'zh' : 'en';
-  $('langBtn').textContent = state.lang === 'en' ? '🇨🇳 中文' : '🇬🇧 English';
   saveState();
+  updateUILanguage();
   renderRoadmap();
   renderDashboardStats();
   if (activeSession) {
-    renderCurrentQuestion();
+    renderQuestionView();
   } else {
     renderWelcomeState();
   }
@@ -1499,6 +1875,7 @@ $('fileInput').onchange = async (e) => {
     if (!data.records || typeof data.records !== 'object') throw new Error();
     state = Object.assign({}, state, data);
     saveState();
+    updateUILanguage();
     renderDashboardStats();
     renderWelcomeState();
     alert(t('importedOk'));
@@ -1508,6 +1885,7 @@ $('fileInput').onchange = async (e) => {
 };
 
 // Initial Render
+updateUILanguage();
 renderRoadmap();
 renderDashboardStats();
 renderWelcomeState();
@@ -1535,8 +1913,8 @@ def main():
     exam_desc = prof.get('description') or 'Bilingual adaptive practice with verified reasoning and realistic mocks.'
     official_url = args.url or prof.get('official_url') or ''
     passing_score = args.pass_score if args.pass_score is not None else prof.get('passing_score_pct', 75)
-    mock_duration_mins = args.mins if args.mins is not None else prof.get('exam_duration_mins', 70)
-    mock_questions_count = prof.get('mock_questions_count', 100)
+    mock_duration_mins = args.mins if args.mins is not None else prof.get('exam_duration_mins', 60)
+    mock_questions_count = prof.get('mock_questions_count', 20)
     logo_mono = prof.get('logo_monogram') or exam_code
     default_theme = prof.get('theme_default', 'cyber')
     
@@ -1544,7 +1922,7 @@ def main():
         {"id": "diagnostic", "name_en": "Stage 1: Diagnostic Baseline", "name_zh": "阶段一：摸底诊断", "desc_en": "Establish topic baseline with sampled questions.", "desc_zh": "抽样摸底，测试初始知识短板。"},
         {"id": "drilling", "name_en": "Stage 2: Topic Drilling", "name_zh": "阶段二：专题精练", "desc_en": "Deep-dive into specific weak topics.", "desc_zh": "逐模块靶向练习并剖析错因。"},
         {"id": "mistakes", "name_en": "Stage 3: Mistake Elimination", "name_zh": "阶段三：错题清零", "desc_en": "Eliminate recurring pitfalls with Bayesian smoothing.", "desc_zh": "错题本贝叶斯加权攻坚直至清零。"},
-        {"id": "mock", "name_en": "Stage 4: Real-world Timed Mock", "name_zh": "阶段四：全真模考", "desc_en": f"Official {mock_duration_mins}-min timed simulation ({passing_score}% pass benchmark).", "desc_zh": f"限时{mock_duration_mins}分钟仿真模考（{passing_score}%及格线）。"},
+        {"id": "mock", "name_en": "Stage 4: Real-world Timed Mock", "name_zh": "阶段四：全真模考", "desc_en": f"Strict {mock_duration_mins}-min timed simulation ({passing_score}% pass benchmark).", "desc_zh": f"限时{mock_duration_mins}分钟仿真模考（{passing_score}%及格线）。"},
         {"id": "sprint", "name_en": "Stage 5: Final Adaptive Sprint", "name_zh": "阶段五：冲刺达标", "desc_en": "5-10 tailored adaptive test sets for mastery.", "desc_zh": "5-10套自适应个性化测试，冲刺达标。"}
     ])
 
@@ -1564,7 +1942,7 @@ def main():
         "stages": stages
     }, ensure_ascii=False).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
 
-    official_link_html = f'<a href="{html.escape(official_url)}" target="_blank" rel="noopener" class="badge-link">🔗 Official Syllabus & Rules</a>' if official_url else ''
+    official_link_html = f'<a href="{html.escape(official_url)}" target="_blank" rel="noopener" class="badge-link">🔗 Syllabus & Rules</a>' if official_url else ''
 
     content = HTML_PAGE
     content = content.replace('__DEFAULT_THEME__', default_theme)

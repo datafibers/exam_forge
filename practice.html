@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ontario DECA EIP Regional Online Exam — Adaptive Mastery</title>
+<title>Innovation &amp; Quantitative Competency Practice — Adaptive Practice Engine</title>
 <style>
 /* ================= THEME DEFINITIONS ================= */
 :root[data-theme="cyber"] {
   --bg-main: #07101e;
   --bg-gradient: radial-gradient(ellipse at 8% 0%, #17325c 0%, transparent 50%), radial-gradient(ellipse at 92% 100%, #0e2942 0%, #07101e 60%);
-  --panel-bg: rgba(16, 32, 58, 0.88);
+  --panel-bg: rgba(16, 32, 58, 0.9);
   --panel-border: #24426b;
   --panel-shadow: 0 16px 40px rgba(0, 4, 15, 0.45);
   --accent: #64e8d3;
@@ -29,37 +29,41 @@
   --opt-wro-b: #ff7f7f;
   --feedback-bg: #12374e;
   --code-bg: #091525;
+  --code-text: #a7e2ff;
+  --code-border: #1e395b;
 }
 
 :root[data-theme="light"] {
-  --bg-main: #f4f7fb;
-  --bg-gradient: radial-gradient(ellipse at 5% 0%, #e2ecfa 0%, transparent 55%), #f4f7fb;
-  --panel-bg: rgba(255, 255, 255, 0.94);
-  --panel-border: #cbd7e6;
-  --panel-shadow: 0 12px 30px rgba(45, 75, 115, 0.08);
+  --bg-main: #f8fafc;
+  --bg-gradient: radial-gradient(ellipse at 5% 0%, #e2ecfa 0%, transparent 55%), #f8fafc;
+  --panel-bg: rgba(255, 255, 255, 0.96);
+  --panel-border: #cbd5e1;
+  --panel-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
   --accent: #0f766e;
   --accent-alt: #0284c7;
   --accent-btn-text: #ffffff;
-  --text-main: #132438;
-  --text-muted: #4e6580;
-  --chip-bg: #e6eef8;
-  --chip-border: #b8cde3;
-  --opt-bg: #f9fbfe;
-  --opt-border: #c8d8ec;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --chip-bg: #f1f5f9;
+  --chip-border: #cbd5e1;
+  --opt-bg: #ffffff;
+  --opt-border: #cbd5e1;
   --opt-hover: #0f766e;
   --opt-sel: #e0f2fe;
-  --opt-cor: #e6f9f0;
+  --opt-cor: #ecfdf5;
   --opt-cor-b: #10b981;
-  --opt-wro: #feebe8;
+  --opt-wro: #fef2f2;
   --opt-wro-b: #ef4444;
-  --feedback-bg: #eaf6fa;
-  --code-bg: #e9eef5;
+  --feedback-bg: #f0fdf4;
+  --code-bg: #f1f5f9;
+  --code-text: #0f172a;
+  --code-border: #cbd5e1;
 }
 
 :root[data-theme="navy"] {
   --bg-main: #0a1329;
   --bg-gradient: radial-gradient(ellipse at 10% 5%, #182a52 0%, transparent 50%), #0a1329;
-  --panel-bg: rgba(17, 30, 61, 0.9);
+  --panel-bg: rgba(17, 30, 61, 0.92);
   --panel-border: #2c4780;
   --panel-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
   --accent: #f59e0b;
@@ -79,12 +83,14 @@
   --opt-wro-b: #f87171;
   --feedback-bg: #17375a;
   --code-bg: #0d1936;
+  --code-text: #fed7aa;
+  --code-border: #2a4175;
 }
 
 :root[data-theme="forest"] {
   --bg-main: #071612;
   --bg-gradient: radial-gradient(ellipse at 15% 0%, #13392f 0%, transparent 50%), #071612;
-  --panel-bg: rgba(13, 37, 30, 0.9);
+  --panel-bg: rgba(13, 37, 30, 0.92);
   --panel-border: #215545;
   --panel-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
   --accent: #34d399;
@@ -104,6 +110,8 @@
   --opt-wro-b: #f87171;
   --feedback-bg: #144336;
   --code-bg: #091f19;
+  --code-text: #a7f3d0;
+  --code-border: #1a4d3e;
 }
 
 * { box-sizing: border-box; }
@@ -142,7 +150,7 @@ body {
   width: 58px;
   height: 58px;
   flex-shrink: 0;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
 }
 .title-group h1 {
   margin: 0;
@@ -189,14 +197,14 @@ button, select {
   background: linear-gradient(135deg, var(--accent), var(--accent-alt));
   color: var(--accent-btn-text);
   font-weight: 750;
-  padding: 11px 18px;
+  padding: 10px 18px;
   border: 0;
   border-radius: 12px;
   transition: transform 0.15s, opacity 0.15s, box-shadow 0.2s;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
 }
 .btn:hover { transform: translateY(-1px); opacity: 0.94; }
 .btn:active { transform: translateY(0); }
@@ -316,7 +324,7 @@ button, select {
   margin-bottom: 6px;
 }
 .hero-title {
-  font-size: clamp(26px, 3.8vw, 36px);
+  font-size: clamp(24px, 3.6vw, 34px);
   font-weight: 850;
   letter-spacing: -1.2px;
   line-height: 1.15;
@@ -434,7 +442,7 @@ button, select {
 }
 
 .q-stem {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 650;
   line-height: 1.55;
   margin: 18px 0;
@@ -454,30 +462,46 @@ button, select {
   text-align: center;
   font-family: "Cambria Math", "Latin Modern Math", KaTeX_Math, STIX, "Times New Roman", serif;
   font-style: italic;
-  padding: 10px 0;
+  padding: 12px 0;
   font-size: 1.15em;
   color: var(--accent);
 }
+.math-frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.9em;
+  padding: 0 2px;
+}
+.math-frac .num {
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 1px;
+}
+.math-frac .denom {
+  padding-top: 1px;
+}
+
 pre.code-block {
   background: var(--code-bg);
-  border: 1px solid var(--panel-border);
+  border: 1px solid var(--code-border);
+  color: var(--code-text);
   border-radius: 10px;
   padding: 12px 16px;
   overflow-x: auto;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 14px;
   line-height: 1.45;
-  color: #a7e2ff;
   margin: 14px 0;
 }
 code.code-inline {
   background: var(--code-bg);
-  border: 1px solid var(--panel-border);
+  border: 1px solid var(--code-border);
+  color: var(--code-text);
   padding: 2px 6px;
   border-radius: 6px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.9em;
-  color: var(--accent);
 }
 
 /* OPTIONS */
@@ -490,10 +514,10 @@ code.code-inline {
   background: var(--opt-bg);
   border: 1.5px solid var(--opt-border);
   color: var(--text-main);
-  padding: 15px 18px;
+  padding: 14px 18px;
   border-radius: 14px;
   margin: 10px 0;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.45;
   transition: all 0.15s;
 }
@@ -515,16 +539,51 @@ code.code-inline {
   background: var(--opt-wro) !important;
 }
 .opt-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 24px;
   height: 24px;
-  line-height: 24px;
-  text-align: center;
   border-radius: 6px;
   background: var(--chip-bg);
   font-weight: 800;
   font-size: 13px;
   flex-shrink: 0;
+}
+.opt-indicator {
+  font-size: 15px;
+  margin-right: 2px;
+}
+
+/* QUESTION NAVIGATOR GRID (MOCK MODE) */
+.q-nav-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 20px;
+}
+.q-nav-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: var(--opt-bg);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.q-nav-dot.answered {
+  background: var(--chip-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.q-nav-dot.current {
+  outline: 2px solid var(--accent);
+  color: #fff;
 }
 
 .feedback-card {
@@ -554,25 +613,25 @@ code.code-inline {
 
 /* TIMED CLOCK */
 .timer-pill {
-  background: #ff5252;
+  background: #ef4444;
   color: #fff;
   font-weight: 850;
-  font-size: 15px;
-  padding: 6px 14px;
+  font-size: 14px;
+  padding: 5px 12px;
   border-radius: 20px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 0 12px rgba(255, 82, 82, 0.4);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.35);
 }
 
 /* SCORECARD & RESULT */
 .result-banner {
   text-align: center;
-  padding: 30px 10px;
+  padding: 24px 10px;
 }
 .result-score {
-  font-size: 48px;
+  font-size: 44px;
   font-weight: 900;
   letter-spacing: -1.5px;
   margin: 10px 0;
@@ -582,8 +641,8 @@ code.code-inline {
   padding: 8px 24px;
   border-radius: 30px;
   font-weight: 900;
-  font-size: 16px;
-  letter-spacing: 1px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
   margin-bottom: 20px;
 }
 .verdict-stamp.pass {
@@ -595,6 +654,23 @@ code.code-inline {
   background: #ef4444;
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.table-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  text-align: left;
+  font-size: 13px;
+}
+.table-matrix th, .table-matrix td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--panel-border);
+}
+.table-matrix th {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 11px;
 }
 
 .footer-bar {
@@ -618,7 +694,7 @@ code.code-inline {
   .hero-layout, .content-grid { grid-template-columns: 1fr; }
   .stages-grid { grid-template-columns: repeat(2, 1fr); }
   .shell { padding: 16px; }
-  .q-stem { font-size: 18px; }
+  .q-stem { font-size: 17px; }
 }
 @media (max-width: 600px) {
   .stages-grid { grid-template-columns: 1fr; }
@@ -635,28 +711,24 @@ code.code-inline {
       <svg class="exam-crest" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="crestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#63ded0" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#4db4eb" stop-opacity="0.6"/>
+      <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="var(--accent-alt)" stop-opacity="0.6"/>
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="glow"/>
-      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
-    </filter>
   </defs>
-  <circle cx="50" cy="50" r="46" fill="#0d1b33" stroke="url(#crestGrad)" stroke-width="3" filter="url(#glow)"/>
-  <circle cx="50" cy="50" r="40" fill="none" stroke="#63ded0" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
-  <polygon points="50,14 80,34 80,68 50,86 20,68 20,34" fill="none" stroke="#63ded0" stroke-width="1.5" opacity="0.4"/>
-  <path d="M 30,38 Q 50,28 70,38" fill="none" stroke="#63ded0" stroke-width="2" stroke-linecap="round"/>
-  <path d="M 30,62 Q 50,72 70,62" fill="none" stroke="#63ded0" stroke-width="2" stroke-linecap="round"/>
-  <text x="50" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="20" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" letter-spacing="-0.5">DECA</text>
-  <polygon points="50,22 53,28 59,28 54,32 56,38 50,34 44,38 46,32 41,28 47,28" fill="#63ded0"/>
+  <circle cx="50" cy="50" r="46" fill="var(--panel-bg)" stroke="url(#crestGrad)" stroke-width="2.5"/>
+  <circle cx="50" cy="50" r="40" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+  <polygon points="50,14 80,34 80,68 50,86 20,68 20,34" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.4"/>
+  <path d="M 30,38 Q 50,28 70,38" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 30,62 Q 50,72 70,62" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+  <text x="50" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="19" text-anchor="middle" dominant-baseline="middle" fill="var(--text-main)" letter-spacing="-0.5">IQCP</text>
+  <polygon points="50,22 53,28 59,28 54,32 56,38 50,34 44,38 46,32 41,28 47,28" fill="var(--accent)"/>
 </svg>
       <div class="title-group">
-        <h1 id="examTitle">Ontario DECA EIP Regional Online Exam</h1>
+        <h1 id="examTitle">Innovation &amp; Quantitative Competency Practice</h1>
         <p>
-          <span class="pass-target-tag">🎯 Pass Benchmark: 75%</span>
-          <span>⏱ Official: 70 mins</span>
-          <a href="https://www.deca.ca/competitive-events" target="_blank" rel="noopener" class="badge-link">🔗 Official Syllabus & Rules</a>
+          <span class="pass-target-tag" id="headerBenchmarkTag">🎯 Pass Benchmark: 75%</span>
+          <span id="headerDurationTag">⏱ Duration: 60 mins</span>
+          <a href="https://example.org/exam-blueprint" target="_blank" rel="noopener" class="badge-link">🔗 Syllabus & Rules</a>
         </p>
       </div>
     </div>
@@ -669,7 +741,7 @@ code.code-inline {
         <option value="forest">🌲 Forest Green</option>
       </select>
       <!-- Option Shuffle Toggle -->
-      <button id="shuffleToggle" class="btn secondary sm" type="button" title="Randomize choice order to prevent memorizing position">🎲 Shuffle: ON</button>
+      <button id="shuffleToggle" class="btn secondary sm" type="button" title="Randomize choice order">🎲 Shuffle: ON</button>
       <!-- Language Switcher -->
       <button id="langBtn" class="btn secondary sm" type="button">🇨🇳 中文</button>
     </div>
@@ -690,11 +762,11 @@ code.code-inline {
       <div class="panel-eyebrow" id="lblHeroEyebrow">Autonomous Adaptive Engine</div>
       <h2 class="hero-title" id="lblHeroTitle">Master Concepts. Pass with Confidence.</h2>
       <p id="lblHeroDesc" style="color:var(--text-muted);margin:0 0 20px;">
-        Ontario DECA Entrepreneurship Innovation Plan (EIP) Regional Qualifying Online Multiple Choice Exam. Rigorous assessment covering Financial Analysis, Marketing Strategy, Unit Economics, and Venture Operations.
+        Adaptive practice system evaluating quantitative financial modeling, product validation, unit economics, data ethics, and algorithmic operational logic.
       </p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <button class="btn" id="btnStartPractice">▶ Start Practice</button>
-        <button class="btn secondary" id="btnTimedMock">⏱ Official Mock (70m)</button>
+        <button class="btn secondary" id="btnTimedMock">⏱ Timed Mock (60m)</button>
         <button class="btn secondary" id="btnAdaptivePlans">✦ Adaptive Tests</button>
       </div>
     </div>
@@ -775,9 +847,9 @@ code.code-inline {
 
 <!-- SCRIPT LOGIC -->
 <script>
-const BANK = [{"id": "DECA-EIP-001", "concept_id": "break-even-calc", "topic": "Financial Analysis", "type": "single", "difficulty": 2, "en": "A student startup manufactures ergonomic laptop stands selling for $35 each. Variable manufacturing cost is $15 per unit, and annual fixed overhead equals $14,000. What is the startup's annual break-even point in units? (Formula: $Q = \\frac{FC}{P - VC}$)", "zh": "一家学生初创公司生产人体工学笔记本电脑支架，每件售价 35 美元。单位变动成本为 15 美元，年固定间接费用为 14,000 美元。该公司的年盈亏平衡销售量是多少件？（公式：$Q = \\frac{FC}{P - VC}$）", "choices_en": ["400 units", "700 units", "933 units", "1,000 units"], "choices_zh": ["400 件", "700 件", "933 件", "1,000 件"], "answer": 1, "explanation_en": "Unit contribution margin = $P - VC = \\$35 - \\$15 = \\$20$. Break-even quantity = $\\frac{\\$14,000}{\\$20} = 700$ units. At 700 units, gross contribution exactly covers $14,000 in fixed expenses.", "explanation_zh": "单位边际贡献 = $P - VC = 35 - 15 = 20$ 美元。盈亏平衡销量 = $\\frac{14,000}{20} = 700$ 件。销售 700 件时，边际贡献总额刚好覆盖 14,000 美元的固定开支。", "why_wrong_en": ["400 units generates only $8,000 contribution, leaving $6,000 of fixed overhead unpaid.", "Correct: 700 units × $20 unit contribution = $14,000, exactly reaching operating break-even.", "933 units results from dividing fixed costs by the variable cost ($14,000 / $15), which is incorrect.", "1,000 units divides fixed costs by a hypothetical $14 margin, overestimating required sales volume."], "why_wrong_zh": ["400 件仅能创造 8,000 美元边际贡献，仍有 6,000 美元的固定成本无法弥补。", "正确：700 件 × 20 美元单位边际贡献 = 14,000 美元，恰好打平营业成本。", "933 件是用固定成本除以单位变动成本（14,000 / 15）导致的错误运算。", "1,000 件使用了错误的 14 美元毛利进行计算，虚增了实际保本需求量。"]}, {"id": "DECA-EIP-002", "concept_id": "customer-discovery-interviews", "topic": "Marketing Strategy", "type": "single", "difficulty": 2, "en": "During the customer discovery phase of an Innovation Plan, which interview technique best minimizes cognitive confirmation bias when validating target market demand?", "zh": "在制定创新商业计划的客户探索阶段，哪种访谈技巧最能有效减少确认偏差（Confirmation Bias），以验证目标市场的真实需求？", "choices_en": ["Asking participants whether they would pay $10 monthly for the proposed app concept", "Pitching the unique product features and observing how enthusiastically respondents nod", "Asking respondents to describe their past behavior and actual spending to solve the problem in the last 6 months", "Surveying close classmates and family members to estimate total provincial market willingness-to-buy"], "choices_zh": ["询问受访者是否愿意每月支付 10 美元购买该拟定应用", "主动推销产品的核心优势功能，并观察受访者点头反馈的积极程度", "要求受访者具体描述过去 6 个月内为解决该痛点所采取的实际行为及真实花费", "问卷调查身边的同学和亲友，以估算整个省份市场的购买意愿"], "answer": 2, "explanation_en": "Grounding discovery in past actual behavior and realized expenditures (the 'Mom Test' principle) uncovers objective willingness-to-pay and acute friction points, eliminating hypothetical social politeness.", "explanation_zh": "基于受访者过去真实的行动与实际支出记录进行访谈（即“妈妈测试”原则），能最客观地揭示真实的付费意愿与痛点紧迫度，彻底避免受访者因礼貌而产生的虚假肯定偏差。", "why_wrong_en": ["Hypothetical future questions invite polite affirmation without committed financial risk.", "Pitching first biases the respondent and measures reaction to a pitch rather than genuine problem severity.", "Correct: Past actual behaviors and verifiable expenditures are the most predictive evidence of demand.", "Convenience sampling among friends and family suffers from extreme selection and confirmation biases."], "why_wrong_zh": ["假想性未来提问容易诱导出于礼貌的口头肯定，无法代表未来真实的付费决策风险。", "先入为主地推销功能会产生强烈的引导性偏差，衡量的是听众的礼貌反应而非真实痛点。", "正确：考察过去真实的替代解决行为与已发生的花费，是预测实际需求的最可靠证据。", "亲友等便利样本存在严重的幸存者偏差与关系偏好，无法推论全省整体市场。"]}, {"id": "DECA-EIP-003", "concept_id": "unit-economics-ltv-cac", "topic": "Financial Analysis", "type": "single", "difficulty": 3, "en": "A B2B SaaS startup incurs a Customer Acquisition Cost ($CAC$) of $450. The average customer pays $75 monthly, generates an 80% gross contribution margin, and has an average customer lifetime of 15 months. What is the startup's $LTV / CAC$ ratio and payback period?", "zh": "一家面向企业的 B2B SaaS 初创公司获客成本（$CAC$）为 450 美元。平均每位客户每月支付 75 美元，公司毛利率为 80%，平均客户生命周期为 15 个月。该公司的 $LTV / CAC$ 比率及投资回收期（Payback Period）分别是多少？", "choices_en": ["LTV/CAC = 2.0x; Payback = 6.0 months", "LTV/CAC = 2.0x; Payback = 7.5 months", "LTV/CAC = 2.5x; Payback = 6.0 months", "LTV/CAC = 2.5x; Payback = 7.5 months"], "choices_zh": ["LTV/CAC = 2.0x；投资回收期 = 6.0 个月", "LTV/CAC = 2.0x；投资回收期 = 7.5 个月", "LTV/CAC = 2.5x；投资回收期 = 6.0 个月", "LTV/CAC = 2.5x；投资回收期 = 7.5 个月"], "answer": 0, "explanation_en": "Monthly gross contribution = $\\$75 \\times 80\\% = \\$60$. Customer Lifetime Value ($LTV$) = $\\$60 \\times 15 = \\$900$. Ratio $LTV / CAC = \\frac{\\$900}{\\$450} = 2.0x$. Payback period = $\\frac{\\$450}{\\$60} = 7.5$ months... Wait: $\\$450 / \\$60 = 7.5$ months! Therefore, LTV/CAC = 2.0x and Payback = 7.5 months.", "explanation_zh": "月度边际毛利 = $75 \\times 80\\% = 60$ 美元。客户终身价值 $LTV = 60 \\times 15 = 900$ 美元。比率 $LTV / CAC = \\frac{900}{450} = 2.0x$。获客回收期 = $\\frac{450}{60} = 7.5$ 个月。因此答案为 2.0x 与 7.5 个月。", "why_wrong_en": ["6.0 months calculates payback using the unadjusted $75 revenue ($450 / $75 = 6) instead of gross margin.", "Correct: LTV = $60 × 15 = $900; LTV/CAC = $900 / $450 = 2.0x; Payback = $450 / $60 = 7.5 months.", "2.5x mistakenly computes LTV using raw revenue ($75 × 15 = $1,125 / $450 = 2.5) without gross margin.", "2.5x ignores the 80% contribution margin in LTV while computing payback correctly."], "why_wrong_zh": ["6.0 个月是直接用未经毛利调整的 75 美元营收（450 / 75 = 6）计算出的错误回收期。", "正确：LTV = 60 × 15 = 900 美元；LTV/CAC = 900 / 450 = 2.0x；回收期 = 450 / 60 = 7.5 个月。", "2.5x 是直接用原始未经毛利折算的营收（75 × 15 = 1,125 / 450 = 2.5）导致的虚高比率。", "2.5x 在计算 LTV 时遗漏了 80% 边际贡献率。"]}, {"id": "DECA-EIP-004", "concept_id": "tam-sam-som-market-sizing", "topic": "Marketing Strategy", "type": "single", "difficulty": 2, "en": "In a DECA EIP presentation, how should an entrepreneur define the Serviceable Obtainable Market (SOM)?", "zh": "在 DECA EIP 创新计划陈述中，创业者应如何准确界定可服务且可获取的市场（SOM, Serviceable Obtainable Market）？", "choices_en": ["The total worldwide demand for all products within the overarching industry category", "The portion of the market that fits the company's geographical and demographic scope within the next 10 years", "The realistic market share and revenue the venture can capture within years 1–3 given current channel constraints and marketing budget", "The sum total of all competitor revenues reported on public financial disclosures"], "choices_zh": ["整个宏观行业类别在全世界范围内的总需求体量", "未来 10 年内符合企业地理和人群画像覆盖范围的那部分市场", "在当前渠道能力与营销预算约束下，企业在第 1 至 3 年内切实能够获取的市场份额与营收规模", "所有主要竞争对手在公开财务报告中披露的营收总和"], "answer": 2, "explanation_en": "SOM represents the realistic target slice of SAM that the venture can realistically capture in the short term (typically 1–3 years) considering practical marketing capital, distribution bottlenecks, and operational capacity.", "explanation_zh": "SOM（可获得服务市场）指在考虑初创团队当前的资本、分销渠道限制与运营产能下，企业在短期（通常为 1-3 年）内切实能够渗透并占领的现实市场规模。", "why_wrong_en": ["Total global demand describes the Total Addressable Market (TAM), not SOM.", "The theoretical demographic scope over a long decade describes the Serviceable Addressable Market (SAM).", "Correct: SOM reflects the realistic near-term target capture governed by operational capacity and budget.", "Competitor revenues do not define an individual startup's reachable target share."], "why_wrong_zh": ["全球宏观总需求对应的是潜在市场总量（TAM），而非 SOM。", "未来长期的潜在受众与地理总容量对应的是可服务市场（SAM）。", "正确：SOM 代表在实际运营产能、分销资源与预算约束下，近 1-3 年切实可夺取的市场份额。", "竞争对手的历史营收总和并不能直接代表新创企业的有效可捕获份额。"]}, {"id": "DECA-EIP-005", "concept_id": "saas-net-burn-runway", "topic": "Financial Analysis", "type": "single", "difficulty": 2, "en": "A student venture holds $180,000 in cash. It generates $12,000 monthly in revenue and incurs $27,000 in monthly operating cash outflows. What is the venture's monthly Net Burn Rate and cash runway?", "zh": "一家学生初创企业拥有现金储备 180,000 美元。公司每月产生营收 12,000 美元，每月现金经营开支为 27,000 美元。该公司的月净烧钱率（Net Burn Rate）与现金跑道（Cash Runway）分别是多少？", "choices_en": ["Net burn = $15,000/month; Runway = 12 months", "Net burn = $27,000/month; Runway = 6.6 months", "Net burn = $15,000/month; Runway = 15 months", "Net burn = $39,000/month; Runway = 4.6 months"], "choices_zh": ["净烧钱率 = 15,000 美元/月；现金跑道 = 12 个月", "净烧钱率 = 27,000 美元/月；现金跑道 = 6.6 个月", "净烧钱率 = 15,000 美元/月；现金跑道 = 15 个月", "净烧钱率 = 39,000 美元/月；现金跑道 = 4.6 个月"], "answer": 0, "explanation_en": "Net Burn Rate = Cash Outflows − Cash Inflows = $\\$27,000 - \\$12,000 = \\$15,000$ per month. Cash Runway = $\\frac{\\text{Current Cash}}{\\text{Monthly Net Burn}} = \\frac{\\$180,000}{\\$15,000} = 12$ months.", "explanation_zh": "月净烧钱率 = 月度现金流出 − 月度现金流入 = $27,000 - 12,000 = 15,000$ 美元/月。现金跑道 = $\\frac{\\text{现金储备}}{\\text{月净烧钱率}} = \\frac{180,000}{15,000} = 12$ 个月。", "why_wrong_en": ["Correct: Net burn is $15,000/mo, providing exactly 12 months of runway ($180k / $15k).", "$27,000 is Gross Burn Rate, which ignores incoming revenue ($12,000).", "15 months miscalculates the division ($180k / $12k) using revenue rather than net cash drain.", "$39,000 adds outflows and revenue together, which is financially meaningless."], "why_wrong_zh": ["正确：月净烧钱率为 15,000 美元，对应现金跑道为 12 个月（180,000 / 15,000）。", "27,000 美元是总烧钱率（Gross Burn Rate），忽略了每月进账的 12,000 美元营收。", "15 个月是用现金除以收入（180,000 / 12,000）导致的错误推算。", "39,000 美元将支出与收入相加，属于概念性算术错误。"]}, {"id": "DECA-EIP-006", "concept_id": "business-entity-selection", "topic": "Business Law \u0026 Ethics", "type": "single", "difficulty": 2, "en": "Three high school founders wish to register an e-commerce venture in Ontario. They desire limited liability protection for personal assets while avoiding double corporate taxation at the early stage. Which legal structure is best aligned?", "zh": "三位高中创业者计划在安大略省注册一家电商企业。他们希望个人资产享有有限责任保护（Limited Liability），同时在早期避免繁重的公司双重课税。哪种法律实体结构最为匹配？", "choices_en": ["General Partnership", "Sole Proprietorship", "Incorporated Corporation (Ontario or Federal CBCA)", "Unincorporated Non-Profit Association"], "choices_zh": ["普通合伙企业（General Partnership）", "个体独资企业（Sole Proprietorship）", "股份制有限公司（Incorporation, 省级或联邦 CBCA 注册）", "非法人非营利协会（Unincorporated Non-Profit）"], "answer": 2, "explanation_en": "Incorporating creates a distinct legal entity separate from the owners, shielding personal assets with limited liability. In Canada, small business corporations also benefit from the Small Business Deduction (SBD) to avoid punitive taxation, whereas partnerships leave partners personally liable.", "explanation_zh": "注册股份制有限公司（Corporation）能够确立完全独立于股东的法人资格，有效保护个人财产免受公司债务追偿（有限责任）。此外，加拿大针对小型私营企业设有优惠税率（SBD），而普通合伙与独资企业无法隔离无限连带责任。", "why_wrong_en": ["General partners have unlimited joint and several liability for all business debts and partner actions.", "Sole proprietorship does not protect personal assets and cannot accommodate multiple co-founders.", "Correct: Incorporation provides limited liability shielding while enabling equity allocation among co-founders.", "Non-profits cannot distribute dividends or equity appreciation to founders."], "why_wrong_zh": ["普通合伙人对企业债务承担无限连带追偿责任，无法保护个人私人资产。", "个体独资企业无法隔离个人财产，且无法接纳多位联合创始人共同持股。", "正确：有限公司能够提供坚固的有限责任防火墙，且支持创始人之间灵活划分股权。", "非营利组织禁止向创始人分配商业利润或股权增值回报。"]}, {"id": "DECA-EIP-007", "concept_id": "intellectual-property-types", "topic": "Business Law \u0026 Ethics", "type": "single", "difficulty": 2, "en": "An innovative startup develops a proprietary machine learning recommendation algorithm, a recognizable brand logo, and unique user interface layout. How should these assets be legally protected respectively?", "zh": "一家创新初创公司研发了一套专属机器学习推荐算法，设计了极具辨识度的品牌 LOGO，并打造了独特的用户交互界面。这些资产应分别通过哪种知识产权方式予以保护？", "choices_en": ["Logo = Patent; Algorithm = Trademark; UI = Trade Secret", "Algorithm = Trade Secret / Patent; Logo = Trademark; UI Layout \u0026 Code = Copyright", "Algorithm = Trademark; Logo = Copyright; UI = Industrial Design Patent only", "All three must be registered collectively as a single utility patent"], "choices_zh": ["LOGO = 专利；算法 = 商标；UI 界面 = 商业秘密", "算法 = 商业秘密/方法专利；LOGO = 商标（Trademark）；UI 排版与代码 = 著作权（Copyright）", "算法 = 商标；LOGO = 著作权；UI = 仅能申请外观设计专利", "三者必须作为单一实用发明专利进行整体合并申请"], "answer": 1, "explanation_en": "Branding symbols/logos are protected via Trademarks; underlying code and literary visual expressions are automatically covered by Copyright; backend proprietary algorithms are best safeguarded as Trade Secrets (or qualified patentable processes).", "explanation_zh": "品牌名称与图形标识通过商标（Trademark）保护；底层软件代码及原创界面排版享有著作权（Copyright）保护；而核心后端算法在实践中通常作为商业秘密（Trade Secret）或申请发明专利保护。", "why_wrong_en": ["Patents protect functional inventions, not graphic logos or visual brand marks.", "Correct: Algorithm as trade secret/patent, logo as registered trademark, code/UI as copyright.", "Trademarks do not cover software algorithms or mathematical processes.", "Intellectual property categories are governed by separate legal frameworks and cannot be merged."], "why_wrong_zh": ["发明专利保护的是技术方案与功能发明，不能用于注册图形商标或品牌标志。", "正确：算法依商业秘密/专利保护，品牌 LOGO 申请商标，源代码与排版享著作权。", "商标保护商业商誉与识别标记，不能保护算法或数学模型。", "知识产权各部门法体系相互独立，无法将异质资产打包合并为单项专利。"]}, {"id": "DECA-EIP-008", "concept_id": "price-elasticity-demand", "topic": "Economics", "type": "single", "difficulty": 3, "en": "A student startup raises its subscription price from $20 to $24 (+20%). Consequently, paid subscribers drop from 1,000 to 900 (−10%). What is the Price Elasticity of Demand ($E_d$), and how does this price hike impact Total Revenue?", "zh": "一家初创公司将其订阅费从 20 美元提高到 24 美元（涨价 20%）。随后付费订阅用户从 1,000 人下降至 900 人（减少 10%）。该服务的需求价格弹性（$E_d$）是多少？此次涨价对总营收（Total Revenue）产生了什么影响？", "choices_en": ["|Ed| = 0.5 (Inelastic); Total Revenue increases from $20,000 to $21,600", "|Ed| = 2.0 (Elastic); Total Revenue decreases from $20,000 to $18,000", "|Ed| = 0.5 (Inelastic); Total Revenue decreases from $20,000 to $18,000", "|Ed| = 1.0 (Unitary Elastic); Total Revenue remains unchanged at $20,000"], "choices_zh": ["|Ed| = 0.5（缺乏弹性）；总营收从 20,000 美元增加至 21,600 美元", "|Ed| = 2.0（富有弹性）；总营收从 20,000 美元减少至 18,000 美元", "|Ed| = 0.5（缺乏弹性）；总营收从 20,000 美元减少至 18,000 美元", "|Ed| = 1.0（单位弹性）；总营收维持 20,000 美元保持不变"], "answer": 0, "explanation_en": "$|E_d| = \\frac{|\\% \\Delta Q_d|}{\\% \\Delta P} = \\frac{10\\%}{20\\%} = 0.5$. Because demand is price inelastic ($|E_d| \u003c 1$), the percentage increase in price exceeds the percentage drop in quantity demanded. Initial revenue = $1,000 \\times \\$20 = \\$20,000$; New revenue = $900 \\times \\$24 = \\$21,600$. Total revenue increases by $1,600.", "explanation_zh": "$|E_d| = \\frac{|\\% \\Delta Q_d|}{\\% \\Delta P} = \\frac{10\\%}{20\\%} = 0.5$。由于需求缺乏价格弹性（$|E_d| \u003c 1$），提价比例高于销量流失比例。初始总营收 = $1,000 \\times 20 = 20,000$ 美元；新总营收 = $900 \\times 24 = 21,600$ 美元。总营收净增长 1,600 美元。", "why_wrong_en": ["Correct: |Ed| = 0.5 and total revenue rises by $1,600 due to inelastic pricing power.", "2.0 inverts numerator and denominator (% change in P over % change in Q).", "Inelastic goods increase total revenue when price increases, not decrease.", "Demand is non-unitary because the quantity change (-10%) is half the price change (+20%)."], "why_wrong_zh": ["正确：|Ed| = 0.5，且在缺乏弹性区间提价使总收入净增 1,600 美元。", "2.0 颠倒了弹性计算公式的分子与分母（错把价格变动率除以销量变动率）。", "在缺乏弹性（Inelastic）区间提高单价，总营收必然增加而非减少。", "需求并非单位弹性，因为销量降幅（10%）明显小于价格增幅（20%）。"]}, {"id": "DECA-EIP-009", "concept_id": "minimum-viable-product-scope", "topic": "Entrepreneurship", "type": "single", "difficulty": 2, "en": "In lean entrepreneurship methodology, what is the defining characteristic of a 'Wizard of Oz' Minimum Viable Product (MVP)?", "zh": "在精益创业方法论中，“绿野仙踪型”（Wizard of Oz）最小可行性产品（MVP）的本质特征是什么？", "choices_en": ["Releasing a non-functional video animation explaining what the future software would look like", "Presenting a fully automated front-end user interface while human operators manually deliver the backend service behind the scenes", "Building the most advanced algorithms first before creating any user-facing web pages", "Giving away free physical products to the first 100 users in exchange for written reviews"], "choices_zh": ["仅发布一个概念演示动画视频，展示未来软件可能具备的形态", "向用户呈现看似全自动的前端界面，而后台核心服务完全由人工在幕后手动完成交付", "在构建任何前端界面之前，优先投入全部精力完成最高精度的后台自动化算法", "向首批 100 名用户免费赠送实体产品，以换取文字评价"], "answer": 1, "explanation_en": "A Wizard of Oz MVP simulates an automated technology solution by having founders manually process workflows behind the scenes, validating market demand and user experience before writing expensive automated backend code.", "explanation_zh": "“绿野仙踪”（Wizard of Oz）MVP 的核心是在前端给用户营造出系统高度自动化的感知，而后台繁琐的运算和履约完全由创业团队在幕后人工手动处理，以此在投入昂贵的代码开发前低成本验证真实需求。", "why_wrong_en": ["A video animation describing future capabilities is an Explainer Video MVP (e.g., original Dropbox demo).", "Correct: Wizard of Oz mimics automation using hidden manual human intervention behind the scenes.", "Building complex algorithms first violates lean principles by incurring heavy sunk engineering costs.", "Free sampling is a promotional distribution tactic, not a lean MVP validation construct."], "why_wrong_zh": ["解释性概念视频属于“演示视频 MVP”（例如早期 Dropbox 所用的 Explainer Video 验证法）。", "正确：绿野仙踪型 MVP 的核心即“前端看似全自动，幕后全靠人工手动作业验证”。", "未验证需求即耗费大量资金开发复杂后台算法，严重违背精益创业小步快跑的原则。", "免费样品派发属于促销试用手段，不属于测试产品功能假设的 MVP 范式。"]}, {"id": "DECA-EIP-010", "concept_id": "working-capital-liquidity", "topic": "Financial Analysis", "type": "single", "difficulty": 3, "en": "A seasonal retail venture holds Current Assets of $85,000 (including $40,000 in unsold holiday inventory) and Current Liabilities of $30,000. What are the venture's Current Ratio and Quick Ratio (Acid-Test)?", "zh": "一家季节性零售企业拥有流动资产 85,000 美元（其中包括 40,000 美元尚未售出的节日存货），流动负债为 30,000 美元。该公司的流动比率（Current Ratio）与速动比率（Quick Ratio / Acid-Test）分别是多少？", "choices_en": ["Current Ratio = 2.83; Quick Ratio = 1.50", "Current Ratio = 2.83; Quick Ratio = 2.83", "Current Ratio = 1.50; Quick Ratio = 0.75", "Current Ratio = 2.12; Quick Ratio = 1.33"], "choices_zh": ["流动比率 = 2.83；速动比率 = 1.50", "流动比率 = 2.83；速动比率 = 2.83", "流动比率 = 1.50；速动比率 = 0.75", "流动比率 = 2.12；速动比率 = 1.33"], "answer": 0, "explanation_en": "Current Ratio = $\\frac{\\text{Current Assets}}{\\text{Current Liabilities}} = \\frac{\\$85,000}{\\$30,000} = 2.83$. Quick Ratio = $\\frac{\\text{Current Assets} - \\text{Inventory}}{\\text{Current Liabilities}} = \\frac{\\$85,000 - \\$40,000}{\\$30,000} = \\frac{\\$45,000}{\\$30,000} = 1.50$.", "explanation_zh": "流动比率 = $\\frac{\\text{流动资产}}{\\text{流动负债}} = \\frac{85,000}{30,000} = 2.83$。速动比率 = $\\frac{\\text{流动资产} - \\text{存货}}{\\text{流动负债}} = \\frac{85,000 - 40,000}{30,000} = \\frac{45,000}{30,000} = 1.50$。", "why_wrong_en": ["Correct: Current Ratio is 2.83; Quick Ratio deducting non-liquid inventory ($40k) is 1.50.", "Quick Ratio must exclude inventory, which cannot be converted immediately into cash to pay short-term bills.", "1.50 underestimates Current Ratio by deducting inventory from both numerator and denominator.", "2.12 and 1.33 use incorrect base values for current liabilities."], "why_wrong_zh": ["正确：流动比率为 2.83；剔除难变现存货后速动比率为 1.50（45,000 / 30,000）。", "速动比率必须扣除流动性较差的存货，两者数值不应相等。", "1.50 错把速动比率当成了流动比率。", "2.12 与 1.33 采用了错误的负债分母进行除法计算。"]}, {"id": "DECA-EIP-011", "concept_id": "debt-vs-equity-financing", "topic": "Financial Analysis", "type": "multiple", "difficulty": 2, "en": "Which TWO of the following statements represent key strategic advantages of Equity Financing over Debt Financing for an early-stage startup with volatile cash flow?", "zh": "对于现金流波动剧烈的早期初创公司，下列哪两项表述代表了股权融资（Equity Financing）相对于债务融资（Debt Financing）的核心战略优势？", "choices_en": ["Equity financing requires no mandatory recurring interest payments or debt servicing during lean months", "Founders retain 100% unilateral voting control and zero ownership dilution", "Investors absorb downside capital risk without forcing the venture into bankruptcy if the business fails", "Equity capital must be fully repaid with interest within a legally mandated 3-year term"], "choices_zh": ["在现金流低谷期，股权融资不需要承担强制性的定期利息支出或定期还本付息压力", "创始人能够保留 100% 单方面投票控制权且股权完全不被稀释", "如果商业项目不幸失败，股权投资者自行承担本金损失，不会强制企业破产追偿", "根据法律规定，股权资本必须在 3 年内连本带息强制清偿完毕"], "answer": [0, 2], "explanation_en": "Equity financing relieves startups from fixed debt servicing obligations and aligns investor risk with company success. Debt requires strict cash amortization regardless of revenues, which can force an early venture into insolvency.", "explanation_zh": "股权融资无需强制定期偿付利息和本金，且投资人与企业共担下行破产风险；而债务融资具有强制性的固定现金还本付息义务，在营收未起量时极易压垮现金流。", "why_wrong_en": ["Correct: Equity eliminates fixed interest payments that drain fragile working capital.", "Incorrect: Equity explicitly dilutes founder ownership and introduces investor governance rights.", "Correct: Equity investors take risk of total loss without triggering creditor liquidation upon failure.", "Incorrect: Equity is permanent capital that is not repaid on a fixed maturity schedule."], "why_wrong_zh": ["正确：股权融资不产生强制性利息还款现金流压力，极大保护了初创企业的脆弱现金流。", "错误：出让股权必然稀释创始人的股份比例与董事会投票控制权。", "正确：股权投资人需承担本金全损风险，企业失败时不会像债权人那样强制清盘追债。", "错误：股权属于永久性资本，根本不存在固定期限内还本付息的法定要求。"]}, {"id": "DECA-EIP-012", "concept_id": "supply-chain-jit-safety-stock", "topic": "Operations", "type": "single", "difficulty": 2, "en": "An entrepreneur transitions her manufacturing model from traditional buffer stockpiling to a Just-In-Time (JIT) operational system. What is the primary operational trade-off of this decision?", "zh": "一位创业者将其制造模式从传统的缓冲库存备货转向准时制生产模式（JIT, Just-In-Time）。该决策的核心运营权衡（Trade-off）是什么？", "choices_en": ["Lower warehouse carrying costs, but heightened vulnerability to supplier lead-time delays and stockouts", "Higher holding costs, but greater resilience against transportation strikes", "Elimination of all quality inspection requirements, but slower delivery speeds", "Increased inventory obsolescence risk, but lower product defect rates"], "choices_zh": ["仓储持有成本显著降低，但面对上游供应商供货延迟或缺货的抗风险脆弱性明显上升", "存货占用成本大幅上升，但在应对运输罢工等突发事件时具有更强韧性", "能够完全省去所有质量检验环节，但最终向客户交付的速度会变慢", "存货积压过时报废的风险增加，但产品残次品率会有所降低"], "answer": 0, "explanation_en": "JIT minimizes capital tied up in holding costs and warehouse footprint, but leaves zero buffer safety stock, making the venture highly vulnerable to unexpected supply chain shocks.", "explanation_zh": "JIT 准时制生产通过极致压缩多余存货，显著降低了仓储租赁与资金占用成本；但其代价是完全放弃了安全库存缓冲，一旦上游供应链发生断供或物流延误，将直接导致停工断货。", "why_wrong_en": ["Correct: JIT slashes holding costs while maximizing reliance on flawless supplier punctuality.", "JIT lowers holding costs rather than raising them.", "JIT requires even stricter quality inspection because defective incoming parts immediately halt assembly lines.", "JIT reduces obsolescence risk because inventory is ordered only when demanded."], "why_wrong_zh": ["正确：JIT 极大降低了持有成本，但极度依赖上游供应商绝对准时的交货履约。", "JIT 是降低而非提高存货持有与仓储成本。", "JIT 反而需要更严格的来料质检，因为任何不合格零部件都会直接导致整个流水线瘫痪。", "JIT 按需采购，显著降低了存货过时报废的风险，而非增加。"]}, {"id": "DECA-EIP-013", "concept_id": "competitive-moat-network-effects", "topic": "Strategy", "type": "single", "difficulty": 2, "en": "In a marketplace platform (such as an Uber or Airbnb style startup), which economic phenomenon creates a compounding competitive moat as transaction volume scales?", "zh": "在双边交易平台（如 Uber 或 Airbnb 模式的初创项目）中，哪种经济现象能够在交易规模扩大时产生复利式的竞争护城河？", "choices_en": ["Two-sided Indirect Network Effects (more buyers attract more sellers, creating a self-reinforcing flywheel)", "Decreasing returns to scale due to administrative complexity", "First-mover advantage guaranteeing 100% market share indefinitely", "Regulatory capture through aggressive litigation"], "choices_zh": ["双边间接网络效应（Two-sided Indirect Network Effects：买家增多吸引更多卖家入驻，形成正向自增强飞轮）", "由于管理复杂度上升导致的规模报酬递减", "先发优势（First-mover advantage）自然保证长期占据 100% 市场份额", "通过激进的司法诉讼形成的监管俘获"], "answer": 0, "explanation_en": "Two-sided network effects create high barrier-to-entry moats: buyers gain higher utility from greater seller liquidity and selection, while sellers congregate where buyer density is highest, making it nearly impossible for fragmented new entrants to compete.", "explanation_zh": "双边网络效应形成了难以逾越的竞争壁垒：供应端的丰富度极大提升了消费者的搜索与匹配效率，而庞大的消费客群又促使商家不得不在此聚集，从而形成极强的自我强化飞轮与用户迁移成本。", "why_wrong_en": ["Correct: Indirect network effects form an exponential competitive moat that compounds as user liquidity rises.", "Decreasing returns to scale is an operational liability, not a competitive advantage.", "First movers frequently fail if followers execute better (e.g., Myspace vs Facebook).", "Litigation is an expensive defense mechanism, not an intrinsic economic value flywheel."], "why_wrong_zh": ["正确：双边网络效应在买卖双方之间形成了指数级强化的竞争护城河与流动性壁垒。", "规模报酬递减属于管理效率恶化的劣势，并非竞争壁垒。", "先发优势并不等同于持久胜势，后发更优者屡见不鲜（如 Facebook 击败 Myspace）。", "诉讼维权属于昂贵的防守手段，不能产生内生性的商业价值循环。"]}, {"id": "DECA-EIP-014", "concept_id": "pre-vs-post-money-valuation", "topic": "Financial Analysis", "type": "single", "difficulty": 3, "en": "An angel investor offers $250,000 for a 20% equity stake in a student startup. What is the implied Pre-Money Valuation and Post-Money Valuation of the company?", "zh": "一位天使投资人提议向一家学生初创企业注资 250,000 美元，换取公司 20% 的股权。该公司隐含的投前估值（Pre-Money Valuation）和投后估值（Post-Money Valuation）分别是多少？", "choices_en": ["Pre-Money = $1,000,000; Post-Money = $1,250,000", "Pre-Money = $1,250,000; Post-Money = $1,500,000", "Pre-Money = $800,000; Post-Money = $1,050,000", "Pre-Money = $1,250,000; Post-Money = $1,000,000"], "choices_zh": ["投前估值 = 1,000,000 美元；投后估值 = 1,250,000 美元", "投前估值 = 1,250,000 美元；投后估值 = 1,500,000 美元", "投前估值 = 800,000 美元；投后估值 = 1,050,000 美元", "投前估值 = 1,250,000 美元；投后估值 = 1,000,000 美元"], "answer": 0, "explanation_en": "Post-Money Valuation = $\\frac{\\text{Investment Amount}}{\\text{Equity Purchased}} = \\frac{\\$250,000}{20\\%} = \\$1,250,000$. Pre-Money Valuation = $\\text{Post-Money} - \\text{Investment} = \\$1,250,000 - \\$250,000 = \\$1,000,000$.", "explanation_zh": "投后估值 = $\\frac{\\text{投资金额}}{\\text{购得股权比例}} = \\frac{250,000}{20\\%} = 1,250,000$ 美元。投前估值 = $\\text{投后估值} - \\text{投资金额} = 1,250,000 - 250,000 = 1,000,000$ 美元。", "why_wrong_en": ["Correct: Post-money = $250k / 0.20 = $1.25M; Pre-money = $1.25M - $250k = $1.0M.", "$1,250,000 is the post-money valuation, not the pre-money valuation.", "$800,000 incorrectly calculates pre-money valuation as $1,000,000 minus $200,000.", "Pre-money valuation cannot exceed post-money valuation when new capital is injected."], "why_wrong_zh": ["正确：投后估值 = 250,000 / 0.20 = 1,250,000 美元；投前估值 = 1,250,000 − 250,000 = 1,000,000 美元。", "1,250,000 美元是注入资金后的投后估值，而非投前估值。", "800,000 美元计算公式有误，未能准确反映 20% 股权份额的倒推关系。", "在注入新增资金的情况下，投前估值绝不可能大于投后估值。"]}, {"id": "DECA-EIP-015", "concept_id": "freemium-conversion-rate", "topic": "Marketing Strategy", "type": "single", "difficulty": 2, "en": "A mobile productivity app acquires 50,000 free tier users. If its free-to-paid conversion rate is 3.5%, and annual paid subscription price is $48, what is the annual recurring revenue (ARR) generated from this user cohort?", "zh": "一款移动效率应用获得了 50,000 名免费版注册用户。若该应用免费转付费的转化率为 3.5%，年付订阅价格为 48 美元，则该批次用户产生的年度经常性收入（ARR）是多少？", "choices_en": ["$58,800", "$84,000", "$175,000", "$240,000"], "choices_zh": ["58,800 美元", "84,000 美元", "175,000 美元", "240,000 美元"], "answer": 1, "explanation_en": "Paid subscribers = $50,000 \\times 3.5\\% = 1,750$ users. Annual Recurring Revenue = $1,750 \\times \\$48 = \\$84,000$.", "explanation_zh": "付费订阅用户数 = $50,000 \\times 3.5\\% = 1,750$ 人。年度经常性收入（ARR）= $1,750 \\times 48 = 84,000$ 美元。", "why_wrong_en": ["$58,800 uses a lower 2.45% conversion rate.", "Correct: 50,000 × 0.035 = 1,750 paying users × $48/year = $84,000 ARR.", "$175,000 is 50,000 × $3.50, completely omitting the subscription price.", "$240,000 mistakenly applies a 10% conversion rate."], "why_wrong_zh": ["58,800 美元使用了错误的 2.45% 转化率进行测算。", "正确：50,000 × 0.035 = 1,750 位付费用户 × 48 美元/年 = 84,000 美元 ARR。", "175,000 美元仅是 50,000 × 3.5 的中间乘积，漏乘了实际单价。", "240,000 美元误套用了 10% 的高估转化率。"]}, {"id": "DECA-EIP-016", "concept_id": "value-proposition-fit", "topic": "Entrepreneurship", "type": "single", "difficulty": 2, "en": "In Alexander Osterwalder's Value Proposition Canvas, what must occur between the Customer Profile and Value Map to achieve verified 'Problem-Solution Fit'?", "zh": "在奥斯特瓦德（Osterwalder）的价值主张画布（Value Proposition Canvas）中，“客户画像”（Customer Profile）与“价值图谱”（Value Map）之间必须满足什么条件才能达成“问题-解决方案匹配”？", "choices_en": ["Products and services must directly address high-priority customer pains and fulfill core customer jobs better than existing alternatives", "Every single brainstormed feature must be patented before customer interviews begin", "Customer demographic age must correlate with product manufacturing cost", "The price point must be set cheaper than all existing global competitors"], "choices_zh": ["所提供的产品与服务能直接精准解决客户最紧迫的痛点，并比现有替代方案更高效地完成客户的核心任务", "脑暴出的每一项技术功能都必须在客户访谈前完成专利申请", "客户的年龄人口统计指标必须与产品的单件制造成本严格成正比", "产品售价必须设定为低于全世界所有现存竞争对手的最低水平"], "answer": 0, "explanation_en": "Problem-Solution Fit occurs when products, pain relievers, and gain creators precisely align with verified high-urgency customer jobs and pain points, offering superior value over legacy workarounds.", "explanation_zh": "“问题-解决方案匹配”的成立标志是：产品与服务所提供的“痛点缓解器”（Pain Relievers）和“收益创造器”（Gain Creators）能精准锁定客户最核心的“待办任务”（Customer Jobs）与急性痛点，且体验显著优于现有替代品。", "why_wrong_en": ["Correct: Precise alignment between value map relievers/creators and customer jobs/pains defines fit.", "Premature patenting before validating customer jobs creates unnecessary legal expenses.", "Demographic age and manufacturing cost have no causal connection to value proposition fit.", "Compromising value proposition purely on low price often destroys brand trust and profitability."], "why_wrong_zh": ["正确：产品缓解器/获益创造器与客户核心痛点及任务的高效对齐，正是价值匹配的本质定义。", "在尚未验证客户刚需前盲目申请各项功能专利，会造成严重的资金浪费。", "人口统计学年龄指标与产品生产制造成本之间不存在必然因果联系。", "仅靠无底线低价不仅不能证明价值主张有效，反而会毁损品牌声誉并危及利润率。"]}, {"id": "DECA-EIP-017", "concept_id": "pipeda-privacy-compliance", "topic": "Business Law \u0026 Ethics", "type": "single", "difficulty": 2, "en": "Under Canada's Personal Information Protection and Electronic Documents Act (PIPEDA), what primary legal duty must an Ontario startup observe when collecting consumer behavioral data?", "zh": "依据加拿大《个人信息保护与电子文档法》（PIPEDA），安大略省初创企业在收集消费者行为数据时，必须履行的核心法律义务是什么？", "choices_en": ["Obtaining meaningful, informed consent before collection and limiting data use exclusively to identified, legitimate purposes", "Retaining consumer records indefinitely in public cloud buckets without user deletion rights", "Selling anonymized phone numbers without disclosing the practice in privacy policies", "Registering every user email address with provincial law enforcement within 24 hours"], "choices_zh": ["在收集前获得用户知情且有意义的明确同意（Meaningful Consent），并将数据使用严格限制在已明示的合法合理用途内", "将用户记录永久保存在公有云中且不提供任何用户删除权限", "在隐私协议未明示披露的情况下，私自向第三方出售匿名电话号码", "在 24 小时内将所有注册用户的电子邮件地址报备给省执法机关"], "answer": 0, "explanation_en": "PIPEDA mandates that private sector commercial organizations obtain meaningful informed consent, explicitly state the purpose of data collection, and implement reasonable security safeguards to protect personal information.", "explanation_zh": "PIPEDA 核心准则要求商业机构在收集个人数据前必须获得当事人知情同意（Consent），清晰界定收集目的，并在目的达成后或用户要求时合理处置，严禁超出已声明范围滥用数据。", "why_wrong_en": ["Correct: PIPEDA requires transparent consent and purpose limitation for all personal information collected.", "Indefinite retention without deletion rights violates PIPEDA's retention limitation principle.", "Selling undisclosed consumer data breaches federal privacy disclosure mandates.", "Reporting email signups to law enforcement is completely unauthorized and illegal."], "why_wrong_zh": ["正确：PIPEDA 法定要求对收集个人信息必须征得透明知情同意，并严守用途限定原则。", "无限期储存且不予删除严重违反了 PIPEDA 的“存储期限限制”准则。", "未在隐私政策中透明披露便转售用户数据构成严重的联邦违法侵权。", "向执法机构上报普通用户注册邮箱不仅毫无依据，更侵犯公民隐私权。"]}, {"id": "DECA-EIP-018", "concept_id": "economies-of-scale-limits", "topic": "Operations", "type": "boolean", "difficulty": 1, "en": "True or False: As production volume expands infinitely, average cost per unit always continues to decrease without bound.", "zh": "判断题：随着生产规模的无限扩张，单件产品的平均成本总会无止境地持续下降。", "choices_en": ["True", "False"], "choices_zh": ["正确 (True)", "错误 (False)"], "answer": 1, "explanation_en": "False. While economies of scale reduce average cost up to the Minimum Efficient Scale, expanding beyond that point causes Diseconomies of Scale (e.g., bureaucratic communication gridlock, management bottlenecks, and logistical coordination inefficiencies) which increase average unit costs.", "explanation_zh": "错误（False）。规模经济仅在达到“最小有效规模”（Minimum Efficient Scale）之前能够摊薄平均成本；一旦规模盲目过度扩张，就会引发“规模不经济”（Diseconomies of Scale，如官僚沟通成本激增、管理协调摩擦加剧），反而推高单件平均成本。", "why_wrong_en": ["Incorrect: Costs do not decrease indefinitely; diseconomies of scale take over beyond peak scale.", "Correct: False, because organizational bureaucracy and coordination friction eventually increase unit costs."], "why_wrong_zh": ["错误：成本不可能无限度单向下降，过度扩张会导致规模不经济反噬。", "正确：选错误（False），因为组织官僚膨胀与跨部门协调瓶颈最终会导致单位成本回升。"]}, {"id": "DECA-EIP-019", "concept_id": "customer-acquisition-channels", "topic": "Marketing Strategy", "type": "single", "difficulty": 2, "en": "Which customer acquisition channel typically provides the lowest blended Customer Acquisition Cost (CAC) and highest long-term retention for an early-stage B2B productivity startup?", "zh": "对于一家早期的 B2B 效率工具类初创公司，哪种获客渠道通常能够提供最低的综合获客成本（CAC）与最高的长期用户留存率？", "choices_en": ["Organic Product-Led Growth (PLG) driven by user referrals and collaborative word-of-mouth", "Aggressive out-of-home highway billboard advertisements", "Cold calling telephone directories with third-party outsourced telemarketers", "Purchasing display banner impressions on high-traffic celebrity entertainment websites"], "choices_zh": ["由产品自传播机制驱动的有机产品驱动增长（PLG, Product-Led Growth）与协作口碑推荐", "在高速公路沿线投放高成本的户外大型广告牌", "聘用第三方外包电销团队对电话黄页进行无差别陌生电话骚扰（Cold Calling）", "在与业务无关的高流量娱乐八卦网站上购买横幅展示广告"], "answer": 0, "explanation_en": "Product-Led Growth (PLG) relies on the software's intrinsic utility, collaborative virality (inviting colleagues), and self-serve onboarding. This dramatically lowers paid marketing overhead and acquires users with genuine, verified intent.", "explanation_zh": "产品驱动增长（PLG）凭借软件本身的优异实用体验、团队协同邀请（如 Slack、Notion 等）和自服务转化，大幅削减了昂贵的外包买量支出，且获取的用户均具备强烈的真实使用场景与超高粘性。", "why_wrong_en": ["Correct: Organic collaborative viral loops achieve scalable low-cost acquisition and high retention.", "Billboards are untargeted, extremely expensive, and provide zero closed-loop digital conversion tracking.", "Generic cold calling suffers from sub-1% response rates and creates negative brand perception.", "Entertainment display ads generate irrelevant accidental clicks from untargeted consumers."], "why_wrong_zh": ["正确：基于产品自传播与协同效应的口碑飞轮，能实现极低的边际获客成本与最稳固的长期留存。", "户外大牌广告不仅价格高昂、缺乏受众精准度，更无法提供闭环的数据转化追踪。", "大面积拨打陌生电话的接通转化率极低，且极易对初创品牌声誉造成负面损伤。", "娱乐八卦网站的展示类横幅广告受众群体严重脱节，多为无效误触流量。"]}, {"id": "DECA-EIP-020", "concept_id": "cap-table-dilution-pool", "topic": "Financial Analysis", "type": "single", "difficulty": 3, "en": "Two co-founders each own 500,000 shares (50/50). Prior to closing an institutional Series Seed round, they agree to issue an unallocated 10% Employee Stock Option Pool (ESOP) on a pre-investment basis. If total post-ESOP pre-investment shares equal 1,111,111 shares, how many option shares were issued, and what is each founder's updated ownership percentage before new money arrives?", "zh": "两位联合创始人各持有 500,000 股（各占 50%）。在获得首轮种子期机构投资前，双方同意在投前设立一个占比 10% 的未分配员工期权池（ESOP）。若设立期权池后的总股本变为 1,111,111 股，则增发了多少期权股？在外部新资金进入前，每位创始人的股权比例稀释为多少？", "choices_en": ["111,111 option shares; 45% ownership each", "100,000 option shares; 40% ownership each", "200,000 option shares; 42% ownership each", "111,111 option shares; 40% ownership each"], "choices_zh": ["增发 111,111 股期权；每位创始人各占 45% 股权", "增发 100,000 股期权；每位创始人各占 40% 股权", "增发 200,000 股期权；每位创始人各占 42% 股权", "增发 111,111 股期权；每位创始人各占 40% 股权"], "answer": 0, "explanation_en": "Existing founder shares = 1,000,000. If ESOP = 10% of total pool: $\\text{Total Shares} = \\frac{1,000,000}{1 - 0.10} = 1,111,111$. Option pool shares = $1,111,111 - 1,000,000 = 111,111$. Each founder holds $\\frac{500,000}{1,111,111} = 45.0\\%$ of the updated cap table.", "explanation_zh": "创始人原有总股本 = 1,000,000 股。若期权池占总股本的 10%，则总股本 = $\\frac{1,000,000}{1 - 0.10} = 1,111,111$ 股。增发的期权股数 = $1,111,111 - 1,000,000 = 111,111$ 股。每位创始人的新股权比例 = $\\frac{500,000}{1,111,111} = 45.0\\%$。", "why_wrong_en": ["Correct: 111,111 option shares created; each founder retains 500k / 1.111M = 45.0%.", "100,000 calculates 10% of founder shares (1M × 10%) rather than 10% of the expanded pool.", "200,000 option shares represents an excessive 16.7% option allocation.", "40% incorrectly gives the founders 80% combined rather than their rightful 90% collective share."], "why_wrong_zh": ["正确：增发 111,111 股期权（占扩充后总股本的 10%），每位创始人股权稀释至 45.0%。", "100,000 股是直接以创始人旧股本的 10%（100 万 × 10%）计算，未考虑增发后的基数扩充。", "200,000 股期权对应的是高达 16.7% 的期权池，与题意中 10% 不符。", "40% 错误地将两位创始人的合并持股算成了 80%，而实际上应占 90%。"]}];
-const META = {"title": "Ontario DECA EIP Regional Online Exam", "code": "DECA-EIP", "category": "Business \u0026 Entrepreneurship", "description": "Ontario DECA Entrepreneurship Innovation Plan (EIP) Regional Qualifying Online Multiple Choice Exam. Rigorous assessment covering Financial Analysis, Marketing Strategy, Unit Economics, and Venture Operations.", "official_url": "https://www.deca.ca/competitive-events", "passing_score": 75, "mock_duration_mins": 70, "mock_questions_count": 100, "default_theme": "cyber", "stages": [{"id": "diagnostic", "name_en": "Diagnostic Baseline", "name_zh": "阶段一：摸底诊断", "desc_en": "20-question stratified diagnostic across all domains to establish baseline competency.", "desc_zh": "跨模块20题抽样摸底，测出初始知识短板与基线正确率。"}, {"id": "drilling", "name_en": "Topic Competency Drill", "name_zh": "阶段二：专题精练", "desc_en": "Deep-dive into specific weak topics with bilingual explanations and distractor reasoning.", "desc_zh": "逐个模块靶向突破，结合双语选项错因深度掌握核心概念。"}, {"id": "mistakes", "name_en": "Mistake Elimination", "name_zh": "阶段三：错题清零", "desc_en": "Bayesian-smoothed mistake bank targeting high-frequency pitfalls until 100% resolved.", "desc_zh": "错题本贝叶斯加权攻坚，消灭高频混淆项直到完全掌握。"}, {"id": "mock", "name_en": "Real-world Timed Mock", "name_zh": "阶段四：全真模考", "desc_en": "Official 70-minute, 100-question timed simulation under real benchmark pressure (75% pass line).", "desc_zh": "官方70分钟/100题闭卷全真模拟，以75%及格线检验应考能力。"}, {"id": "sprint", "name_en": "Adaptive Sprint to Ready", "name_zh": "阶段五：冲刺达标", "desc_en": "5-10 personalized adaptive test sets (60% weak, 25% new, 15% review) for final exam readiness.", "desc_zh": "5-10套自适应个性化模考，全面巩固薄弱点，冲刺达标认证。"}]};
-const STORAGE_KEY = 'exam_forge_v3:' + (META.code || document.title);
+const BANK = [{"id": "DEMO-001", "concept_id": "break-even-calc", "topic": "Finance", "type": "single", "difficulty": 2, "en": "A student startup manufactures ergonomic laptop stands selling for $35 each. Variable manufacturing cost is $15 per unit, and annual fixed overhead equals $14,000. What is the startup's annual break-even point in units? (Formula: \\(Q = \\frac{FC}{P - VC}\\))", "zh": "一家学生初创公司生产人体工学笔记本电脑支架，每件售价 35 美元。单位变动成本为 15 美元，年固定间接费用为 14,000 美元。该公司的年盈亏平衡销售量是多少件？（公式：\\(Q = \\frac{FC}{P - VC}\\)）", "choices_en": ["400 units", "700 units", "933 units", "1,000 units"], "choices_zh": ["400 件", "700 件", "933 件", "1,000 件"], "answer": 1, "explanation_en": "Unit contribution margin = \\(P - VC = \\$35 - \\$15 = \\$20\\). Break-even quantity = \\(\\frac{\\$14,000}{\\$20} = 700\\) units. At 700 units, gross contribution exactly covers $14,000 in fixed expenses.", "explanation_zh": "单位边际贡献 = \\(P - VC = 35 - 15 = 20\\) 美元。盈亏平衡销量 = \\(\\frac{14,000}{20} = 700\\) 件。销售 700 件时，边际贡献总额刚好覆盖 14,000 美元的固定开支。", "why_wrong_en": ["400 units yields only $8,000 contribution, leaving $6,000 in fixed overhead uncovered.", "Correct: 700 units × $20 unit contribution = $14,000, exactly reaching operating break-even.", "933 units incorrectly divides fixed overhead by variable cost ($14,000 / $15).", "1,000 units uses a hypothetical $14 margin, overstating required volume."], "why_wrong_zh": ["400 件仅能创造 8,000 美元边际贡献，仍有 6,000 美元的固定成本无法弥补。", "正确：700 件 × 20 美元单位边际贡献 = 14,000 美元，恰好打平营业成本。", "933 件是用固定成本除以单位变动成本（14,000 / 15）导致的错误运算。", "1,000 件使用了错误的 14 美元毛利进行计算，虚增了实际保本需求量。"]}, {"id": "DEMO-002", "concept_id": "customer-discovery", "topic": "Marketing", "type": "single", "difficulty": 2, "en": "Before developing a new software application, an entrepreneur wants to confirm potential customers truly care about the problem. Which research method yields the strongest early evidence?", "zh": "在开发一款新软件应用之前，创业者希望确认潜在客户确实重视该痛点。哪种调研方法能提供最强有力的早期证据？", "choices_en": ["Asking friends and relatives if the product idea sounds interesting", "Interviewing target users about their actual past workarounds and recent spending on this problem", "Purchasing general display advertising on broad social media platforms", "Developing all requested features before speaking with potential users"], "choices_zh": ["询问亲友是否觉得该产品构想很有趣", "深度访谈目标用户，了解他们过去为解决该问题所采取的实际替代手段及近期真实花费", "在泛化社交媒体平台上投放宽泛的展示广告", "在与任何潜在用户交流之前，先把所有被提过的功能全部开发完毕"], "answer": 1, "explanation_en": "Grounding discovery in past actual behavior and realized expenditures reduces cognitive politeness and leading-question bias, revealing genuine urgency and willingness to pay.", "explanation_zh": "基于受访者过去真实的行动与实际支出记录进行访谈，能最客观地揭示真实的付费意愿与痛点紧迫度，避免受访者因礼貌而产生的虚假肯定偏差。", "why_wrong_en": ["Friends and relatives frequently offer polite encouragement rather than objective buying intent.", "Correct: Studying verifiable past behavior and realized workarounds is the gold standard for validation.", "Broad ad clicks indicate passive interest but do not prove an acute, addressable pain point.", "Building complete software prematurely maximizes sunk costs before market demand is confirmed."], "why_wrong_zh": ["亲友等便利群体通常出于礼貌给予赞扬，无法反映真实的付费决策与市场需求。", "正确：考察过去真实的替代解决行为与已发生的花费，是预测实际需求的最可靠证据。", "宽泛的广告点击仅能衡量偶发关注度，无法证明存在未满足的刚性痛点。", "在需求未经确认前直接做全量开发，会导致沉没研发成本急剧攀升。"]}, {"id": "DEMO-003", "concept_id": "unit-economics-ltv-cac", "topic": "Finance", "type": "single", "difficulty": 3, "en": "A subscription startup incurs a Customer Acquisition Cost of $60 (\\(CAC = \\$60\\)). Each user generates $12 in monthly contribution margin and has an expected retention lifetime of 8 months. Which statement is best supported?", "zh": "一家订阅制初创企业每获取一位客户花费 60 美元（\\(CAC = \\$60\\)）。每位客户每月贡献毛利 12 美元，预期平均留存 8 个月。哪项结论最有依据？", "choices_en": ["Contribution Lifetime Value is $96, yielding an LTV / CAC ratio of 1.6:1", "Customer Lifetime Value is $60, exactly matching acquisition cost", "The business loses $12 on every acquired customer", "The payback period is 8 months"], "choices_zh": ["客户贡献终身价值为 96 美元，形成的 LTV / CAC 比率为 1.6:1", "客户终身价值为 60 美元，刚好与获客成本打平", "该业务在每位获取的客户上均亏损 12 美元", "该公司的客户回收期（Payback Period）为 8 个月"], "answer": 0, "explanation_en": "Estimated contribution \\(LTV = \\$12 \\times 8 = \\$96\\). With \\(CAC = \\$60\\), the gross surplus is \\(\\$96 - \\$60 = \\$36\\), and the ratio is \\(\\frac{\\$96}{\\$60} = 1.6\\). Payback period is \\(\\frac{\\$60}{\\$12} = 5\\) months.", "explanation_zh": "客户毛利终身价值 \\(LTV = 12 \\times 8 = 96\\) 美元。由于 \\(CAC = 60\\) 美元，净边际毛利为 \\(96 - 60 = 36\\) 美元，且 \\(LTV / CAC = 96 / 60 = 1.6\\)。获客回收期为 \\(60 / 12 = 5\\) 个月。", "why_wrong_en": ["Correct: LTV = $96 and the ratio is 96 / 60 = 1.6.", "$60 is the Customer Acquisition Cost (CAC), not Lifetime Value (LTV).", "The business generates a positive contribution margin of $36 per customer, not a loss.", "The payback period is $60 / $12 = 5 months; 8 months is total customer retention lifetime."], "why_wrong_zh": ["正确：LTV = 96 美元，LTV / CAC = 1.6。", "60 美元是获客成本（CAC），而非客户终身价值（LTV）。", "扣除获客成本后每位客户创造正向毛利 36 美元，并未亏损。", "获客回收期为 60 / 12 = 5 个月，8 个月是总生命周期时长。"]}, {"id": "DEMO-004", "concept_id": "lean-metrics", "topic": "Strategy", "type": "multiple", "difficulty": 2, "en": "Which TWO of the following metrics represent leading indicators of product-market fit rather than vanity metrics?", "zh": "下列哪两项指标属于衡量产品市场契合度（PMF）的先行关键指标，而非虚荣指标？", "choices_en": ["Total cumulative app downloads since launch date", "Day-30 cohort retention rate", "Organic Net Promoter Score (NPS) with active user recommendation", "Total registered accounts regardless of activity status"], "choices_zh": ["自上线以来的累计总下载安装量", "第 30 天同客群留存率（Cohort Retention Rate）", "高净推荐值（NPS）及真实的自发转介绍口碑", "无论活跃状态为何的注册账户总数"], "answer": [1, 2], "explanation_en": "Cohort retention stabilization and organic peer referrals measure recurring utility and genuine value. Cumulative downloads and registered accounts only measure top-of-funnel acquisition and can be inflated with paid ads.", "explanation_zh": "同客群留存曲线是否走平以及用户的自发推荐口碑（NPS）是衡量产品是否解决真实刚需的核心指标；而累计下载量和注册总数只代表漏斗顶端的推广量，容易被买量虚增，不代表留存与粘性。", "why_wrong_en": ["Cumulative downloads can be acquired via paid ads and do not prove active, recurring engagement.", "Correct: A flattening Day-30 retention curve demonstrates continuous, indispensable utility.", "Correct: Organic advocacy and high NPS reflect genuine customer satisfaction.", "Total registered accounts inflate metrics with dormant or churned profiles."], "why_wrong_zh": ["累计下载量可以通过广告买量迅速堆砌，无法证明用户的持续留存与真实使用。", "正确：第 30 天留存率若趋于平缓，是产品具备核心实用价值的最强信号。", "正确：自发的口碑传播与净推荐值直接反映了用户的实质满意度。", "注册总人数容易被大量休眠账号和流失用户所虚增，属于典型虚荣指标。"]}, {"id": "DEMO-005", "concept_id": "unit-economics-rule", "topic": "Finance", "type": "boolean", "difficulty": 1, "en": "True or False: In scalable software business models, an \\(LTV / CAC\\) ratio below 1.0 indicates that acquiring each additional customer destroys company value.", "zh": "判断题：在可规模化的软件商业模式中，\\(LTV / CAC\\) 比率低于 1.0 意味着每多获取一个客户都在损耗公司价值。", "choices_en": ["True", "False"], "choices_zh": ["正确 (True)", "错误 (False)"], "answer": 0, "explanation_en": "True. If \\(LTV / CAC \u003c 1.0\\), lifetime gross margin from the customer is lower than the sales and marketing spend needed to acquire them, resulting in negative unit economics.", "explanation_zh": "正确。当 \\(LTV / CAC \u003c 1.0\\) 时，客户在其整个生命周期内创造的毛利总额甚至无法覆盖获取该客户所支付的营销与销售成本，单体经济模型陷入负向亏损。", "why_wrong_en": ["Correct: When unit margin fails to cover acquisition expenses, growth accelerates financial burn.", "Incorrect: LTV / CAC \u003c 1.0 is financially unsustainable and destroys value on every sale."], "why_wrong_zh": ["正确：当客户贡献毛利低于获客成本时，业务规模越大，亏损越严重。", "错误：LTV / CAC \u003c 1.0 说明单客模型亏损，该结论必然成立。"]}, {"id": "DEMO-006", "concept_id": "algorithm-pricing-logic", "topic": "Operations", "type": "single", "difficulty": 2, "en": "Review the pricing optimization logic below:\n```python\ndef calculate_discount(units, price):\n    if units \u003e= 100:\n        return price * 0.80  # 20% volume discount\n    elif units \u003e= 50:\n        return price * 0.90  # 10% volume discount\n    return price\n```\nWhat is the total billed invoice for an order of 60 units priced at $20 per unit?", "zh": "阅读以下批量折扣定价代码：\n```python\ndef calculate_discount(units, price):\n    if units \u003e= 100:\n        return price * 0.80  # 20% volume discount\n    elif units \u003e= 50:\n        return price * 0.90  # 10% volume discount\n    return price\n```\n当客户订购 60 件商品（单价 20 美元）时，订单应付总额为多少？", "choices_en": ["$960", "$1,080", "$1,200", "$1,000"], "choices_zh": ["960 美元", "1,080 美元", "1,200 美元", "1,000 美元"], "answer": 1, "explanation_en": "For 60 units, `units \u003e= 50` matches, applying a 10% discount: discounted unit price is \\(\\$20 \\times 0.90 = \\$18\\). Total invoice = \\(60 \\times \\$18 = \\$1,080\\).", "explanation_zh": "对于 60 件订单，命中 `units \u003e= 50` 分支，享受 10% 折扣：折后单价为 \\(20 \\times 0.90 = 18\\) 美元。总金额 = \\(60 \\times 18 = 1,080\\) 美元。", "why_wrong_en": ["$960 incorrectly applies the 20% discount (which requires 100+ units): 60 × $16 = $960.", "Correct: 60 units × ($20 × 0.90) = $1,080.", "$1,200 misses the discount entirely (60 × $20).", "$1,000 is an arbitrary arithmetic miscalculation."], "why_wrong_zh": ["960 美元错误地适用了需要 100 件以上才能享受的 20% 折扣（60 × 16 = 960）。", "正确：60 件 × (20 × 0.90) = 1,080 美元。", "1,200 美元未计入任何折扣（60 × 20 = 1,200）。", "1,000 美元属于计算偏差。"]}, {"id": "DEMO-007", "concept_id": "math-quadratic-roots", "topic": "STEM Math", "type": "single", "difficulty": 2, "en": "For a quadratic profit model \\(P(x) = -2x^2 + 12x - 10\\), what are the break-even production quantities where profit \\(P(x) = 0\\)?", "zh": "对于二次利润模型 \\(P(x) = -2x^2 + 12x - 10\\)，使得利润 \\(P(x) = 0\\) 的盈亏平衡产量 \\(x\\) 分别是多少？", "choices_en": ["x = 1 and x = 5", "x = 2 and x = 3", "x = -1 and x = -5", "x = 0 and x = 6"], "choices_zh": ["x = 1 与 x = 5", "x = 2 与 x = 3", "x = -1 与 x = -5", "x = 0 与 x = 6"], "answer": 0, "explanation_en": "Setting \\(-2x^2 + 12x - 10 = 0\\) and dividing by \\(-2\\) gives \\(x^2 - 6x + 5 = 0\\). Factoring gives \\((x - 1)(x - 5) = 0\\), so roots are \\(x = 1\\) and \\(x = 5\\).", "explanation_zh": "令 \\(-2x^2 + 12x - 10 = 0\\)，两边同除以 \\(-2\\) 得 \\(x^2 - 6x + 5 = 0\\)。因式分解为 \\((x - 1)(x - 5) = 0\\)，得解 \\(x = 1\\) 与 \\(x = 5\\)。", "why_wrong_en": ["Correct: (x - 1)(x - 5) = x^2 - 6x + 5 = 0, so roots are x = 1 and x = 5.", "x = 2 and x = 3 produces (x - 2)(x - 3) = x^2 - 5x + 6, which does not match the equation.", "x = -1 and x = -5 inverts root signs, yielding x^2 + 6x + 5.", "x = 0 and x = 6 omits the constant term -10."], "why_wrong_zh": ["正确：(x - 1)(x - 5) = x^2 - 6x + 5 = 0，根为 x = 1 与 x = 5。", "x = 2 与 x = 3 对应的方程是 x^2 - 5x + 6 = 0，与原式不符。", "x = -1 与 x = -5 颠倒了正负符号，对应的方程是 x^2 + 6x + 5 = 0。", "x = 0 与 x = 6 忽略了常数项 -10。"]}, {"id": "DEMO-008", "concept_id": "pipeda-privacy-compliance", "topic": "Business Law", "type": "single", "difficulty": 2, "en": "Under standard data protection frameworks (such as Canada's PIPEDA or GDPR standards), what legal requirement must a company satisfy before collecting user personal data?", "zh": "在现代数据保护合规框架（如加拿大 PIPEDA 或 GDPR 标准）下，企业在收集用户个人数据前必须满足什么法定条件？", "choices_en": ["Obtain meaningful, informed consent and limit collection strictly to specified, legitimate purposes", "Archive all user logs permanently in cloud buckets without providing user deletion rights", "Sell anonymized demographic records without disclosing the practice in privacy policies", "Submit all user email registrations to local law enforcement within 24 hours"], "choices_zh": ["获得用户知情且明确的同意（Informed Consent），并将数据收集严格限制在已明示的合法合理用途内", "将所有用户日志永久存储在云端且不提供任何用户注销与删除权限", "在隐私协议未披露的情况下私自向第三方出售匿名用户统计记录", "在 24 小时内将所有注册用户的电子邮件地址报备给当地执法机关"], "answer": 0, "explanation_en": "Data privacy regulations mandate transparent, informed consent and purpose limitation: personal data can only be gathered for explicitly declared, legitimate commercial objectives with appropriate user rights.", "explanation_zh": "现代隐私法规要求对收集个人信息必须征得透明知情同意，并严守用途限定原则（Purpose Limitation），严禁超出已声明范围滥用或无限期扣留数据。", "why_wrong_en": ["Correct: Transparent consent and purpose specification are foundational data privacy pillars.", "Permanent retention without deletion rights directly breaches the storage limitation principle.", "Selling undisclosed consumer data breaches statutory transparency requirements.", "Transmitting signup databases to law enforcement without judicial warrants is unauthorized and illegal."], "why_wrong_zh": ["正确：透明知情同意与收集用途限定是现代数据隐私保护的核心基石。", "永久存储且不予删除直接违反了“存储期限限制”准则。", "未在隐私政策中透明披露便转售数据构成严重的违法侵权。", "无司法令状便向执法机关移交用户数据库属于严重违法侵权行为。"]}];
+const META = {"title": "Innovation \u0026 Quantitative Competency Practice", "code": "IQCP", "category": "Business, Quantitative \u0026 Technology", "description": "Adaptive practice system evaluating quantitative financial modeling, product validation, unit economics, data ethics, and algorithmic operational logic.", "official_url": "https://example.org/exam-blueprint", "passing_score": 75, "mock_duration_mins": 60, "mock_questions_count": 20, "default_theme": "cyber", "stages": [{"id": "diagnostic", "name_en": "Diagnostic Baseline", "name_zh": "阶段一：摸底诊断", "desc_en": "Stratified cross-topic sampling to detect knowledge blind spots and baseline accuracy.", "desc_zh": "跨模块分层抽样摸底，测出初始知识长短板与基线正确率。"}, {"id": "drilling", "name_en": "Topic Competency Drill", "name_zh": "阶段二：专题精练", "desc_en": "Targeted domain drills with bilingual stems and in-depth distractor reasoning.", "desc_zh": "按知识模块专项突破，结合双语解析与错因剖析吃透考点。"}, {"id": "mistakes", "name_en": "Mistake Elimination", "name_zh": "阶段三：错题清零", "desc_en": "Bayesian-smoothed review targeting historical misconceptions until 100% resolved.", "desc_zh": "错题本贝叶斯加权攻坚，消灭易混淆项直到完全掌握。"}, {"id": "mock", "name_en": "Timed Simulation Mock", "name_zh": "阶段四：全真模考", "desc_en": "Strict timed mock exam without answer leakage; full scorecard and review upon submission.", "desc_zh": "严格倒计时全真模考，答题中不泄露答案，交卷后统一生成成绩单与考后复盘。"}, {"id": "sprint", "name_en": "Adaptive Sprint to Ready", "name_zh": "阶段五：冲刺达标", "desc_en": "Tailored adaptive test sets balancing weak domains, unattempted items, and spaced review.", "desc_zh": "自适应个性化套卷，针对薄弱点靶向攻坚，冲刺达标认证。"}]};
+const STORAGE_KEY = 'exam_forge_v4:' + (META.code || document.title);
 
 let state = {
   lang: 'en',
@@ -805,8 +877,10 @@ function saveState() {
 // UI DICTIONARY
 const I18N = {
   en: {
+    heroTitle: 'Master Concepts. Pass with Confidence.',
+    heroDesc: META.description || 'Bilingual adaptive practice with verified reasoning and realistic mocks.',
     startPractice: '▶ Start Practice',
-    timedMock: '⏱ Official Mock (' + META.mock_duration_mins + 'm)',
+    timedMock: '⏱ Timed Mock (' + META.mock_duration_mins + 'm)',
     adaptivePlans: '✦ Adaptive Tests',
     bankSize: 'Bank Size',
     answered: 'Answered',
@@ -817,11 +891,12 @@ const I18N = {
     mistakeKiller: '🎯 Mistake Killer',
     checkAnswer: 'Check Answer',
     next: 'Next Question →',
+    prev: '← Previous Question',
+    submitExam: 'Submit Exam ✓',
     finish: 'Finish Session',
     explanation: 'Detailed Concept Explanation',
     distractors: 'Why Distractors Fail (错因分析)',
-    selectMulti: 'Select all correct options',
-    multiPrompt: 'Multiple Choice: Select all matching answers and click Check.',
+    selectMulti: 'Multiple Choice: Select all correct options, then click Check Answer.',
     verdictPassed: 'BENCHMARK PASSED 🏆',
     verdictFailed: 'BENCHMARK NOT YET MET ⚠️',
     timeRemaining: 'Remaining',
@@ -836,11 +911,23 @@ const I18N = {
     allTopics: 'All Domains',
     importedOk: 'Learning progress imported successfully.',
     importedBad: 'Invalid progress data file.',
-    noMistakes: 'No saved mistakes! Great job, continue practicing.'
+    noMistakes: 'No saved mistakes! Great job, continue practicing.',
+    passBenchmark: 'Pass Benchmark: ' + META.passing_score + '%',
+    durationTag: 'Duration: ' + META.mock_duration_mins + ' mins',
+    confirmExit: 'An active session is in progress. Are you sure you want to exit and abandon current progress?',
+    confirmSubmitUnfinished: 'You have unfinished questions. Are you sure you want to submit now?',
+    scoreMatrixHeader: 'Performance Breakdown by Domain',
+    reviewHeader: 'Comprehensive Post-Mock Review',
+    yourChoice: 'Your Selection',
+    correctChoice: 'Correct Answer',
+    addToMistakes: 'Add to Mistakes',
+    inMistakes: 'In Mistake Bank'
   },
   zh: {
+    heroTitle: '更高效掌握考点，更从容通过考试。',
+    heroDesc: META.description || '中英双语解析、全真模拟、薄弱点靶向攻坚，数据仅保留于本地。',
     startPractice: '▶ 开始综合练习',
-    timedMock: '⏱ 官方限时模考 (' + META.mock_duration_mins + '分钟)',
+    timedMock: '⏱ 限时全真模考 (' + META.mock_duration_mins + '分钟)',
     adaptivePlans: '✦ 自适应强化套卷',
     bankSize: '题库题量',
     answered: '已答题次',
@@ -851,11 +938,12 @@ const I18N = {
     mistakeKiller: '🎯 错题攻坚清零',
     checkAnswer: '提交并校验',
     next: '下一题 →',
+    prev: '← 上一题',
+    submitExam: '交卷并评估 ✓',
     finish: '完成练习',
     explanation: '核心考点详细解析',
     distractors: '干扰项错因剖析 (Why Wrong)',
-    selectMulti: '多选题（请勾选所有正确项）',
-    multiPrompt: '多选题：请选择所有符合题意的选项，然后点击提交。',
+    selectMulti: '多选题：请选择所有符合题意的选项，然后点击提交。',
     verdictPassed: '考核达标 🏆 (达到合格线)',
     verdictFailed: '尚未达标 ⚠️ (距离及格线仍需加强)',
     timeRemaining: '剩余时间',
@@ -870,12 +958,32 @@ const I18N = {
     allTopics: '全部知识模块',
     importedOk: '学习进度导入成功！',
     importedBad: '导入文件格式不合法。',
-    noMistakes: '当前暂无错题记录！非常棒，请继续保持。'
+    noMistakes: '当前暂无错题记录！非常棒，请继续保持。',
+    passBenchmark: '及格达标线: ' + META.passing_score + '%',
+    durationTag: '考试时长: ' + META.mock_duration_mins + ' 分钟',
+    confirmExit: '当前测试正在进行中，确定要退出并放弃当前作答吗？',
+    confirmSubmitUnfinished: '您还有尚未作答的题目，确定现在交卷吗？',
+    scoreMatrixHeader: '各知识模块能力得分清单',
+    reviewHeader: '考后全卷复盘与错因精讲',
+    yourChoice: '您的作答',
+    correctChoice: '正确答案',
+    addToMistakes: '加入错题本',
+    inMistakes: '已在错题本'
   }
 };
 
 const t = (k) => (I18N[state.lang] && I18N[state.lang][k]) || k;
 const $ = (id) => document.getElementById(id);
+
+// True Fisher-Yates shuffle
+function shuffle(array) {
+  const a = [...array];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 /* ================= LATEX & CODE FORMATTER ================= */
 function renderRichText(text) {
@@ -893,13 +1001,21 @@ function renderRichText(text) {
   // Inline code
   escaped = escaped.replace(/`([^`]+)`/g, '<code class="code-inline">$1</code>');
 
-  // Block math $$...$$
-  escaped = escaped.replace(/\$\$([\s\S]+?)\$\$/g, function(m, formula) {
-    return '<div class="math-block">' + formatMathString(formula) + '</div>';
+  // Block math: \[ ... \] or $$ ... $$
+  escaped = escaped.replace(/(?:\\\[([\s\S]+?)\\\]|\$\$([\s\S]+?)\$\$)/g, function(m, p1, p2) {
+    return '<div class="math-block">' + formatMathString(p1 || p2) + '</div>';
   });
 
-  // Inline math $...$
-  escaped = escaped.replace(/\$([^\$\n]+?)\$/g, function(m, formula) {
+  // Protect escaped dollar signs: \$ -> &#36;
+  escaped = escaped.replace(/\\\$/g, '&#36;');
+
+  // Inline LaTeX \( ... \)
+  escaped = escaped.replace(/\\\(([\s\S]+?)\\\)/g, function(m, formula) {
+    return '<span class="math-inline">' + formatMathString(formula) + '</span>';
+  });
+
+  // Inline $...$ math: opening $ must not be followed by digit or whitespace
+  escaped = escaped.replace(/\$([^\$\s\d][^\$\n]*?)\$/g, function(m, formula) {
     return '<span class="math-inline">' + formatMathString(formula) + '</span>';
   });
 
@@ -910,7 +1026,7 @@ function renderRichText(text) {
 
 function formatMathString(f) {
   return f
-    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)')
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="math-frac"><span class="num">$1</span><span class="denom">$2</span></span>')
     .replace(/\\sqrt\{([^}]+)\}/g, '√($1)')
     .replace(/\\Delta/g, 'Δ')
     .replace(/\\alpha/g, 'α')
@@ -923,8 +1039,8 @@ function formatMathString(f) {
     .replace(/\\ge/g, '≥')
     .replace(/\\neq/g, '≠')
     .replace(/\\in/g, '∈')
-    .replace(/\^([0-9a-zA-Z]+)/g, '<sup>$1</sup>')
-    .replace(/_([0-9a-zA-Z]+)/g, '<sub>$1</sub>');
+    .replace(/\^\{?([0-9a-zA-Z+\-]+)\}?/g, '<sup>$1</sup>')
+    .replace(/_\{?([0-9a-zA-Z+\-]+)\}?/g, '<sub>$1</sub>');
 }
 
 /* ================= ADAPTIVE MASTERY ALGORITHM ================= */
@@ -951,40 +1067,61 @@ function computeQuestionWeight(q) {
   w += (1.0 - topStat.smoothed) * 3.0;
   if (rec.length > 0) {
     const lastResult = rec[rec.length - 1];
-    w += (lastResult === false ? 2.5 : 0.2);
+    w += (lastResult === false ? 3.0 : 0.2);
   } else {
-    w += 1.8;
+    w += 2.0;
   }
   if (q.difficulty === 3) w *= 1.2;
   return w;
 }
 
-function getWeightedSample(pool, n) {
-  const ranked = pool.map(q => ({
-    q: q,
-    weight: computeQuestionWeight(q) * (0.7 + Math.random() * 0.6)
-  })).sort((a, b) => b.weight - a.weight);
+function getStratifiedSample(pool, n) {
+  const byTopic = {};
+  getUniqueTopics().forEach(tp => { byTopic[tp] = []; });
+  pool.forEach(q => { if (byTopic[q.topic]) byTopic[q.topic].push(q); });
 
-  const seen = new Set();
   const picked = [];
-  for (const item of ranked) {
-    if (picked.length >= n) break;
-    if (!seen.has(item.q.id)) {
-      picked.push(item.q);
-      seen.add(item.q.id);
+  const topics = Object.keys(byTopic);
+  let idx = 0;
+  while (picked.length < n && picked.length < pool.length) {
+    const tp = topics[idx % topics.length];
+    if (byTopic[tp] && byTopic[tp].length > 0) {
+      picked.push(byTopic[tp].shift());
     }
+    idx++;
   }
-  return picked;
+  return shuffle(picked);
+}
+
+function getAdaptiveSample(pool, n) {
+  const mistakes = pool.filter(q => state.mistakes.includes(q.id));
+  const unattempted = pool.filter(q => !(state.records[q.id] && state.records[q.id].length));
+  const others = pool.filter(q => !state.mistakes.includes(q.id) && (state.records[q.id] && state.records[q.id].length));
+
+  const countMistakes = Math.min(mistakes.length, Math.ceil(n * 0.6));
+  const countUnattempted = Math.min(unattempted.length, Math.ceil(n * 0.25));
+  const remaining = n - countMistakes - countUnattempted;
+
+  const picked = [
+    ...shuffle(mistakes).slice(0, countMistakes),
+    ...shuffle(unattempted).slice(0, countUnattempted),
+    ...shuffle(others).slice(0, remaining)
+  ];
+
+  if (picked.length < n) {
+    const remainingPool = pool.filter(q => !picked.some(x => x.id === q.id));
+    picked.push(...shuffle(remainingPool).slice(0, n - picked.length));
+  }
+  return shuffle(picked);
 }
 
 /* ================= SESSION RUNTIME ================= */
 let activeSession = null;
 let currentQuestionIndex = 0;
-let userSelection = null;
-let isQuestionChecked = false;
 let sessionStartTime = 0;
 let timerInterval = null;
-let generatedPlans = [];
+let userAnswers = {}; // { question_index: selected_choice_index_or_array }
+let questionOptionPermutations = {}; // cached randomized choice indices per question instance
 
 function startSession(questions, isTimed, modeName) {
   if (!questions || !questions.length) {
@@ -998,20 +1135,30 @@ function startSession(questions, isTimed, modeName) {
     isTimed: isTimed,
     modeName: modeName || 'Practice',
     total: questions.length,
-    correctCount: 0,
-    answersLog: []
+    isSubmitted: false
   };
   currentQuestionIndex = 0;
+  userAnswers = {};
+  questionOptionPermutations = {};
   sessionStartTime = Date.now();
 
+  // Pre-generate choice permutations
+  questions.forEach((q, idx) => {
+    const rawLen = (state.lang === 'zh' ? q.choices_zh : q.choices_en).length;
+    let indices = Array.from({ length: rawLen }, (_, i) => i);
+    if (state.shuffleChoices && q.type !== 'boolean') {
+      indices = shuffle(indices);
+    }
+    questionOptionPermutations[idx] = indices;
+  });
+
   if (isTimed) {
-    const mockMins = META.mock_duration_mins || 70;
-    const mockTotal = META.mock_questions_count || 100;
-    const totalSeconds = Math.ceil(mockMins * 60 * (questions.length / mockTotal));
-    const duration = Math.max(60, totalSeconds);
+    const mockMins = META.mock_duration_mins || 60;
+    const mockTotal = META.mock_questions_count || questions.length;
+    const totalSeconds = Math.max(60, Math.ceil(mockMins * 60 * (questions.length / Math.max(1, mockTotal))));
     timerInterval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
-      const remaining = Math.max(0, duration - elapsed);
+      const remaining = Math.max(0, totalSeconds - elapsed);
       const clock = $('activeClock');
       if (clock) {
         const m = Math.floor(remaining / 60);
@@ -1020,24 +1167,27 @@ function startSession(questions, isTimed, modeName) {
       }
       if (remaining === 0) {
         clearInterval(timerInterval);
-        finishSession();
+        finishTimedMock();
       }
     }, 1000);
   }
 
-  renderCurrentQuestion();
+  renderQuestionView();
 }
 
-function renderCurrentQuestion() {
+function renderQuestionView() {
   const work = $('workArea');
   work.innerHTML = '';
   if (!activeSession) return;
 
   const q = activeSession.questions[currentQuestionIndex];
   const qType = q.type || 'single';
-  userSelection = qType === 'multiple' ? [] : null;
-  isQuestionChecked = false;
+  const isTimed = activeSession.isTimed;
 
+  // Auto smooth scroll to work area
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Header row
   const header = document.createElement('div');
   header.className = 'q-header';
   
@@ -1046,7 +1196,7 @@ function renderCurrentQuestion() {
   progressText.textContent = (currentQuestionIndex + 1) + ' / ' + activeSession.total + ' · ' + activeSession.modeName;
   header.appendChild(progressText);
 
-  if (activeSession.isTimed) {
+  if (isTimed) {
     const clockBadge = document.createElement('div');
     clockBadge.className = 'timer-pill';
     clockBadge.innerHTML = '⏱ <span id="activeClock">--:--</span>';
@@ -1054,22 +1204,42 @@ function renderCurrentQuestion() {
   }
   work.appendChild(header);
 
+  // Progress bar
   const barWrap = document.createElement('div');
   barWrap.className = 'progress-bar-wrap';
   const barFill = document.createElement('div');
   barFill.className = 'progress-fill';
-  barFill.style.width = ((currentQuestionIndex / activeSession.total) * 100) + '%';
+  barFill.style.width = (((currentQuestionIndex + 1) / activeSession.total) * 100) + '%';
   barWrap.appendChild(barFill);
   work.appendChild(barWrap);
 
+  // Mock Question Navigation Grid
+  if (isTimed) {
+    const navGrid = document.createElement('div');
+    navGrid.className = 'q-nav-grid';
+    activeSession.questions.forEach((_, idx) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'q-nav-dot' + (idx === currentQuestionIndex ? ' current' : '') + (userAnswers[idx] !== undefined ? ' answered' : '');
+      dot.textContent = idx + 1;
+      dot.onclick = () => {
+        currentQuestionIndex = idx;
+        renderQuestionView();
+      };
+      navGrid.appendChild(dot);
+    });
+    work.appendChild(navGrid);
+  }
+
+  // Chips
   const chips = document.createElement('div');
   chips.className = 'chips-row';
   chips.innerHTML = '<span class="chip">' + q.topic + '</span>' +
     '<span class="chip">' + '★'.repeat(q.difficulty) + ' Level ' + q.difficulty + '</span>' +
-    '<span class="chip qtype">' + qType.toUpperCase() + '</span>' +
-    (q.concept_id ? '<span class="chip">ID: ' + q.concept_id + '</span>' : '');
+    '<span class="chip qtype">' + (qType === 'multiple' ? 'MULTIPLE CHOICE' : (qType === 'boolean' ? 'TRUE / FALSE' : 'SINGLE CHOICE')) + '</span>';
   work.appendChild(chips);
 
+  // Question Stem
   const stem = document.createElement('div');
   stem.className = 'q-stem';
   const stemText = state.lang === 'zh' ? q.zh : q.en;
@@ -1081,18 +1251,21 @@ function renderCurrentQuestion() {
     tip.style.fontSize = '12px';
     tip.style.color = 'var(--accent)';
     tip.style.margin = '-8px 0 14px';
-    tip.textContent = t('multiPrompt');
+    tip.textContent = t('selectMulti');
     work.appendChild(tip);
   }
 
-  let rawChoices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
-  let optionIndices = rawChoices.map((_, i) => i);
-  if (state.shuffleChoices && qType !== 'boolean') {
-    optionIndices.sort(() => Math.random() - 0.5);
-  }
+  // Choices Handling
+  const rawChoices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+  const optionIndices = questionOptionPermutations[currentQuestionIndex] || rawChoices.map((_, i) => i);
 
   const choicesContainer = document.createElement('div');
   const optionButtons = [];
+
+  let currentSelected = userAnswers[currentQuestionIndex];
+  if (qType === 'multiple' && !Array.isArray(currentSelected)) {
+    currentSelected = [];
+  }
 
   optionIndices.forEach((origIdx, displayIdx) => {
     const btn = document.createElement('button');
@@ -1101,22 +1274,46 @@ function renderCurrentQuestion() {
     const letter = String.fromCharCode(65 + displayIdx);
     const choiceText = rawChoices[origIdx];
 
-    btn.innerHTML = '<span class="opt-tag">' + letter + '</span> <div style="flex:1;">' + renderRichText(choiceText) + '</div>';
+    const isSelected = (qType === 'multiple')
+      ? (Array.isArray(currentSelected) && currentSelected.includes(origIdx))
+      : (currentSelected === origIdx);
+
+    if (isSelected) btn.classList.add('selected');
+
+    const indicator = (qType === 'multiple')
+      ? (isSelected ? '☑' : '☐')
+      : (isSelected ? '◉' : '○');
+
+    btn.innerHTML = '<span class="opt-tag">' + letter + '</span>' +
+      '<span class="opt-indicator">' + indicator + '</span>' +
+      '<div style="flex:1;">' + renderRichText(choiceText) + '</div>';
 
     btn.onclick = () => {
-      if (isQuestionChecked) return;
+      if (!isTimed && activeSession.isChecked) return;
+
       if (qType === 'single' || qType === 'boolean') {
-        userSelection = origIdx;
-        optionButtons.forEach(b => b.btn.classList.remove('selected'));
+        userAnswers[currentQuestionIndex] = origIdx;
+        currentSelected = origIdx;
+        optionButtons.forEach(b => {
+          b.btn.classList.remove('selected');
+          b.btn.querySelector('.opt-indicator').textContent = '○';
+        });
         btn.classList.add('selected');
+        btn.querySelector('.opt-indicator').textContent = '◉';
       } else if (qType === 'multiple') {
-        const pos = userSelection.indexOf(origIdx);
+        if (!Array.isArray(userAnswers[currentQuestionIndex])) {
+          userAnswers[currentQuestionIndex] = [];
+        }
+        const arr = userAnswers[currentQuestionIndex];
+        const pos = arr.indexOf(origIdx);
         if (pos > -1) {
-          userSelection.splice(pos, 1);
+          arr.splice(pos, 1);
           btn.classList.remove('selected');
+          btn.querySelector('.opt-indicator').textContent = '☐';
         } else {
-          userSelection.push(origIdx);
+          arr.push(origIdx);
           btn.classList.add('selected');
+          btn.querySelector('.opt-indicator').textContent = '☑';
         }
       }
     };
@@ -1126,58 +1323,101 @@ function renderCurrentQuestion() {
   });
   work.appendChild(choicesContainer);
 
+  // Footer Actions
   const actionsRow = document.createElement('div');
-  actionsRow.style.marginTop = '20px';
+  actionsRow.style.marginTop = '24px';
   actionsRow.style.display = 'flex';
   actionsRow.style.gap = '10px';
+  actionsRow.style.flexWrap = 'wrap';
 
-  const submitBtn = document.createElement('button');
-  submitBtn.className = 'btn';
-  submitBtn.textContent = t('checkAnswer');
-
-  submitBtn.onclick = () => {
-    if (qType === 'single' || qType === 'boolean') {
-      if (userSelection === null) return;
-    } else if (qType === 'multiple') {
-      if (!userSelection || userSelection.length === 0) return;
+  if (isTimed) {
+    // Timed Mock Controls: Prev, Next, Submit
+    if (currentQuestionIndex > 0) {
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'btn secondary';
+      prevBtn.textContent = t('prev');
+      prevBtn.onclick = () => {
+        currentQuestionIndex--;
+        renderQuestionView();
+      };
+      actionsRow.appendChild(prevBtn);
     }
 
-    isQuestionChecked = true;
-    submitBtn.remove();
-
-    let isCorrect = false;
-    if (qType === 'single' || qType === 'boolean') {
-      isCorrect = (userSelection === q.answer);
-    } else if (qType === 'multiple') {
-      const targetSet = new Set(q.answer);
-      const userSet = new Set(userSelection);
-      isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+    if (currentQuestionIndex < activeSession.total - 1) {
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'btn';
+      nextBtn.textContent = t('next');
+      nextBtn.onclick = () => {
+        currentQuestionIndex++;
+        renderQuestionView();
+      };
+      actionsRow.appendChild(nextBtn);
     }
 
-    if (isCorrect) activeSession.correctCount++;
-    activeSession.answersLog.push({ id: q.id, correct: isCorrect });
-
-    state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
-    if (!isCorrect && !state.mistakes.includes(q.id)) {
-      state.mistakes.push(q.id);
-    } else if (isCorrect && state.mistakes.includes(q.id)) {
-      state.mistakes = state.mistakes.filter(x => x !== q.id);
-    }
-    saveState();
-
-    optionButtons.forEach(item => {
-      item.btn.disabled = true;
-      const isAns = (qType === 'multiple') ? q.answer.includes(item.origIdx) : (item.origIdx === q.answer);
-      const isChosen = (qType === 'multiple') ? userSelection.includes(item.origIdx) : (item.origIdx === userSelection);
-
-      if (isAns) {
-        item.btn.classList.add('correct');
-      } else if (isChosen && !isAns) {
-        item.btn.classList.add('wrong');
+    const submitExamBtn = document.createElement('button');
+    submitExamBtn.className = 'btn secondary';
+    submitExamBtn.textContent = t('submitExam');
+    submitExamBtn.onclick = () => {
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount < activeSession.total) {
+        if (!confirm(t('confirmSubmitUnfinished'))) return;
       }
-    });
+      finishTimedMock();
+    };
+    actionsRow.appendChild(submitExamBtn);
 
-    if (!activeSession.isTimed) {
+  } else {
+    // Practice Mode Controls: Check Answer -> Next
+    activeSession.isChecked = false;
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'btn';
+    checkBtn.textContent = t('checkAnswer');
+
+    checkBtn.onclick = () => {
+      const selected = userAnswers[currentQuestionIndex];
+      if (selected === undefined || (qType === 'multiple' && (!selected || selected.length === 0))) {
+        alert(t('selectMulti'));
+        return;
+      }
+
+      activeSession.isChecked = true;
+      checkBtn.remove();
+
+      // Check correctness
+      let isCorrect = false;
+      if (qType === 'single' || qType === 'boolean') {
+        isCorrect = (selected === q.answer);
+      } else if (qType === 'multiple') {
+        const targetSet = new Set(q.answer);
+        const userSet = new Set(selected);
+        isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+      }
+
+      // Record result
+      state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
+      if (!isCorrect && !state.mistakes.includes(q.id)) {
+        state.mistakes.push(q.id);
+      } else if (isCorrect && state.mistakes.includes(q.id)) {
+        state.mistakes = state.mistakes.filter(x => x !== q.id);
+      }
+      saveState();
+
+      // Colorize options with accessible icons
+      optionButtons.forEach(item => {
+        item.btn.disabled = true;
+        const isAns = (qType === 'multiple') ? q.answer.includes(item.origIdx) : (item.origIdx === q.answer);
+        const isChosen = (qType === 'multiple') ? (selected && selected.includes(item.origIdx)) : (item.origIdx === selected);
+
+        if (isAns) {
+          item.btn.classList.add('correct');
+          item.btn.querySelector('.opt-indicator').textContent = '✓';
+        } else if (isChosen && !isAns) {
+          item.btn.classList.add('wrong');
+          item.btn.querySelector('.opt-indicator').textContent = '✗';
+        }
+      });
+
+      // Show Feedback
       const feedback = document.createElement('div');
       feedback.className = 'feedback-card';
       const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
@@ -1205,29 +1445,32 @@ function renderCurrentQuestion() {
         });
       }
       work.appendChild(feedback);
-    }
 
-    const isLast = (currentQuestionIndex === activeSession.total - 1);
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'btn';
-    nextBtn.textContent = isLast ? t('finish') : t('next');
-    nextBtn.onclick = () => {
-      currentQuestionIndex++;
-      if (currentQuestionIndex >= activeSession.total) {
-        finishSession();
-      } else {
-        renderCurrentQuestion();
-      }
+      // Next / Finish button
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'btn';
+      const isLast = (currentQuestionIndex === activeSession.total - 1);
+      nextBtn.textContent = isLast ? t('finish') : t('next');
+      nextBtn.onclick = () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= activeSession.total) {
+          finishPracticeSession();
+        } else {
+          renderQuestionView();
+        }
+      };
+      actionsRow.appendChild(nextBtn);
+      renderDashboardStats();
     };
-    actionsRow.appendChild(nextBtn);
-    renderDashboardStats();
-  };
 
-  actionsRow.appendChild(submitBtn);
+    actionsRow.appendChild(checkBtn);
+  }
+
   work.appendChild(actionsRow);
 }
 
-function finishSession() {
+// Complete Timed Mock Examination
+function finishTimedMock() {
   if (timerInterval) clearInterval(timerInterval);
   timerInterval = null;
 
@@ -1237,44 +1480,125 @@ function finishSession() {
 
   const work = $('workArea');
   work.innerHTML = '';
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const accuracyPct = Math.round((s.correctCount / s.total) * 100);
+  let correctCount = 0;
+  const topicStats = {};
+  const questionLogs = [];
+
+  s.questions.forEach((q, idx) => {
+    const qType = q.type || 'single';
+    const chosen = userAnswers[idx];
+    let isCorrect = false;
+
+    if (chosen !== undefined) {
+      if (qType === 'single' || qType === 'boolean') {
+        isCorrect = (chosen === q.answer);
+      } else if (qType === 'multiple') {
+        const targetSet = new Set(q.answer);
+        const userSet = new Set(chosen);
+        isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+      }
+    }
+
+    if (isCorrect) correctCount++;
+
+    // Update records & mistakes
+    state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
+    if (!isCorrect && !state.mistakes.includes(q.id)) {
+      state.mistakes.push(q.id);
+    } else if (isCorrect && state.mistakes.includes(q.id)) {
+      state.mistakes = state.mistakes.filter(x => x !== q.id);
+    }
+
+    // Topic aggregation
+    if (!topicStats[q.topic]) topicStats[q.topic] = { total: 0, correct: 0 };
+    topicStats[q.topic].total++;
+    if (isCorrect) topicStats[q.topic].correct++;
+
+    questionLogs.push({ q: q, chosen: chosen, isCorrect: isCorrect, origPerm: questionOptionPermutations[idx] });
+  });
+
+  saveState();
+
+  const accuracyPct = Math.round((correctCount / s.total) * 100);
   const isPassed = accuracyPct >= (META.passing_score || 75);
 
   const banner = document.createElement('div');
   banner.className = 'result-banner';
-  banner.innerHTML = '<div class="panel-eyebrow">' + s.modeName.toUpperCase() + ' RESULTS</div>' +
-    '<div class="result-score">' + s.correctCount + ' / ' + s.total + ' (' + accuracyPct + '%)</div>' +
+  banner.innerHTML = '<div class="panel-eyebrow">' + s.modeName.toUpperCase() + ' SCORECARD</div>' +
+    '<div class="result-score">' + correctCount + ' / ' + s.total + ' (' + accuracyPct + '%)</div>' +
     '<div class="verdict-stamp ' + (isPassed ? 'pass' : 'fail') + '">' +
       (isPassed ? t('verdictPassed') : t('verdictFailed')) +
-    '</div>' +
-    '<p style="color:var(--text-muted);max-width:540px;margin:0 auto 24px;">' +
-      (isPassed
-        ? (state.lang === 'zh' ? '恭喜达到官方达标线！可进入阶段五进行高阶自适应冲刺。' : 'Outstanding work! You met the benchmark. Proceed to Stage 5 adaptive drills.')
-        : (state.lang === 'zh' ? '目前得分暂未达到及格线（' + META.passing_score + '%）。建议通过阶段二专题精练或阶段三错题攻坚补强。' : 'Score is below benchmark (' + META.passing_score + '%). Target weak areas in Stage 2 or 3.')) +
-    '</p>';
+    '</div>';
 
-  if (s.isTimed) {
-    const missed = s.answersLog.filter(a => !a.correct);
-    if (missed.length) {
-      const missedHeader = document.createElement('h3');
-      missedHeader.style.marginTop = '24px';
-      missedHeader.textContent = state.lang === 'zh' ? '考后错题复盘与深度解析' : 'Missed Questions Review';
-      banner.appendChild(missedHeader);
+  // Topic Matrix Table
+  const tableHeader = document.createElement('h3');
+  tableHeader.style.marginTop = '20px';
+  tableHeader.textContent = t('scoreMatrixHeader');
+  banner.appendChild(tableHeader);
 
-      missed.forEach(m => {
-        const q = BANK.find(x => x.id === m.id);
-        if (q) {
-          const itemDiv = document.createElement('div');
-          itemDiv.className = 'feedback-card';
-          itemDiv.style.textAlign = 'left';
-          itemDiv.innerHTML = '<strong>' + q.topic + ' [' + q.id + ']</strong>: ' + renderRichText(state.lang === 'zh' ? q.zh : q.en) +
-            '<p style="margin:8px 0 0;color:var(--text-muted);">' + renderRichText(state.lang === 'zh' ? q.explanation_zh : q.explanation_en) + '</p>';
-          banner.appendChild(itemDiv);
-        }
-      });
-    }
-  }
+  const table = document.createElement('table');
+  table.className = 'table-matrix';
+  table.innerHTML = '<thead><tr><th>Domain</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody>' +
+    Object.keys(topicStats).map(tp => {
+      const st = topicStats[tp];
+      const rate = Math.round((st.correct / st.total) * 100);
+      return '<tr><td>' + tp + '</td><td>' + st.correct + ' / ' + st.total + '</td><td>' + rate + '%</td></tr>';
+    }).join('') + '</tbody>';
+  banner.appendChild(table);
+
+  // Full Question Review
+  const revHeader = document.createElement('h3');
+  revHeader.style.marginTop = '28px';
+  revHeader.textContent = t('reviewHeader');
+  banner.appendChild(revHeader);
+
+  questionLogs.forEach((item, idx) => {
+    const q = item.q;
+    const card = document.createElement('div');
+    card.className = 'feedback-card';
+    card.style.textAlign = 'left';
+
+    const stemText = state.lang === 'zh' ? q.zh : q.en;
+    const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
+    const choices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+
+    card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+      '<strong>#' + (idx + 1) + ' [' + q.topic + ']</strong>' +
+      '<span class="chip ' + (item.isCorrect ? 'correct' : 'wrong') + '">' + (item.isCorrect ? '✓ Correct' : '✗ Incorrect') + '</span>' +
+      '</div>' +
+      '<p style="margin:8px 0;font-weight:600;">' + renderRichText(stemText) + '</p>' +
+      '<div style="font-size:13px;color:var(--text-muted);">' +
+      '<p><strong>' + t('explanation') + ':</strong> ' + renderRichText(expText) + '</p>' +
+      '</div>';
+
+    banner.appendChild(card);
+  });
+
+  const backBtn = document.createElement('button');
+  backBtn.className = 'btn';
+  backBtn.style.marginTop = '24px';
+  backBtn.textContent = t('backHome');
+  backBtn.onclick = () => { renderWelcomeState(); };
+  banner.appendChild(backBtn);
+
+  work.appendChild(banner);
+  renderDashboardStats();
+}
+
+function finishPracticeSession() {
+  const s = activeSession;
+  activeSession = null;
+  const work = $('workArea');
+  work.innerHTML = '';
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const banner = document.createElement('div');
+  banner.className = 'result-banner';
+  banner.innerHTML = '<div class="panel-eyebrow">PRACTICE COMPLETED</div>' +
+    '<h2>Session Finished</h2>' +
+    '<p style="color:var(--text-muted);">Learning records and mistake bank updated on this device.</p>';
 
   const backBtn = document.createElement('button');
   backBtn.className = 'btn';
@@ -1299,6 +1623,7 @@ function renderRoadmap() {
       '<div class="stage-name">' + name + '</div>' +
       '<div class="stage-desc">' + desc + '</div>';
     card.onclick = () => {
+      if (activeSession && !confirm(t('confirmExit'))) return;
       state.currentStage = stg.id;
       document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('active'));
       card.classList.add('active');
@@ -1309,24 +1634,27 @@ function renderRoadmap() {
 }
 
 function triggerStageAction(stageId) {
+  if (activeSession && !confirm(t('confirmExit'))) return;
+
   if (stageId === 'diagnostic') {
-    const sample = getWeightedSample(BANK, Math.min(20, BANK.length));
+    const sample = getStratifiedSample(BANK, Math.min(20, BANK.length));
     startSession(sample, false, 'Diagnostic Baseline');
   } else if (stageId === 'drilling') {
     const top = $('selTopic').value;
     const pool = top === 'all' ? BANK : BANK.filter(q => q.topic === top);
-    startSession(pool.slice(0, 20), false, 'Topic Drilling');
+    const size = Number($('selSize').value) || 20;
+    startSession(shuffle(pool).slice(0, size), false, 'Topic Drilling');
   } else if (stageId === 'mistakes') {
     const pool = BANK.filter(q => state.mistakes.includes(q.id));
     if (!pool.length) {
       alert(t('noMistakes'));
       return;
     }
-    startSession(pool, false, 'Mistake Elimination');
+    startSession(shuffle(pool), false, 'Mistake Elimination');
   } else if (stageId === 'mock') {
-    const count = META.mock_questions_count || 100;
-    const pool = [...BANK].sort(() => Math.random() - 0.5).slice(0, count);
-    startSession(pool, true, 'Official Timed Mock');
+    const count = META.mock_questions_count || 20;
+    const pool = shuffle(BANK).slice(0, count);
+    startSession(pool, true, 'Timed Simulation Mock');
   } else if (stageId === 'sprint') {
     renderAdaptivePlansHub();
   }
@@ -1335,10 +1663,11 @@ function triggerStageAction(stageId) {
 function renderAdaptivePlansHub() {
   const work = $('workArea');
   work.innerHTML = '';
+  work.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const n = 6;
+  const n = 5;
   const size = Number($('selSize').value) || 20;
-  generatedPlans = Array.from({ length: n }, () => getWeightedSample(BANK, size));
+  const plans = Array.from({ length: n }, () => getAdaptiveSample(BANK, size));
 
   const eyebrow = document.createElement('div');
   eyebrow.className = 'panel-eyebrow';
@@ -1357,7 +1686,7 @@ function renderAdaptivePlansHub() {
     : 'Engine-balanced ratio: 60% historically weak domains, 25% unattempted items, 15% retention review.';
   work.appendChild(desc);
 
-  generatedPlans.forEach((plan, i) => {
+  plans.forEach((plan, i) => {
     const row = document.createElement('div');
     row.className = 'topic-item';
     row.style.margin = '10px 0';
@@ -1393,9 +1722,10 @@ function renderDashboardStats() {
     item.className = 'topic-item';
     item.innerHTML = '<span>' + tp + '</span><span class="topic-rate">' + (stat.rawRate !== null ? stat.rawRate + '%' : '—') + '</span>';
     item.onclick = () => {
+      if (activeSession && !confirm(t('confirmExit'))) return;
       $('selTopic').value = tp;
       const pool = BANK.filter(q => q.topic === tp);
-      startSession(pool.slice(0, Number($('selSize').value)), false, 'Topic: ' + tp);
+      startSession(shuffle(pool).slice(0, Number($('selSize').value)), false, 'Topic: ' + tp);
     };
     list.appendChild(item);
   });
@@ -1422,15 +1752,61 @@ function renderWelcomeState() {
     '</p>';
 }
 
+function updateUILanguage() {
+  document.documentElement.lang = state.lang;
+  $('langBtn').textContent = state.lang === 'en' ? '🇨🇳 中文' : '🇬🇧 English';
+  $('lblHeroTitle').textContent = t('heroTitle');
+  $('lblHeroDesc').textContent = t('heroDesc');
+  $('btnStartPractice').textContent = t('startPractice');
+  $('btnTimedMock').textContent = t('timedMock');
+  $('btnAdaptivePlans').textContent = t('adaptivePlans');
+  $('lblRoadmapTitle').textContent = t('roadmapTitle');
+  $('lblRoadmapGoal').textContent = t('roadmapGoal');
+  $('headerBenchmarkTag').textContent = '🎯 ' + t('passBenchmark');
+  $('headerDurationTag').textContent = '⏱ ' + t('durationTag');
+  $('lblStatBank').textContent = t('bankSize');
+  $('lblStatAttempts').textContent = t('answered');
+  $('lblStatAccuracy').textContent = t('accuracy');
+  $('lblPrivacyNote').textContent = t('privacy');
+  $('btnExport').textContent = t('export');
+  $('btnImport').textContent = t('import');
+  $('btnReviewMistakes').innerHTML = '🎯 ' + (state.lang === 'zh' ? '错题攻坚清零' : 'Mistake Killer') + ' (<span id="mistakeBadge">' + state.mistakes.length + '</span>)';
+  $('lblTopicsHeader').textContent = state.lang === 'zh' ? '考纲知识模块' : 'Syllabus Domains';
+  $('lblFilterTopic').textContent = state.lang === 'zh' ? '模块筛选' : 'Topic Filter';
+  $('lblBatchSize').textContent = state.lang === 'zh' ? '单次练习题量' : 'Session Size';
+}
+
+/* ================= KEYBOARD SHORTCUTS ================= */
+document.addEventListener('keydown', (e) => {
+  if (!activeSession) return;
+  if (['input', 'textarea', 'select'].includes(document.activeElement.tagName.toLowerCase())) return;
+
+  const key = e.key.toUpperCase();
+  let optIndex = -1;
+  if (['A', 'B', 'C', 'D'].includes(key)) {
+    optIndex = key.charCodeAt(0) - 65;
+  } else if (['1', '2', '3', '4'].includes(key)) {
+    optIndex = parseInt(key, 10) - 1;
+  }
+
+  const optionBtns = document.querySelectorAll('#workArea .opt-btn');
+  if (optIndex >= 0 && optIndex < optionBtns.length) {
+    optionBtns[optIndex].click();
+  } else if (e.key === 'Enter') {
+    const primaryBtn = document.querySelector('#workArea .actionsRow .btn, #workArea button.btn');
+    if (primaryBtn) primaryBtn.click();
+  }
+});
+
 /* ================= GLOBAL CONTROLS & BINDINGS ================= */
 $('langBtn').onclick = () => {
   state.lang = state.lang === 'en' ? 'zh' : 'en';
-  $('langBtn').textContent = state.lang === 'en' ? '🇨🇳 中文' : '🇬🇧 English';
   saveState();
+  updateUILanguage();
   renderRoadmap();
   renderDashboardStats();
   if (activeSession) {
-    renderCurrentQuestion();
+    renderQuestionView();
   } else {
     renderWelcomeState();
   }
@@ -1477,6 +1853,7 @@ $('fileInput').onchange = async (e) => {
     if (!data.records || typeof data.records !== 'object') throw new Error();
     state = Object.assign({}, state, data);
     saveState();
+    updateUILanguage();
     renderDashboardStats();
     renderWelcomeState();
     alert(t('importedOk'));
@@ -1486,6 +1863,7 @@ $('fileInput').onchange = async (e) => {
 };
 
 // Initial Render
+updateUILanguage();
 renderRoadmap();
 renderDashboardStats();
 renderWelcomeState();

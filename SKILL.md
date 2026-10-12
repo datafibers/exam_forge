@@ -65,7 +65,8 @@ Use when asked to create, rebuild, expand, or curate exam-practice websites, moc
 ---
 
 ## Quality Gates
-- **Anti-Hallucination:** Never claim a full past exam was read if it was not. Differentiate official materials from original synthetic items.
+- **Anti-Hallucination & Provenance:** Never claim a full past exam was read if it was not. Differentiate official materials from original synthetic items. Never invent past-exam provenance.
+- **Official Rules Honesty:** Never label unverified estimates as official rules. Mark unverified time limits and passing thresholds clearly as practice defaults or unverified benchmarks. Never silently assume written-event rubrics equal multiple-choice online exam blueprints.
 - **Concept Authenticity:** Never generate 100 questions from only 5 repetitive templates. Report distinct `concept_id` count vs variations.
 - **Distractor Rigor:** Every option must have a clear rationale explaining why it fails or why it is correct.
 - **True Offline Portability:** No external fonts, scripts, CDNs, or server dependencies. Progress stored in `localStorage` with JSON export/import.

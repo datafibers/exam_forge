@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Validate question bank JSON and optional exam profile for integrity, schema, and quality gates."""
-import argparse, collections, json, sys
+import argparse, collections, json, re, sys
 from pathlib import Path
 
 def validate(bank_path, profile_path=None):
@@ -47,13 +47,26 @@ def validate(bank_path, profile_path=None):
         # Check duplicate English stem (normalized)
         stem = ' '.join(q['en'].lower().split())
         if stem in stems:
-            warnings.append(f"[{row_id}] duplicate or near-duplicate English question stem")
+            errors.append(f"[{row_id}] duplicate or near-duplicate English question stem")
         stems.add(stem)
 
-        # Check non-empty text fields
+        # Check non-empty text fields and draft residues
         for k in ['en', 'zh', 'explanation_en', 'explanation_zh']:
-            if not isinstance(q[k], str) or not q[k].strip():
+            val = q[k]
+            if not isinstance(val, str) or not val.strip():
                 errors.append(f"[{row_id}] field '{k}' is empty or not a string")
+            elif re.search(r'\b(TODO|Wait:|Draft:)\b', val, re.IGNORECASE):
+                errors.append(f"[{row_id}] field '{k}' contains unreviewed draft markers ('{val[:40]}...')")
+
+        # Check unclosed math delimiters
+        for k in ['en', 'zh', 'explanation_en', 'explanation_zh']:
+            text = q.get(k, '')
+            if text.count(r'\(') != text.count(r'\)'):
+                errors.append(f"[{row_id}] unclosed \\( ... \\) math delimiter in '{k}'")
+            if text.count(r'\[') != text.count(r'\]'):
+                errors.append(f"[{row_id}] unclosed \\[ ... \\] math delimiter in '{k}'")
+            if text.count('$$') % 2 != 0:
+                errors.append(f"[{row_id}] unclosed $$ ... $$ math block in '{k}'")
 
         # Question type handling
         qtype = q.get('type', 'single')
@@ -74,6 +87,10 @@ def validate(bank_path, profile_path=None):
         elif qtype in ('single', 'multiple') and len(ch_en) < 2:
             errors.append(f"[{row_id}] question must have at least 2 choices")
 
+        # Check duplicate choice text within question
+        if len(set(x.strip().lower() for x in ch_en)) != len(ch_en):
+            errors.append(f"[{row_id}] duplicate option text detected in choices_en")
+
         # Check answer format
         ans = q['answer']
         if qtype in ('single', 'boolean'):
@@ -84,17 +101,21 @@ def validate(bank_path, profile_path=None):
                 errors.append(f"[{row_id}] multiple-choice answer must be a non-empty list of indices")
             elif any(not isinstance(x, int) or x < 0 or x >= len(ch_en) for x in ans):
                 errors.append(f"[{row_id}] multiple-choice answer indices {ans} out of bounds")
+            elif len(set(ans)) != len(ans):
+                errors.append(f"[{row_id}] duplicate indices in multiple-choice answer: {ans}")
 
         # Check difficulty
         if q['difficulty'] not in (1, 2, 3):
             errors.append(f"[{row_id}] invalid difficulty {q['difficulty']} (must be 1, 2, or 3)")
         diff_count[q['difficulty']] += 1
 
-        # Check distractor explanations if present
+        # Check distractor explanations
         for dist_key in ('why_wrong_en', 'why_wrong_zh'):
             if dist_key in q and q[dist_key] is not None:
-                if not isinstance(q[dist_key], list) or len(q[dist_key]) != len(ch_en):
-                    warnings.append(f"[{row_id}] {dist_key} length ({len(q[dist_key]) if isinstance(q[dist_key], list) else 'non-list'}) does not match choices count ({len(ch_en)})")
+                if not isinstance(q[dist_key], list):
+                    errors.append(f"[{row_id}] {dist_key} must be a list")
+                elif len(q[dist_key]) != len(ch_en):
+                    errors.append(f"[{row_id}] {dist_key} length ({len(q[dist_key])}) does not match choices count ({len(ch_en)})")
 
         topics[q['topic']] += 1
         concepts.add(q.get('concept_id', q['id']))
@@ -112,8 +133,11 @@ def validate(bank_path, profile_path=None):
                     errors.append(f"Exam profile missing required field '{rf}'")
             target_mock = prof.get('mock_questions_count', 100)
             if len(bank) < target_mock:
-                warnings.append(f"Question bank ({len(bank)} items) is smaller than official mock target ({target_mock} items). Mocks will reuse or scale.")
-            profile_info = f"\nProfile verified: {prof.get('exam_name')} | Duration: {prof.get('exam_duration_mins')}m | Pass: {prof.get('passing_score_pct')}%"
+                warnings.append(f"Question bank ({len(bank)} items) is smaller than mock target ({target_mock} items). Mocks will reuse or scale.")
+            
+            verified = prof.get('verified_rules', False)
+            verified_tag = "[Official Rules Verified]" if verified else "[Unofficial Practice Settings]"
+            profile_info = f"\nProfile: {prof.get('exam_name')} {verified_tag}\nDuration: {prof.get('exam_duration_mins')}m | Benchmark: {prof.get('passing_score_pct')}%"
         except Exception as e:
             errors.append(f"Cannot load profile file {profile_path}: {e}")
 
@@ -132,8 +156,6 @@ def validate(bank_path, profile_path=None):
         print(f"\n[!] Warnings ({len(warnings)}):")
         for w in warnings[:10]:
             print(f"  - {w}")
-        if len(warnings) > 10:
-            print(f"  ... and {len(warnings)-10} more warnings.")
 
     if errors:
         print(f"\n[X] Errors ({len(errors)}):")
@@ -141,7 +163,7 @@ def validate(bank_path, profile_path=None):
             print(f"  - {e}")
         return False
 
-    print("\n[✓] Schema, logic, and translation checks passed successfully.")
+    print("\n[✓] Schema, logic, math delimiters, and translation checks passed successfully.")
     return True
 
 if __name__ == '__main__':

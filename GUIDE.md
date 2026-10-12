@@ -10,18 +10,19 @@
 
 ```json
 {
-  "exam_name": "Ontario DECA EIP Regional Online Exam",
-  "exam_code": "DECA-EIP",
-  "exam_category": "Business & Entrepreneurship",
-  "description": "DECA 创新商业计划书（EIP）地区线上资格考，考察商业模式、财务分析与市场营销能力。",
-  "official_url": "https://www.deca.ca/competitive-events",
+  "exam_name": "Innovation & Quantitative Competency Practice",
+  "exam_code": "IQCP",
+  "exam_category": "Business, Quantitative & Technology",
+  "description": "自适应评测系统，考察量化财务分析、商业假设验证、单位经济学与算法逻辑。",
+  "official_url": "https://example.org/exam-blueprint",
   "passing_score_pct": 75,
-  "exam_duration_mins": 70,
-  "mock_questions_count": 100,
-  "target_bank_size": 300,
-  "target_mock_tests": 8,
-  "logo_monogram": "DECA",
-  "theme_default": "cyber"
+  "exam_duration_mins": 60,
+  "mock_questions_count": 20,
+  "target_bank_size": 100,
+  "target_mock_tests": 5,
+  "logo_monogram": "IQCP",
+  "theme_default": "cyber",
+  "verified_rules": false
 }
 ```
 
