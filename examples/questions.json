@@ -1,0 +1,184 @@
+[
+  {
+    "id": "ENT-001",
+    "concept_id": "break-even",
+    "topic": "Finance",
+    "type": "single",
+    "difficulty": 2,
+    "en": "A student startup sells a product for $25. Variable cost is $10 per unit and fixed costs are $3,000. How many units must it sell to break even? (Formula: $Q = \\frac{FC}{P - VC}$)",
+    "zh": "一家学生创业公司产品售价为25美元，单位变动成本为10美元，固定成本为3,000美元。需要销售多少件才能达到盈亏平衡？（公式：$Q = \\frac{FC}{P - VC}$）",
+    "choices_en": ["120 units", "150 units", "200 units", "300 units"],
+    "choices_zh": ["120 件", "150 件", "200 件", "300 件"],
+    "answer": 2,
+    "explanation_en": "Contribution margin is $P - VC = \\$25 - \\$10 = \\$15$ per unit. Break-even units = $\\frac{\\$3,000}{\\$15} = 200$. Fixed costs are recovered after 200 units.",
+    "explanation_zh": "单位边际贡献为 $P - VC = 25 - 10 = 15$ 美元。盈亏平衡销量 = $\\frac{3,000}{15} = 200$ 件。销售 200 件后刚好覆盖固定成本。",
+    "why_wrong_en": [
+      "120 units yields only $1,800 contribution, leaving $1,200 of fixed costs uncovered.",
+      "150 units divides fixed costs by $20 instead of the actual $15 contribution margin.",
+      "Correct: 200 × $15 = $3,000, exactly covering all fixed expenses.",
+      "300 units overstates required volume and generates $1,500 profit instead of break-even."
+    ],
+    "why_wrong_zh": [
+      "120 件仅产生 1,800 美元边际贡献，无法覆盖 1,200 美元的固定成本。",
+      "150 件错误地使用了 20 美元而非真实的 15 美元边际贡献进行除法计算。",
+      "正确：200 × 15 = 3,000 美元，刚好完全打平固定成本。",
+      "300 件高估了所需销量，已产生 1,500 美元营业利润而非保本点。"
+    ]
+  },
+  {
+    "id": "ENT-002",
+    "concept_id": "customer-discovery",
+    "topic": "Marketing",
+    "type": "single",
+    "difficulty": 2,
+    "en": "Before developing an app, an entrepreneur wants to confirm the problem matters to potential customers. Which action produces the strongest early evidence?",
+    "zh": "创业者开发应用前，希望确认潜在客户确实重视某个痛点。哪一种行动最能提供最有力的早期证据？",
+    "choices_en": [
+      "Ask friends and family if the app idea sounds exciting",
+      "Interview target users about their current workarounds and actual expenses",
+      "Buy broad social-media advertisements targeting all demographics",
+      "Build every requested feature before speaking with any users"
+    ],
+    "choices_zh": [
+      "询问朋友和家人是否觉得该应用点子很有趣",
+      "深度访谈目标用户，了解他们目前如何替代解决以及为此付出的实际成本",
+      "面向所有人群投放泛化的社交媒体展示广告",
+      "在与任何用户交流前把大家提过的所有功能全部开发出来"
+    ],
+    "answer": 1,
+    "explanation_en": "Behavior-based interviews uncover the frequency, severity, and current cost of the problem. They reduce leading-question bias better than asking whether someone likes a hypothetical app.",
+    "explanation_zh": "围绕真实行为的深度访谈能够客观揭示痛点发生的频率、严重程度和现有替代方案的实际成本，能最大程度避免假想引导性偏差。",
+    "why_wrong_en": [
+      "Friends and family often offer courteous encouragement rather than objective willingness-to-pay.",
+      "Correct: studying actual past behavior and current workarounds is the gold standard for validation.",
+      "Generic impressions measure passive social media clicks, not verified commitment or validated pain.",
+      "Building full features prematurely maximizes sunk cost before demand is validated."
+    ],
+    "why_wrong_zh": [
+      "熟人和家人通常出于礼貌给予赞扬，无法反映真实的付费意愿与客观市场需求。",
+      "正确：考察用户过去的真实解决行为与痛点成本是验证商业假设的黄金标准。",
+      "泛化广告仅能衡量偶发点击量，无法证明用户具有强烈的真实痛点。",
+      "在需求未经确认前直接做全量开发，会导致沉没成本急剧攀升。"
+    ]
+  },
+  {
+    "id": "ENT-003",
+    "concept_id": "unit-economics",
+    "topic": "Finance",
+    "type": "single",
+    "difficulty": 3,
+    "en": "A subscription startup spends $60 to acquire each customer ($CAC = \\$60$). Each user generates $12 monthly contribution margin and has an expected retention of 8 months. Which statement is best supported?",
+    "zh": "一家订阅制创业公司每获取一位客户花费 60 美元（$CAC = \\$60$）。每位客户每月贡献 12 美元毛利，预期平均留存 8 个月。哪项结论最有依据？",
+    "choices_en": [
+      "Contribution LTV is $96, yielding an $LTV / CAC$ ratio of 1.6:1",
+      "Customer lifetime value is $60, exactly breaking even with CAC",
+      "The business loses $12 on every acquired customer",
+      "The payback period is 8 months"
+    ],
+    "choices_zh": [
+      "客户贡献终身价值为 96 美元，形成的 $LTV / CAC$ 比率为 1.6:1",
+      "客户终身价值为 60 美元，刚好与获客成本打平",
+      "该业务在每位获取的客户上均亏损 12 美元",
+      "该公司的客户回收期（Payback Period）为 8 个月"
+    ],
+    "answer": 0,
+    "explanation_en": "Contribution $LTV = \\$12 \\times 8 = \\$96$. With $CAC = \\$60$, the net gross surplus is $\\$96 - \\$60 = \\$36$, and $LTV / CAC = 96 / 60 = 1.6$. Payback period is $\\$60 / \\$12 = 5$ months.",
+    "explanation_zh": "客户毛利终身价值 $LTV = 12 \\times 8 = 96$ 美元。由于 $CAC = 60$ 美元，净边际毛利为 $96 - 60 = 36$ 美元，且 $LTV / CAC = 96 / 60 = 1.6$。回本周期为 $60 / 12 = 5$ 个月。",
+    "why_wrong_en": [
+      "Correct: $LTV = \\$96$ and ratio is $96/60 = 1.6$.",
+      "$60 is the Customer Acquisition Cost (CAC), not Lifetime Value (LTV).",
+      "The business generates a positive gross margin of $36 per customer, not a loss.",
+      "The payback period is $60 / $12 = 5 months, whereas 8 months is the total lifetime."
+    ],
+    "why_wrong_zh": [
+      "正确：$LTV = 96$ 美元，$LTV / CAC = 1.6$。",
+      "60 美元是获客成本（CAC），而非客户终身价值（LTV）。",
+      "扣除获客成本后每位客户创造正向毛利 36 美元，并未亏损。",
+      "获客回收期为 $60 / 12 = 5$ 个月，8 个月是总生命周期时长。"
+    ]
+  },
+  {
+    "id": "ENT-004",
+    "concept_id": "lean-metrics",
+    "topic": "Strategy",
+    "type": "multiple",
+    "difficulty": 2,
+    "en": "Which TWO of the following metrics represent leading indicators of startup product-market fit rather than vanity metrics?",
+    "zh": "下列哪两项指标属于衡量初创企业产品市场契合度（PMF）的先行关键指标，而非虚荣指标？",
+    "choices_en": [
+      "Total cumulative app downloads since launch",
+      "Day-30 cohort retention rate",
+      "Organic net promoter score (NPS) with willingness to recommend",
+      "Registered user count regardless of last login date"
+    ],
+    "choices_zh": [
+      "自上线以来的累计总下载安装量",
+      "第 30 天同客群留存率（Cohort Retention Rate）",
+      "高净推荐值（NPS）及真实的自发转介绍率",
+      "无论上次登录时间为何的注册账户总数"
+    ],
+    "answer": [1, 2],
+    "explanation_en": "Cohort retention and organic advocacy (NPS) measure whether users find continuous, indispensable value. Cumulative signups and downloads only reflect marketing acquisition volume without confirming recurring retention.",
+    "explanation_zh": "同客群留存曲线是否走平以及用户的自发推荐口碑（NPS）是衡量产品是否解决真实刚需的核心指标；而累计下载量和注册总数只代表漏斗顶端的推广量，不代表留存与粘性。",
+    "why_wrong_en": [
+      "Cumulative downloads can be purchased through ads and do not prove active recurring usage.",
+      "Correct: Day-30 retention curve flattening demonstrates actual utility and stickiness.",
+      "Correct: Organic referral and high NPS signal genuine customer satisfaction.",
+      "Total registered accounts inflate counts with dormant or abandoned profiles."
+    ],
+    "why_wrong_zh": [
+      "累计下载量可以通过花钱买量迅速堆砌，无法证明用户的持续留存与真实使用。",
+      "正确：第30天留存率若趋于平缓，是产品具备核心实用价值的最强信号。",
+      "正确：自发的口碑传播与净推荐值直接反映了用户的实质满意度。",
+      "注册总人数容易被大量休眠账号和流失用户所虚增，属于典型虚荣指标。"
+    ]
+  },
+  {
+    "id": "ENT-005",
+    "concept_id": "unit-economics-rule",
+    "topic": "Finance",
+    "type": "boolean",
+    "difficulty": 1,
+    "en": "True or False: In scalable SaaS business models, an $LTV / CAC$ ratio below 1.0 indicates that acquiring each additional customer destroys company value.",
+    "zh": "判断题：在可规模化的 SaaS 商业模式中，$LTV / CAC$ 比率低于 1.0 意味着每多获取一个客户都在损耗公司价值。",
+    "choices_en": ["True", "False"],
+    "choices_zh": ["正确 (True)", "错误 (False)"],
+    "answer": 0,
+    "explanation_en": "True. If $LTV / CAC < 1.0$, the lifetime gross contribution from the customer is less than the sales and marketing spend needed to acquire them, resulting in a net loss on unit economics.",
+    "explanation_zh": "正确。当 $LTV / CAC < 1.0$ 时，客户在其整个生命周期内创造的毛利总额甚至无法覆盖获取该客户所支付的营销与销售成本，单体经济模型陷入负向亏损。",
+    "why_wrong_en": [
+      "Correct: When unit margin fails to cover acquisition expenses, growth accelerates financial burn.",
+      "Incorrect: $LTV / CAC < 1.0$ is definitively unsustainable and destroys economic value."
+    ],
+    "why_wrong_zh": [
+      "正确：当客户贡献毛利低于获客成本时，业务规模越大，亏损越严重。",
+      "错误：$LTV / CAC < 1.0$ 说明单客模型亏损，该结论必然成立。"
+    ]
+  },
+  {
+    "id": "CS-006",
+    "concept_id": "algorithm-logic",
+    "topic": "Operations",
+    "type": "single",
+    "difficulty": 2,
+    "en": "Review the pricing optimization routine below:\n```python\ndef calculate_discount(units, price):\n    if units >= 100:\n        return price * 0.80  # 20% volume discount\n    elif units >= 50:\n        return price * 0.90  # 10% volume discount\n    return price\n```\nWhat is the total billed invoice for an order of 60 units priced at $20/unit?",
+    "zh": "阅读以下批量折扣定价代码：\n```python\ndef calculate_discount(units, price):\n    if units >= 100:\n        return price * 0.80  # 20% volume discount\n    elif units >= 50:\n        return price * 0.90  # 10% volume discount\n    return price\n```\n当客户订购 60 件商品（单价 20 美元）时，订单应付总额为多少？",
+    "choices_en": ["$960", "$1,080", "$1,200", "$1,000"],
+    "choices_zh": ["960 美元", "1,080 美元", "1,200 美元", "1,000 美元"],
+    "answer": 1,
+    "explanation_en": "For 60 units, `units >= 50` matches, applying a 10% discount: unit price is $\\$20 \\times 0.90 = \\$18$. Total invoice = $60 \\times \\$18 = \\$1,080$.",
+    "explanation_zh": "对于 60 件订单，命中 `units >= 50` 分支，享受 10% 折扣：折后单价为 $20 \\times 0.90 = 18$ 美元。总金额 = $60 \\times 18 = 1,080$ 美元。",
+    "why_wrong_en": [
+      "$960 incorrectly applies the 20% discount (requiring 100+ units): 60 × $16 = $960.",
+      "Correct: 60 units × ($20 × 0.90) = $1,080.",
+      "$1,200 misses the discount entirely (60 × $20).",
+      "$1,000 is an arbitrary arithmetic miscalculation."
+    ],
+    "why_wrong_zh": [
+      "960 美元错误地适用了需要 100 件以上才能享受的 20% 折扣（60 × 16 = 960）。",
+      "正确：60 件 × (20 × 0.90) = 1,080 美元。",
+      "1,200 美元未计入任何折扣（60 × 20 = 1,200）。",
+      "1,000 美元属于计算偏差。"
+    ]
+  }
+]
