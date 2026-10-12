@@ -1,0 +1,1008 @@
+[
+  {
+    "id": "AMC10-001",
+    "concept_id": "arithmetic-progression-sum",
+    "topic": "Algebra",
+    "type": "single",
+    "difficulty": 1,
+    "en": "The sum of the first \\(n\\) terms of an arithmetic progression is given by \\(S_n = 3n^2 + 5n\\). What is the 10th term \\(a_{10}\\) of this progression?",
+    "zh": "某等差数列的前 \\(n\\) 项和公式为 \\(S_n = 3n^2 + 5n\\)。该数列的第 10 项 \\(a_{10}\\) 是多少？",
+    "choices_en": [
+      "56",
+      "62",
+      "68",
+      "74",
+      "80"
+    ],
+    "choices_zh": [
+      "56",
+      "62",
+      "68",
+      "74",
+      "80"
+    ],
+    "answer": 1,
+    "explanation_en": "The \\(n\\)-th term is \\(a_n = S_n - S_{n-1}\\). For \\(n = 10\\), \\(S_{10} = 3(10)^2 + 5(10) = 350\\), and \\(S_9 = 3(9)^2 + 5(9) = 243 + 45 = 288\\). Thus \\(a_{10} = 350 - 288 = 62\\). Alternatively, \\(a_n = (3n^2+5n) - (3(n-1)^2+5(n-1)) = 6n + 2\\), so \\(a_{10} = 6(10) + 2 = 62\\).",
+    "explanation_zh": "等差数列的第 \\(n\\) 项满足 \\(a_n = S_n - S_{n-1}\\)。当 \\(n = 10\\) 时，\\(S_{10} = 3(100) + 50 = 350\\)，\\(S_9 = 3(81) + 45 = 288\\)。因此 \\(a_{10} = 350 - 288 = 62\\)。亦可通项化简得 \\(a_n = 6n + 2\\)，代入 \\(n = 10\\) 得 62。",
+    "why_wrong_en": [
+      "56 incorrectly computes a_9 instead of a_10: 6(9) + 2 = 56.",
+      "Correct: a_10 = S_10 - S_9 = 350 - 288 = 62.",
+      "68 incorrectly computes a_11: 6(11) + 2 = 68.",
+      "74 evaluates 6(12) + 2.",
+      "80 is an arbitrary arithmetic miscalculation."
+    ],
+    "why_wrong_zh": [
+      "56 误算成了第 9 项：6(9) + 2 = 56。",
+      "正确：a_10 = S_10 - S_9 = 350 - 288 = 62。",
+      "68 误算成了第 11 项：6(11) + 2 = 68。",
+      "74 是代入 n = 12 时的结果。",
+      "80 属于计算粗心。"
+    ]
+  },
+  {
+    "id": "AMC10-002",
+    "concept_id": "legendre-trailing-zeros",
+    "topic": "Number Theory",
+    "type": "single",
+    "difficulty": 1,
+    "en": "How many trailing zeros does the decimal expansion of \\(100!\\) end with?",
+    "zh": "正整数 \\(100!\\) 的十进制表示末尾有多少个连续的零？",
+    "choices_en": [
+      "20",
+      "24",
+      "25",
+      "28",
+      "30"
+    ],
+    "choices_zh": [
+      "20",
+      "24",
+      "25",
+      "28",
+      "30"
+    ],
+    "answer": 1,
+    "explanation_en": "Trailing zeros are determined by the exponent of 5 in the prime factorization of \\(100!\\). By Legendre's formula: \\(E_5(100!) = \\lfloor \\frac{100}{5} \\rfloor + \\lfloor \\frac{100}{25} \\rfloor + \\lfloor \\frac{100}{125} \\rfloor = 20 + 4 + 0 = 24\\).",
+    "explanation_zh": "阶乘末尾零的个数取决于因数分解中 5 的幂次。由勒让德（Legendre）公式：\\(E_5(100!) = \\lfloor \\frac{100}{5} \\rfloor + \\lfloor \\frac{100}{25} \\rfloor = 20 + 4 = 24\\) 个。",
+    "why_wrong_en": [
+      "20 only counts multiples of 5, forgetting that multiples of 25 contribute an extra factor of 5.",
+      "Correct: 20 multiples of 5 plus 4 multiples of 25 gives 24 zeros.",
+      "25 assumes 100 / 4.",
+      "28 includes non-existent powers of 5.",
+      "30 is an overestimation."
+    ],
+    "why_wrong_zh": [
+      "20 只算了 5 的倍数，漏算了 25 的倍数多贡献的质因数 5。",
+      "正确：20 个含因数 5 的项加 4 个含 25 的项共 24 个末尾零。",
+      "25 错误用 100 除以 4。",
+      "28 虚算了额外的 5 的幂次。",
+      "30 属于估算过大。"
+    ]
+  },
+  {
+    "id": "AMC10-003",
+    "concept_id": "right-triangle-incircle-radius",
+    "topic": "Geometry",
+    "type": "single",
+    "difficulty": 1,
+    "figure_svg": "<svg viewBox=\"0 0 360 160\" width=\"100%\" height=\"130\" style=\"max-width:340px;\"><polygon points=\"40,130 240,130 40,30\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><circle cx=\"73\" cy=\"97\" r=\"33\" fill=\"none\" stroke=\"#06b6d4\" stroke-width=\"2\"/><text x=\"140\" y=\"145\" font-size=\"12\" fill=\"currentColor\" text-anchor=\"middle\">b = 8</text><text x=\"20\" y=\"85\" font-size=\"12\" fill=\"currentColor\">a = 6</text><text x=\"155\" y=\"70\" font-size=\"12\" fill=\"currentColor\">c = 10</text><circle cx=\"73\" cy=\"97\" r=\"3\" fill=\"#10b981\"/><text x=\"80\" y=\"95\" font-size=\"11\" fill=\"#10b981\">r</text></svg>",
+    "en": "A right triangle has perpendicular legs of length \\(a = 6\\) and \\(b = 8\\). What is the radius \\(r\\) of the circle inscribed in this triangle?",
+    "zh": "一个直角三角形的两条直角边长分别为 \\(a = 6\\) 和 \\(b = 8\\)。该直角三角形内切圆的半径 \\(r\\) 是多少？",
+    "choices_en": [
+      "1",
+      "2",
+      "2.5",
+      "3",
+      "4"
+    ],
+    "choices_zh": [
+      "1",
+      "2",
+      "2.5",
+      "3",
+      "4"
+    ],
+    "answer": 1,
+    "explanation_en": "Hypotenuse \\(c = \\sqrt{6^2 + 8^2} = 10\\). For any right triangle, inradius \\(r = \\frac{a + b - c}{2} = \\frac{6 + 8 - 10}{2} = 2\\). Alternatively, \\(r = \\frac{\\text{Area}}{s} = \\frac{\\frac{1}{2}(6)(8)}{\\frac{6+8+10}{2}} = \\frac{24}{12} = 2\\).",
+    "explanation_zh": "斜边 \\(c = \\sqrt{6^2 + 8^2} = 10\\)。直角三角形内切圆半径公式为 \\(r = \\frac{a + b - c}{2} = \\frac{6 + 8 - 10}{2} = 2\\)。亦可用面积与半周长比值：\\(r = \\frac{S}{p} = \\frac{24}{12} = 2\\)。",
+    "why_wrong_en": [
+      "1 is half the correct inradius.",
+      "Correct: r = (6 + 8 - 10) / 2 = 2.",
+      "2.5 is a miscalculated fraction.",
+      "3 incorrectly averages the legs.",
+      "4 confuses inradius with half of a leg."
+    ],
+    "why_wrong_zh": [
+      "1 只有内切圆半径的一半。",
+      "正确：r = (6 + 8 - 10) / 2 = 2。",
+      "2.5 属于分式计算错误。",
+      "3 错误取了边长平均值。",
+      "4 误将半条直角边当作半径。"
+    ]
+  },
+  {
+    "id": "AMC10-004",
+    "concept_id": "complementary-counting-line",
+    "topic": "Combinatorics",
+    "type": "single",
+    "difficulty": 1,
+    "en": "Five students \\(A, B, C, D,\\) and \\(E\\) stand in a straight line. In how many different orders can they arrange themselves such that \\(A\\) and \\(B\\) do NOT stand adjacent to each other?",
+    "zh": "五名学生 \\(A, B, C, D, E\\) 排成一排。如果要求 \\(A\\) 和 \\(B\\) 两人互不相邻，共有多少种不同的排列方式？",
+    "choices_en": [
+      "48",
+      "60",
+      "72",
+      "84",
+      "96"
+    ],
+    "choices_zh": [
+      "48",
+      "60",
+      "72",
+      "84",
+      "96"
+    ],
+    "answer": 2,
+    "explanation_en": "Total permutations of 5 students = \\(5! = 120\\). To find arrangements where \\(A\\) and \\(B\\) are adjacent, treat \\((A, B)\\) as a single block: there are \\(4! = 24\\) block arrangements and \\(2! = 2\\) internal orders, yielding \\(24 \\times 2 = 48\\) arrangements. By complementary counting: \\(120 - 48 = 72\\).",
+    "explanation_zh": "5 人的总排列数为 \\(5! = 120\\)。采用正难则反的补集思想：将相邻的 \\(A, B\\) 捆绑为一个整体，有 \\(4! = 24\\) 种排法，\\(A, B\\) 内部有 \\(2! = 2\\) 种排法，相邻总数为 \\(24 \\times 2 = 48\\)。不相邻排法为 \\(120 - 48 = 72\\) 种。",
+    "why_wrong_en": [
+      "48 is the number of arrangements where A and B ARE adjacent.",
+      "60 is half of the total arrangements 120 / 2.",
+      "Correct: Total (120) - Adjacent (48) = 72.",
+      "84 is an arithmetic error.",
+      "96 subtracts only 4! without multiplying by 2! for internal order."
+    ],
+    "why_wrong_zh": [
+      "48 是 A 与 B 相邻的排列数，而非不相邻。",
+      "60 是将总数 120 折半导致的错误推导。",
+      "正确：总数 (120) - 相邻 (48) = 72 种。",
+      "84 属于四则运算错误。",
+      "96 扣除时漏乘了 AB 内部的排列数 2!。"
+    ]
+  },
+  {
+    "id": "AMC10-005",
+    "concept_id": "vieta-cubic-sum",
+    "topic": "Algebra",
+    "type": "single",
+    "difficulty": 2,
+    "en": "Let \\(\\alpha\\) and \\(\\beta\\) be the roots of the quadratic equation \\(x^2 - 7x + 9 = 0\\). What is the value of \\(\\alpha^3 + \\beta^3\\)?",
+    "zh": "设 \\(\\alpha\\) 与 \\(\\beta\\) 是二次方程 \\(x^2 - 7x + 9 = 0\\) 的两个实数根。求 \\(\\alpha^3 + \\beta^3\\) 的值。",
+    "choices_en": [
+      "154",
+      "172",
+      "196",
+      "217",
+      "343"
+    ],
+    "choices_zh": [
+      "154",
+      "172",
+      "196",
+      "217",
+      "343"
+    ],
+    "answer": 0,
+    "explanation_en": "By Vieta's formulas, \\(\\alpha + \\beta = 7\\) and \\(\\alpha\\beta = 9\\). Using the identity \\(\\alpha^3 + \\beta^3 = (\\alpha + \\beta)^3 - 3\\alpha\\beta(\\alpha + \\beta)\\): \\(\\alpha^3 + \\beta^3 = 7^3 - 3(9)(7) = 343 - 189 = 154\\).",
+    "explanation_zh": "由韦达定理可知：\\(\\alpha + \\beta = 7\\)，\\(\\alpha\\beta = 9\\)。利用代数恒等式 \\(\\alpha^3 + \\beta^3 = (\\alpha + \\beta)^3 - 3\\alpha\\beta(\\alpha + \\beta)\\)：\\(\\alpha^3 + \\beta^3 = 7^3 - 3(9)(7) = 343 - 189 = 154\\)。",
+    "why_wrong_en": [
+      "Correct: 7^3 - 3(9)(7) = 343 - 189 = 154.",
+      "172 miscalculates 3 * 9 * 7.",
+      "196 subtracts 3 * 7^2 instead of 3 * alpha * beta * (alpha + beta).",
+      "217 computes 7^3 - 2 * 9 * 7.",
+      "343 is simply (alpha + beta)^3, ignoring cross terms."
+    ],
+    "why_wrong_zh": [
+      "正确：7^3 - 3(9)(7) = 343 - 189 = 154。",
+      "172 乘法计算出现失误。",
+      "196 错误扣除了 3 * 7^2。",
+      "217 错用了平方展开中的系数 2。",
+      "343 仅为 (alpha + beta)^3，忽略了交叉项。"
+    ]
+  },
+  {
+    "id": "AMC10-006",
+    "concept_id": "divisor-count-formula",
+    "topic": "Number Theory",
+    "type": "single",
+    "difficulty": 2,
+    "en": "How many positive integer divisors does the number \\(N = 2^4 \\cdot 3^3 \\cdot 5^2\\) have?",
+    "zh": "正整数 \\(N = 2^4 \\cdot 3^3 \\cdot 5^2\\) 共有多少个正因数？",
+    "choices_en": [
+      "24",
+      "36",
+      "48",
+      "60",
+      "72"
+    ],
+    "choices_zh": [
+      "24",
+      "36",
+      "48",
+      "60",
+      "72"
+    ],
+    "answer": 3,
+    "explanation_en": "If \\(N = p_1^{e_1} p_2^{e_2} \\cdots p_k^{e_k}\\), the total number of divisors is \\(d(N) = (e_1 + 1)(e_2 + 1)\\cdots(e_k + 1)\\). Here, \\(d(N) = (4 + 1)(3 + 1)(2 + 1) = 5 \\times 4 \\times 3 = 60\\).",
+    "explanation_zh": "由正因数个数公式可知，若质因数分解为 \\(N = p_1^{e_1} p_2^{e_2} p_3^{e_3}\\)，因数个数为 \\((e_1 + 1)(e_2 + 1)(e_3 + 1)\\)。本题中 \\(d(N) = (4 + 1)(3 + 1)(2 + 1) = 5 \\times 4 \\times 3 = 60\\) 个。",
+    "why_wrong_en": [
+      "24 multiplies the exponents directly: 4 * 3 * 2 = 24, forgetting the zero-exponent +1.",
+      "36 uses wrong factor arithmetic.",
+      "48 omits incrementing one of the powers.",
+      "Correct: (4 + 1) * (3 + 1) * (2 + 1) = 60.",
+      "72 is an overcount."
+    ],
+    "why_wrong_zh": [
+      "24 直接将各指数相乘（4 * 3 * 2 = 24），漏掉了 0 次幂对应的 +1。",
+      "36 计算系数有误。",
+      "48 漏给某个指数加 1。",
+      "正确：(4 + 1) * (3 + 1) * (2 + 1) = 60 个。",
+      "72 属于虚增因数。"
+    ]
+  },
+  {
+    "id": "AMC10-007",
+    "concept_id": "power-of-a-point-secant",
+    "topic": "Geometry",
+    "type": "single",
+    "difficulty": 2,
+    "figure_svg": "<svg viewBox=\"0 0 420 180\" width=\"100%\" height=\"130\" style=\"max-width:380px;\"><circle cx=\"270\" cy=\"90\" r=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><line x1=\"50\" y1=\"90\" x2=\"245\" y2=\"24\" stroke=\"#06b6d4\" stroke-width=\"2\"/><circle cx=\"245\" cy=\"24\" r=\"4\" fill=\"#06b6d4\"/><text x=\"245\" y=\"16\" font-size=\"11\" fill=\"currentColor\">T</text><line x1=\"50\" y1=\"90\" x2=\"340\" y2=\"90\" stroke=\"currentColor\" stroke-width=\"2\"/><circle cx=\"50\" cy=\"90\" r=\"4\" fill=\"#f59e0b\"/><text x=\"38\" y=\"94\" font-size=\"12\" fill=\"currentColor\">P</text><circle cx=\"200\" cy=\"90\" r=\"4\" fill=\"#10b981\"/><text x=\"198\" y=\"82\" font-size=\"11\" fill=\"currentColor\">A</text><circle cx=\"340\" cy=\"90\" r=\"4\" fill=\"#10b981\"/><text x=\"344\" y=\"84\" font-size=\"11\" fill=\"currentColor\">B</text><text x=\"130\" y=\"46\" font-size=\"11\" fill=\"#06b6d4\">PT = 6</text><text x=\"120\" y=\"106\" font-size=\"11\" fill=\"currentColor\">PA = 4</text></svg>",
+    "en": "From an exterior point \\(P\\), a tangent segment \\(PT\\) is drawn to a circle with length \\(PT = 6\\). A secant line through \\(P\\) intersects the circle at points \\(A\\) and \\(B\\) (with \\(A\\) between \\(P\\) and \\(B\\)). If \\(PA = 4\\), what is the length of chord \\(AB\\)?",
+    "zh": "从圆外一点 \\(P\\) 向圆引切线 \\(PT\\)，切点为 \\(T\\)，切线长 \\(PT = 6\\)。过点 \\(P\\) 的割线交圆于 \\(A, B\\) 两点（点 \\(A\\) 在 \\(P, B\\) 之间）。若 \\(PA = 4\\)，求弦 \\(AB\\) 的长度。",
+    "choices_en": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "9"
+    ],
+    "choices_zh": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "9"
+    ],
+    "answer": 1,
+    "explanation_en": "By the Power of a Point (Tangent-Secant Theorem): \\(PT^2 = PA \\cdot PB\\). Substituting: \\(6^2 = 4 \\cdot PB \\implies 36 = 4 \\cdot PB \\implies PB = 9\\). The chord length is \\(AB = PB - PA = 9 - 4 = 5\\).",
+    "explanation_zh": "由切割线定理（圆幂定理）：\\(PT^2 = PA \\cdot PB\\)。代入数值：\\(6^2 = 4 \\cdot PB \\implies 36 = 4 \\cdot PB \\implies PB = 9\\)。因此弦长 \\(AB = PB - PA = 9 - 4 = 5\\)。",
+    "why_wrong_en": [
+      "4 confuses the chord length AB with the secant segment PA.",
+      "Correct: PT^2 = PA * PB => 36 = 4 * PB => PB = 9 => AB = 9 - 4 = 5.",
+      "6 confuses chord AB with tangent PT.",
+      "8 is an arithmetic error.",
+      "9 is the full secant length PB, forgetting to subtract PA = 4."
+    ],
+    "why_wrong_zh": [
+      "4 混淆了弦长 AB 与割线外段 PA。",
+      "正确：PT^2 = PA * PB => 36 = 4 * PB => PB = 9 => AB = 9 - 4 = 5。",
+      "6 混淆了弦长与切线长 PT。",
+      "8 属于计算失误。",
+      "9 是全长 PB，漏减了外段 PA = 4。"
+    ]
+  },
+  {
+    "id": "AMC10-008",
+    "concept_id": "stars-and-bars-positive",
+    "topic": "Combinatorics",
+    "type": "single",
+    "difficulty": 2,
+    "en": "How many ordered triples of positive integers \\((x, y, z)\\) satisfy the equation \\(x + y + z = 14\\)?",
+    "zh": "满足方程 \\(x + y + z = 14\\) 的正整数有序三元组 \\((x, y, z)\\) 共有多少组？",
+    "choices_en": [
+      "55",
+      "66",
+      "78",
+      "91",
+      "105"
+    ],
+    "choices_zh": [
+      "55",
+      "66",
+      "78",
+      "91",
+      "105"
+    ],
+    "answer": 2,
+    "explanation_en": "By the Stars and Bars theorem for positive integers (each \\(\\ge 1\\)), distributing \\(n = 14\\) items into \\(k = 3\\) bins corresponds to choosing \\(k - 1\\) dividers among \\(n - 1\\) spaces: \\(\\binom{n - 1}{k - 1} = \\binom{14 - 1}{3 - 1} = \\binom{13}{2} = \\frac{13 \\times 12}{2} = 78\\).",
+    "explanation_zh": "由隔板法（Stars and Bars），将 \\(n = 14\\) 分解为 \\(k = 3\\) 个正整数（各变量 \\(\\ge 1\\)），相当于在 13 个空隙中插入 2 块隔板：\\(\\binom{n - 1}{k - 1} = \\binom{13}{2} = \\frac{13 \\times 12}{2} = 78\\) 组。",
+    "why_wrong_en": [
+      "55 evaluates C(11, 2), subtracting too many items.",
+      "66 evaluates C(12, 2).",
+      "Correct: C(13, 2) = (13 * 12) / 2 = 78.",
+      "91 evaluates C(14, 2).",
+      "105 allows non-negative integers C(14 + 3 - 1, 2) = C(16, 2) = 120."
+    ],
+    "why_wrong_zh": [
+      "55 是 C(11, 2)，过度减去了基数。",
+      "66 是 C(12, 2)。",
+      "正确：C(13, 2) = (13 * 12) / 2 = 78 组。",
+      "91 是 C(14, 2)。",
+      "105 属于组合数换算失误。"
+    ]
+  },
+  {
+    "id": "AMC10-009",
+    "concept_id": "am-gm-minimum-value",
+    "topic": "Algebra",
+    "type": "single",
+    "difficulty": 2,
+    "en": "For all positive real numbers \\(x > 0\\), what is the minimum possible value of the function \\(f(x) = 4x + \\frac{9}{x}\\)?",
+    "zh": "对所有正实数 \\(x > 0\\)，函数 \\(f(x) = 4x + \\frac{9}{x}\\) 的最小值是多少？",
+    "choices_en": [
+      "6",
+      "10",
+      "12",
+      "13",
+      "16"
+    ],
+    "choices_zh": [
+      "6",
+      "10",
+      "12",
+      "13",
+      "16"
+    ],
+    "answer": 2,
+    "explanation_en": "By the Arithmetic Mean-Geometric Mean (AM-GM) inequality: \\(4x + \\frac{9}{x} \\ge 2\\sqrt{4x \\cdot \\frac{9}{x}} = 2\\sqrt{36} = 12\\). Equality holds when \\(4x = \\frac{9}{x} \\implies x^2 = \\frac{9}{4} \\implies x = \\frac{3}{2} > 0\\).",
+    "explanation_zh": "由基本不等式（均值不等式 AM-GM）：\\(4x + \\frac{9}{x} \\ge 2\\sqrt{4x \\cdot \\frac{9}{x}} = 2\\sqrt{36} = 12\\)。当且仅当 \\(4x = \\frac{9}{x} \\implies x^2 = \\frac{9}{4} \\implies x = 1.5\\) 时取等号，因此最小值为 12。",
+    "why_wrong_en": [
+      "6 forgets the multiplier of 2 in 2 * sqrt(ab).",
+      "10 is an arbitrary estimate.",
+      "Correct: 2 * sqrt(4 * 9) = 2 * 6 = 12.",
+      "13 evaluates f(1) = 4(1) + 9/1 = 13, which is not the minimum.",
+      "16 evaluates f(2) = 8 + 4.5 = 12.5 rounded."
+    ],
+    "why_wrong_zh": [
+      "6 漏掉了均值不等式公式前面的系数 2（只算了 sqrt(ab) = 6）。",
+      "10 属于主观估值。",
+      "正确：2 * sqrt(4 * 9) = 2 * 6 = 12。",
+      "13 只是代入 x = 1 时的值（4 + 9 = 13），并非极小值点。",
+      "16 并非最小值。"
+    ]
+  },
+  {
+    "id": "AMC10-010",
+    "concept_id": "modulo-power-units-digit",
+    "topic": "Number Theory",
+    "type": "single",
+    "difficulty": 2,
+    "en": "What is the remainder when \\(7^{2026}\\) is divided by 10 (i.e., what is the units digit of \\(7^{2026}\\))?",
+    "zh": "求 \\(7^{2026}\\) 除以 10 的余数（即 \\(7^{2026}\\) 的个位数字是多少）？",
+    "choices_en": [
+      "1",
+      "3",
+      "5",
+      "7",
+      "9"
+    ],
+    "choices_zh": [
+      "1",
+      "3",
+      "5",
+      "7",
+      "9"
+    ],
+    "answer": 4,
+    "explanation_en": "The units digits of powers of 7 repeat with period 4: \\(7^1 \\equiv 7\\), \\(7^2 \\equiv 9\\), \\(7^3 \\equiv 3\\), \\(7^4 \\equiv 1 \\pmod{10}\\). Dividing the exponent by 4: \\(2026 = 4 \\times 506 + 2\\), so \\(7^{2026} \\equiv 7^2 \\equiv 9 \\pmod{10}\\).",
+    "explanation_zh": "7 的整数次幂个位数字以 4 为周期循环：\\(7^1 \\to 7\\)，\\(7^2 \\to 9\\)，\\(7^3 \\to 3\\)，\\(7^4 \\to 1\\)。由于指数 \\(2026 = 4 \\times 506 + 2\\)，故 \\(7^{2026} \\equiv 7^2 \\equiv 9 \\pmod{10}\\)。",
+    "why_wrong_en": [
+      "1 corresponds to powers with remainder 0 mod 4 (e.g. 7^2024).",
+      "3 corresponds to powers with remainder 3 mod 4.",
+      "5 is impossible as 7 is coprime to 5 and odd.",
+      "7 corresponds to powers with remainder 1 mod 4.",
+      "Correct: 2026 mod 4 = 2, so the units digit is 7^2 = 9."
+    ],
+    "why_wrong_zh": [
+      "1 对应指数除以 4 余 0 的情况（如 7^2024）。",
+      "3 对应指数除以 4 余 3 的情况。",
+      "5 不可能出现，7 的奇次幂不可能含因子 5。",
+      "7 对应指数除以 4 余 1 的情况。",
+      "正确：2026 mod 4 = 2，个位数字为 7^2 = 9。"
+    ]
+  },
+  {
+    "id": "AMC10-011",
+    "concept_id": "isosceles-trapezoid-pythagoras",
+    "topic": "Geometry",
+    "type": "single",
+    "difficulty": 2,
+    "figure_svg": "<svg viewBox=\"0 0 380 160\" width=\"100%\" height=\"130\" style=\"max-width:350px;\"><polygon points=\"40,130 320,130 240,40 120,40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><line x1=\"120\" y1=\"40\" x2=\"120\" y2=\"130\" stroke=\"#38bdf8\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><text x=\"100\" y=\"90\" font-size=\"11\" fill=\"#38bdf8\">h = 12</text><text x=\"180\" y=\"32\" font-size=\"12\" fill=\"currentColor\" text-anchor=\"middle\">CD = 8</text><text x=\"180\" y=\"148\" font-size=\"12\" fill=\"currentColor\" text-anchor=\"middle\">AB = 18</text><text x=\"60\" y=\"80\" font-size=\"12\" fill=\"currentColor\">13</text><text x=\"295\" y=\"80\" font-size=\"12\" fill=\"currentColor\">13</text></svg>",
+    "en": "An isosceles trapezoid \\(ABCD\\) has bases \\(AB = 18\\) and \\(CD = 8\\), and legs \\(AD = BC = 13\\). What is the area of trapezoid \\(ABCD\\)?",
+    "zh": "在等腰梯形 \\(ABCD\\) 中，下底 \\(AB = 18\\)，上底 \\(CD = 8\\)，两腰长 \\(AD = BC = 13\\)。求梯形 \\(ABCD\\) 的面积。",
+    "choices_en": [
+      "130",
+      "144",
+      "156",
+      "169",
+      "182"
+    ],
+    "choices_zh": [
+      "130",
+      "144",
+      "156",
+      "169",
+      "182"
+    ],
+    "answer": 2,
+    "explanation_en": "Dropping altitudes from \\(C\\) and \\(D\\) onto \\(AB\\), the base projections have length \\(\\frac{18 - 8}{2} = 5\\). By the Pythagorean theorem, the height is \\(h = \\sqrt{13^2 - 5^2} = \\sqrt{169 - 25} = 12\\). The trapezoid area is \\(\\frac{AB + CD}{2} \\cdot h = \\frac{18 + 8}{2} \\cdot 12 = 13 \\times 12 = 156\\).",
+    "explanation_zh": "作两高线，底边两端突出的直角边长为 \\(\\frac{18 - 8}{2} = 5\\)。由勾股定理可得梯形的高 \\(h = \\sqrt{13^2 - 5^2} = 12\\)。梯形面积公式为 \\(\\frac{18 + 8}{2} \\times 12 = 13 \\times 12 = 156\\)。",
+    "why_wrong_en": [
+      "130 miscalculates the height as 10.",
+      "144 multiplies 12 * 12.",
+      "Correct: Area = (18 + 8) / 2 * 12 = 13 * 12 = 156.",
+      "169 computes 13^2, confusing side length with height.",
+      "182 uses an incorrect height factor of 14."
+    ],
+    "why_wrong_zh": [
+      "130 误将高算成了 10。",
+      "144 错算为 12 * 12。",
+      "正确：面积 = (18 + 8) / 2 * 12 = 13 * 12 = 156。",
+      "169 算的是腰长的平方 13^2。",
+      "182 错误套用了高为 14 的计算。"
+    ]
+  },
+  {
+    "id": "AMC10-012",
+    "concept_id": "geometric-probability-meeting",
+    "topic": "Combinatorics",
+    "type": "single",
+    "difficulty": 2,
+    "en": "Alice and Bob each arrive independently and uniformly at random at a library between 2:00 PM and 3:00 PM. Each stays for exactly 20 minutes before leaving. What is the probability that they are in the library at the same time?",
+    "zh": "爱丽丝和鲍勃在下午 2:00 到 3:00 之间各自独立且均匀随机地到达图书馆。每个人均在图书馆停留恰好 20 分钟后离开。两人能在图书馆相遇的概率是多少？",
+    "choices_en": [
+      "\\(\\frac{1}{3}\\)",
+      "\\(\\frac{4}{9}\\)",
+      "\\(\\frac{1}{2}\\)",
+      "\\(\\frac{5}{9}\\)",
+      "\\(\\frac{2}{3}\\)"
+    ],
+    "choices_zh": [
+      "\\(\\frac{1}{3}\\)",
+      "\\(\\frac{4}{9}\\)",
+      "\\(\\frac{1}{2}\\)",
+      "\\(\\frac{5}{9}\\)",
+      "\\(\\frac{2}{3}\\)"
+    ],
+    "answer": 3,
+    "explanation_en": "Let arrival times in minutes after 2:00 PM be \\(x, y \\in [0, 60]\\). Total area of the square sample space is \\(60^2 = 3600\\). They meet if \\(|x - y| \\le 20\\). The non-meeting region consists of two right triangles with leg lengths \\(60 - 20 = 40\\): total non-meeting area = \\(2 \\times \\frac{1}{2} \\times 40^2 = 1600\\). Probability = \\(1 - \\frac{1600}{3600} = 1 - \\frac{4}{9} = \\frac{5}{9}\\).",
+    "explanation_zh": "设到达时间分别为 \\(x, y \\in [0, 60]\\) 分钟。样本空间为面积 \\(60^2 = 3600\\) 的正方形。两人相遇条件为 \\(|x - y| \\le 20\\)。不相遇的区域由两块直角边长为 40 的等腰直角三角形组成，其面积为 \\(2 \\times \\frac{1}{2} \\times 40^2 = 1600\\)。因此相遇概率为 \\(1 - \\frac{1600}{3600} = 1 - \\frac{4}{9} = \\frac{5}{9}\\)。",
+    "why_wrong_en": [
+      "1/3 is the stay ratio 20 / 60, ignoring two-dimensional overlap.",
+      "4/9 is the probability that they do NOT meet (1600 / 3600).",
+      "1/2 is an intuitive but inaccurate guess.",
+      "Correct: 1 - (40/60)^2 = 1 - 4/9 = 5/9.",
+      "2/3 is an overestimation."
+    ],
+    "why_wrong_zh": [
+      "1/3 只是简单的停留时长占比 20/60，忽略了二维几何重叠。",
+      "4/9 恰好是两人不相遇的概率（1600 / 3600）。",
+      "1/2 属于直觉错误猜测。",
+      "正确：1 - (40/60)^2 = 1 - 4/9 = 5/9。",
+      "2/3 估计过高。"
+    ]
+  },
+  {
+    "id": "AMC10-013",
+    "concept_id": "logarithm-change-of-base",
+    "topic": "Algebra",
+    "type": "single",
+    "difficulty": 2,
+    "en": "If \\(\\log_2(x) + \\log_4(x) + \\log_{16}(x) = 21\\), what is the value of \\(x\\)?",
+    "zh": "已知 \\(\\log_2(x) + \\log_4(x) + \\log_{16}(x) = 21\\)，求 \\(x\\) 的值。",
+    "choices_en": [
+      "\\(2^6\\)",
+      "\\(2^8\\)",
+      "\\(2^{12}\\)",
+      "\\(2^{14}\\)",
+      "\\(2^{16}\\)"
+    ],
+    "choices_zh": [
+      "\\(2^6\\)",
+      "\\(2^8\\)",
+      "\\(2^{12}\\)",
+      "\\(2^{14}\\)",
+      "\\(2^{16}\\)"
+    ],
+    "answer": 2,
+    "explanation_en": "Express all logarithms in base 2: \\(\\log_4(x) = \\frac{\\log_2(x)}{\\log_2(4)} = \\frac{1}{2}\\log_2(x)\\), and \\(\\log_{16}(x) = \\frac{1}{4}\\log_2(x)\\). The sum is \\(\\log_2(x) \\left(1 + \\frac{1}{2} + \\frac{1}{4}\\right) = \\frac{7}{4}\\log_2(x) = 21\\). Solving: \\(\\log_2(x) = 21 \\cdot \\frac{4}{7} = 12\\), so \\(x = 2^{12}\\).",
+    "explanation_zh": "统一换底至以 2 为底：\\(\\log_4(x) = \\frac{1}{2}\\log_2(x)\\)，\\(\\log_{16}(x) = \\frac{1}{4}\\log_2(x)\\)。原式合并得 \\(\\log_2(x)(1 + \\frac{1}{2} + \\frac{1}{4}) = \\frac{7}{4}\\log_2(x) = 21\\)。解得 \\(\\log_2(x) = 21 \\times \\frac{4}{7} = 12\\)，故 \\(x = 2^{12}\\)。",
+    "why_wrong_en": [
+      "2^6 incorrectly divides 12 by 2.",
+      "2^8 is an algebraic calculation slip.",
+      "Correct: (7/4) * log_2(x) = 21 => log_2(x) = 12 => x = 2^12.",
+      "2^14 uses (3/2) * log_2(x) = 21.",
+      "2^16 assumes log_2(x) = 16."
+    ],
+    "why_wrong_zh": [
+      "2^6 错误地将 12 再次折半。",
+      "2^8 属于代数运算失误。",
+      "正确：(7/4) * log_2(x) = 21 => log_2(x) = 12 => x = 2^12。",
+      "2^14 漏算了第三项的系数 1/4。",
+      "2^16 误算 log_2(x) = 16。"
+    ]
+  },
+  {
+    "id": "AMC10-014",
+    "concept_id": "gcd-lcm-identity",
+    "topic": "Number Theory",
+    "type": "single",
+    "difficulty": 2,
+    "en": "The greatest common divisor of two positive integers \\(a\\) and \\(b\\) is 12, and their least common multiple is 720. If \\(a = 36\\), what is the value of \\(b\\)?",
+    "zh": "两个正整数 \\(a\\) 和 \\(b\\) 的最大公约数是 12，最小公倍数是 720。若 \\(a = 36\\)，求 \\(b\\) 的值。",
+    "choices_en": [
+      "120",
+      "180",
+      "240",
+      "288",
+      "360"
+    ],
+    "choices_zh": [
+      "120",
+      "180",
+      "240",
+      "288",
+      "360"
+    ],
+    "answer": 2,
+    "explanation_en": "By the fundamental relation \\(a \\cdot b = \\gcd(a, b) \\cdot \\operatorname{lcm}(a, b)\\): \\(36 \\cdot b = 12 \\cdot 720 = 8640\\). Solving for \\(b\\): \\(b = \\frac{8640}{36} = 240\\).",
+    "explanation_zh": "由正整数基本恒等式 \\(a \\cdot b = \\gcd(a, b) \\cdot \\operatorname{lcm}(a, b)\\)：\\(36 \\cdot b = 12 \\cdot 720 = 8640\\)。解得 \\(b = \\frac{8640}{36} = 240\\)。",
+    "why_wrong_en": [
+      "120 divides 8640 / 72.",
+      "180 is 720 / 4.",
+      "Correct: b = (12 * 720) / 36 = 240.",
+      "288 calculates 720 * 12 / 30.",
+      "360 is 720 / 2."
+    ],
+    "why_wrong_zh": [
+      "120 是 8640 / 72 导致的错误结果。",
+      "180 是 720 / 4。",
+      "正确：b = (12 * 720) / 36 = 240。",
+      "288 属于计算失误。",
+      "360 是直接将最小公倍数折半。"
+    ]
+  },
+  {
+    "id": "AMC10-015",
+    "concept_id": "angle-bisector-theorem",
+    "topic": "Geometry",
+    "type": "single",
+    "difficulty": 2,
+    "figure_svg": "<svg viewBox=\"0 0 360 160\" width=\"100%\" height=\"130\" style=\"max-width:340px;\"><polygon points=\"40,130 300,130 120,30\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><line x1=\"120\" y1=\"30\" x2=\"144\" y2=\"130\" stroke=\"#8b5cf6\" stroke-width=\"2\"/><circle cx=\"144\" cy=\"130\" r=\"3\" fill=\"#8b5cf6\"/><text x=\"110\" y=\"24\" font-size=\"12\" fill=\"currentColor\">A</text><text x=\"30\" y=\"135\" font-size=\"12\" fill=\"currentColor\">B</text><text x=\"308\" y=\"135\" font-size=\"12\" fill=\"currentColor\">C</text><text x=\"142\" y=\"146\" font-size=\"11\" fill=\"#8b5cf6\">D</text><text x=\"65\" y=\"75\" font-size=\"11\" fill=\"currentColor\">AB = 10</text><text x=\"215\" y=\"75\" font-size=\"11\" fill=\"currentColor\">AC = 15</text><text x=\"80\" y=\"122\" font-size=\"11\" fill=\"#8b5cf6\">BD = ?</text></svg>",
+    "en": "In \\(\\triangle ABC\\), the side lengths are \\(AB = 10\\), \\(AC = 15\\), and \\(BC = 20\\). The interior angle bisector of \\(\\angle A\\) intersects side \\(BC\\) at point \\(D\\). What is the length of segment \\(BD\\)?",
+    "zh": "在 \\(\\triangle ABC\\) 中，已知边长 \\(AB = 10\\)，\\(AC = 15\\)，\\(BC = 20\\)。\\(\\angle A\\) 的内角平分线交对边 \\(BC\\) 于点 \\(D\\)。求线段 \\(BD\\) 的长度。",
+    "choices_en": [
+      "6",
+      "7.5",
+      "8",
+      "10",
+      "12"
+    ],
+    "choices_zh": [
+      "6",
+      "7.5",
+      "8",
+      "10",
+      "12"
+    ],
+    "answer": 2,
+    "explanation_en": "By the Angle Bisector Theorem: \\(\\frac{BD}{DC} = \\frac{AB}{AC} = \\frac{10}{15} = \\frac{2}{3}\\). Since \\(BD + DC = BC = 20\\), \\(BD = 20 \\cdot \\frac{2}{2 + 3} = 20 \\cdot \\frac{2}{5} = 8\\).",
+    "explanation_zh": "由内角平分线定理：\\(\\frac{BD}{DC} = \\frac{AB}{AC} = \\frac{10}{15} = \\frac{2}{3}\\)。由于 \\(BD + DC = BC = 20\\)，因此 \\(BD = 20 \\times \\frac{2}{2 + 3} = 20 \\times \\frac{2}{5} = 8\\)。",
+    "why_wrong_en": [
+      "6 assumes a ratio of 1 to 3.",
+      "7.5 is 15 / 2.",
+      "Correct: BD = 20 * (10 / 25) = 8.",
+      "10 assumes D is the midpoint of BC.",
+      "12 is the length of DC = 20 * (3 / 5) = 12."
+    ],
+    "why_wrong_zh": [
+      "6 错误估计比例为 1:3。",
+      "7.5 是 15 / 2。",
+      "正确：BD = 20 * (10 / 25) = 8。",
+      "10 误以为 D 是 BC 的中点。",
+      "12 算出的是另一段 DC（20 * 3/5 = 12）。"
+    ]
+  },
+  {
+    "id": "AMC10-016",
+    "concept_id": "grid-paths-forbidden-point",
+    "topic": "Combinatorics",
+    "type": "single",
+    "difficulty": 2,
+    "en": "How many paths are there in the coordinate plane from \\((0, 0)\\) to \\((5, 4)\\) using only unit steps right \\((+1, 0)\\) or unit steps up \\((0, +1)\\), such that the path does NOT pass through the point \\((2, 2)\\)?",
+    "zh": "在平面直角坐标系中，每次只能向右移动 1 个单位或向上移动 1 个单位。从 \\((0, 0)\\) 走到 \\((5, 4)\\) 且不经过点 \\((2, 2)\\) 的不同路径共有多少条？",
+    "choices_en": [
+      "54",
+      "66",
+      "72",
+      "86",
+      "96"
+    ],
+    "choices_zh": [
+      "54",
+      "66",
+      "72",
+      "86",
+      "96"
+    ],
+    "answer": 1,
+    "explanation_en": "Total unconstrained paths from \\((0,0)\\) to \\((5,4)\\) = \\(\\binom{5+4}{4} = \\binom{9}{4} = \\frac{9 \\times 8 \\times 7 \\times 6}{24} = 126\\). Paths passing through \\((2,2)\\): from \\((0,0)\\) to \\((2,2)\\) is \\(\\binom{2+2}{2} = \\binom{4}{2} = 6\\), and from \\((2,2)\\) to \\((5,4)\\) is \\(\\binom{(5-2)+(4-2)}{4-2} = \\binom{5}{2} = 10\\). Thus \\(6 \\times 10 = 60\\) paths pass through \\((2,2)\\). By complementary counting: \\(126 - 60 = 66\\).",
+    "explanation_zh": "从 \\((0,0)\\) 到 \\((5,4)\\) 的无约束总路径数为 \\(\\binom{5+4}{4} = \\binom{9}{4} = 126\\)。途经 \\((2,2)\\) 的路径数：从 \\((0,0)\\) 到 \\((2,2)\\) 为 \\(\\binom{4}{2} = 6\\) 种；从 \\((2,2)\\) 到 \\((5,4)\\) 为 \\(\\binom{3+2}{2} = 10\\) 种，乘积为 \\(6 \\times 10 = 60\\) 条。利用补集思想：\\(126 - 60 = 66\\) 条。",
+    "why_wrong_en": [
+      "54 calculates 126 - 72.",
+      "Correct: Total C(9,4)=126 minus through (2,2) [C(4,2)*C(5,2)=60] = 66.",
+      "72 is an arithmetic error.",
+      "86 forgets to multiply the second subpath.",
+      "96 only subtracts 30."
+    ],
+    "why_wrong_zh": [
+      "54 算成了 126 - 72。",
+      "正确：总数 C(9,4)=126 减去途经 (2,2) 的 [6*10=60] = 66 条。",
+      "72 属于四则运算失误。",
+      "86 漏算了第二段路径的乘法原理。",
+      "96 扣除的限制项不足。"
+    ]
+  },
+  {
+    "id": "AMC10-017",
+    "concept_id": "telescoping-rational-product",
+    "topic": "Algebra",
+    "type": "single",
+    "difficulty": 3,
+    "en": "What is the numerical value of the finite product \\(\\prod_{k=2}^{10} \\left(1 - \\frac{1}{k^2}\\right) = \\left(1 - \\frac{1}{4}\\right)\\left(1 - \\frac{1}{9}\\right)\\cdots\\left(1 - \\frac{1}{100}\\right)\\)?",
+    "zh": "求有限乘积 \\(\\prod_{k=2}^{10} \\left(1 - \\frac{1}{k^2}\\right) = \\left(1 - \\frac{1}{4}\\right)\\left(1 - \\frac{1}{9}\\right)\\cdots\\left(1 - \\frac{1}{100}\\right)\\) 的准确数值。",
+    "choices_en": [
+      "\\(\\frac{9}{20}\\)",
+      "\\(\\frac{11}{20}\\)",
+      "\\(\\frac{1}{2}\\)",
+      "\\(\\frac{5}{11}\\)",
+      "\\(\\frac{19}{40}\\)"
+    ],
+    "choices_zh": [
+      "\\(\\frac{9}{20}\\)",
+      "\\(\\frac{11}{20}\\)",
+      "\\(\\frac{1}{2}\\)",
+      "\\(\\frac{5}{11}\\)",
+      "\\(\\frac{19}{40}\\)"
+    ],
+    "answer": 1,
+    "explanation_en": "Factor each term: \\(1 - \\frac{1}{k^2} = \\frac{k^2 - 1}{k^2} = \\frac{(k-1)(k+1)}{k^2}\\). Expanding the product: \\(\\left(\\frac{1}{2} \\cdot \\frac{3}{2}\\right) \\left(\\frac{2}{3} \\cdot \\frac{4}{3}\\right) \\left(\\frac{3}{4} \\cdot \\frac{5}{4}\\right) \\cdots \\left(\\frac{9}{10} \\cdot \\frac{11}{10}\\right)\\). All intermediate terms cancel, leaving: \\(\\frac{1}{2} \\cdot \\frac{11}{10} = \\frac{11}{20}\\).",
+    "explanation_zh": "将每一项因式分解：\\(1 - \\frac{1}{k^2} = \\frac{(k-1)(k+1)}{k^2}\\)。展开裂项相消：\\((\\frac{1}{2} \\cdot \\frac{3}{2}) (\\frac{2}{3} \\cdot \\frac{4}{3}) \\cdots (\\frac{9}{10} \\cdot \\frac{11}{10})\\)。中间项全部对消，仅剩余首尾：\\(\\frac{1}{2} \\times \\frac{11}{10} = \\frac{11}{20}\\)。",
+    "why_wrong_en": [
+      "9/20 calculates (1/2) * (9/10).",
+      "Correct: (1/2) * (11/10) = 11/20.",
+      "1/2 misses the upper remainder factor (k+1)/k.",
+      "5/11 is an inverted ratio.",
+      "19/40 is an incorrect arithmetic approximation."
+    ],
+    "why_wrong_zh": [
+      "9/20 误算了分子为 9（算成 1/2 * 9/10）。",
+      "正确：首尾对消剩余 (1/2) * (11/10) = 11/20。",
+      "1/2 漏掉了尾部的因子 (10+1)/10。",
+      "5/11 分数颠倒。",
+      "19/40 属于通分失误。"
+    ]
+  },
+  {
+    "id": "AMC10-018",
+    "concept_id": "diophantine-positive-solutions",
+    "topic": "Number Theory",
+    "type": "single",
+    "difficulty": 3,
+    "en": "How many ordered pairs of positive integers \\((x, y)\\) satisfy the linear Diophantine equation \\(7x + 11y = 2026\\)?",
+    "zh": "满足线性不定方程 \\(7x + 11y = 2026\\) 的正整数有序对 \\((x, y)\\) 共有多少组？",
+    "choices_en": [
+      "25",
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "choices_zh": [
+      "25",
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "answer": 1,
+    "explanation_en": "Work modulo 7: \\(11y \\equiv 4y \\equiv 2026 \\pmod{7}\\). Since \\(2026 = 7(289) + 3\\), \\(4y \\equiv 3 \\equiv 24 \\implies y \\equiv 6 \\pmod{7}\\). The smallest positive \\(y = 6\\), which yields \\(7x = 2026 - 11(6) = 1960 \\implies x = 280\\). The general positive solution is \\(x = 280 - 11k\\) and \\(y = 6 + 7k\\) for integer \\(k\\). For \\(x > 0\\): \\(280 - 11k \\ge 1 \\implies 11k \\le 279 \\implies k \\le 25\\). Since \\(y > 0\\) requires \\(k \\ge 0\\), \\(k \\in \\{0, 1, 2, \\dots, 25\\}\\), yielding exactly \\(25 - 0 + 1 = 26\\) solutions.",
+    "explanation_zh": "两边模 7：\\(11y \\equiv 4y \\equiv 2026 \\pmod{7}\\)。由于 \\(2026 = 7 \\times 289 + 3\\)，\\(4y \\equiv 3 \\equiv 24 \\implies y \\equiv 6 \\pmod{7}\\)。最小正整数解为 \\(y = 6\\)，对应 \\(7x = 2026 - 66 = 1960 \\implies x = 280\\)。通解形式为 \\(x = 280 - 11k\\)，\\(y = 6 + 7k\\)。由 \\(x > 0\\) 得 \\(11k \\le 279 \\implies k \\le 25\\)；由 \\(y > 0\\) 得 \\(k \\ge 0\\)。整数 \\(k \\in [0, 25]\\)，共有 \\(25 - 0 + 1 = 26\\) 组正整数解。",
+    "why_wrong_en": [
+      "25 forgets to include k = 0 (counting 1 to 25).",
+      "Correct: k in [0..25] gives 26 solutions.",
+      "27 includes an extra boundary term.",
+      "28 divides 2026 / 77 directly.",
+      "29 is an arithmetic miscalculation."
+    ],
+    "why_wrong_zh": [
+      "25 漏算了 k = 0 对应的初始正整数解 (280, 6)。",
+      "正确：k 在 [0..25] 内共 26 组解。",
+      "27 多算了一个端点。",
+      "28 粗糙地用 2026 / 77 进行整除估计。",
+      "29 属于边界计算错误。"
+    ]
+  },
+  {
+    "id": "AMC10-019",
+    "concept_id": "ptolemy-cyclic-quadrilateral",
+    "topic": "Geometry",
+    "type": "single",
+    "difficulty": 3,
+    "figure_svg": "<svg viewBox=\"0 0 360 180\" width=\"100%\" height=\"130\" style=\"max-width:340px;\"><circle cx=\"180\" cy=\"90\" r=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/><polygon points=\"120,40 230,40 245,130 115,120\" fill=\"none\" stroke=\"#06b6d4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"40\" x2=\"245\" y2=\"130\" stroke=\"#8b5cf6\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"230\" y1=\"40\" x2=\"115\" y2=\"120\" stroke=\"#8b5cf6\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><text x=\"108\" y=\"36\" font-size=\"12\" fill=\"currentColor\">A</text><text x=\"238\" y=\"36\" font-size=\"12\" fill=\"currentColor\">B</text><text x=\"255\" y=\"135\" font-size=\"12\" fill=\"currentColor\">C</text><text x=\"102\" y=\"128\" font-size=\"12\" fill=\"currentColor\">D</text><text x=\"175\" y=\"32\" font-size=\"11\" fill=\"currentColor\">2</text><text x=\"245\" y=\"85\" font-size=\"11\" fill=\"currentColor\">3</text><text x=\"180\" y=\"140\" font-size=\"11\" fill=\"currentColor\">6</text><text x=\"100\" y=\"80\" font-size=\"11\" fill=\"currentColor\">7</text></svg>",
+    "en": "In a cyclic quadrilateral \\(ABCD\\) with vertices in clockwise order, the side lengths are \\(AB = 2\\), \\(BC = 3\\), \\(CD = 6\\), and \\(DA = 7\\). What is the ratio of the diagonal lengths \\(\\frac{AC}{BD}\\)?",
+    "zh": "在圆内接四边形 \\(ABCD\\) 中，顶点沿圆周顺时针排列，边长分别为 \\(AB = 2\\)，\\(BC = 3\\)，\\(CD = 6\\)，\\(DA = 7\\)。对角线长度之比 \\(\\frac{AC}{BD}\\) 是多少？",
+    "choices_en": [
+      "\\(\\frac{1}{2}\\)",
+      "\\(\\frac{3}{5}\\)",
+      "\\(\\frac{2}{3}\\)",
+      "\\(\\frac{3}{4}\\)",
+      "\\(\\frac{4}{5}\\)"
+    ],
+    "choices_zh": [
+      "\\(\\frac{1}{2}\\)",
+      "\\(\\frac{3}{5}\\)",
+      "\\(\\frac{2}{3}\\)",
+      "\\(\\frac{3}{4}\\)",
+      "\\(\\frac{4}{5}\\)"
+    ],
+    "answer": 2,
+    "explanation_en": "For any cyclic quadrilateral \\(ABCD\\), the ratio of the diagonals is given by the classical formula: \\(\\frac{AC}{BD} = \\frac{AB \\cdot AD + BC \\cdot CD}{AB \\cdot BC + AD \\cdot CD}\\). Substituting the side lengths: \\(\\frac{AC}{BD} = \\frac{2 \\cdot 7 + 3 \\cdot 6}{2 \\cdot 3 + 7 \\cdot 6} = \\frac{14 + 18}{6 + 42} = \\frac{32}{48} = \\frac{2}{3}\\).",
+    "explanation_zh": "由圆内接四边形对角线比值定理：\\(\\frac{AC}{BD} = \\frac{AB \\cdot AD + BC \\cdot CD}{AB \\cdot BC + AD \\cdot CD}\\)。代入已知边长：\\(\\frac{AC}{BD} = \\frac{2 \\times 7 + 3 \\times 6}{2 \\times 3 + 7 \\times 6} = \\frac{14 + 18}{6 + 42} = \\frac{32}{48} = \\frac{2}{3}\\)。",
+    "why_wrong_en": [
+      "1/2 calculates 24 / 48.",
+      "3/5 evaluates 30 / 50.",
+      "Correct: (14 + 18) / (6 + 42) = 32 / 48 = 2/3.",
+      "3/4 is an inverted arithmetic error.",
+      "4/5 is an incorrect ratio."
+    ],
+    "why_wrong_zh": [
+      "1/2 算成了 24 / 48。",
+      "3/5 算成了 30 / 50。",
+      "正确：(14 + 18) / (6 + 42) = 32 / 48 = 2/3。",
+      "3/4 属于代数推导颠倒。",
+      "4/5 比例错误。"
+    ]
+  },
+  {
+    "id": "AMC10-020",
+    "concept_id": "pie-three-sets",
+    "topic": "Combinatorics",
+    "type": "single",
+    "difficulty": 3,
+    "en": "In a school math club of 100 students, 50 participate in Algebra, 40 in Geometry, and 35 in Number Theory. Exactly 20 participate in both Algebra and Geometry, 15 in both Algebra and Number Theory, 12 in both Geometry and Number Theory, and 8 participate in all three subjects. How many students participate in NONE of these three subjects?",
+    "zh": "在一个 100 人的数学俱乐部中，50 人参加代数组，40 人参加几何组，35 人参加数论组。恰好 20 人同时参加代数和几何，15 人同时参加代数和数论，12 人同时参加几何和数论，8 人同时参加全部三组。有多少名学生未参加这三个组中的任何一组？",
+    "choices_en": [
+      "8",
+      "12",
+      "14",
+      "16",
+      "20"
+    ],
+    "choices_zh": [
+      "8",
+      "12",
+      "14",
+      "16",
+      "20"
+    ],
+    "answer": 2,
+    "explanation_en": "By the Principle of Inclusion-Exclusion for 3 sets: \\(|A \\cup G \\cup N| = (|A| + |G| + |N|) - (|A \\cap G| + |A \\cap N| + |G \\cap N|) + |A \\cap G \\cap N|\\). Substituting: \\(|A \\cup G \\cup N| = (50 + 40 + 35) - (20 + 15 + 12) + 8 = 125 - 47 + 8 = 86\\). The number of students participating in none of the subjects is \\(100 - 86 = 14\\).",
+    "explanation_zh": "由三集合容斥原理：\\(|A \\cup G \\cup N| = (50 + 40 + 35) - (20 + 15 + 12) + 8 = 125 - 47 + 8 = 86\\)。未参加任何一组的学生人数为全集减去并集：\\(100 - 86 = 14\\) 人。",
+    "why_wrong_en": [
+      "8 is the number of students who participate in ALL three subjects.",
+      "12 misses the +8 ternary intersection term: 100 - (125 - 47) = 100 - 78 = 22.",
+      "Correct: 100 - (125 - 47 + 8) = 100 - 86 = 14.",
+      "16 computes 100 - 84.",
+      "20 ignores double intersections."
+    ],
+    "why_wrong_zh": [
+      "8 是同时参加全部三组的学生人数。",
+      "12 漏加上了三集合公共重叠项 +8。",
+      "正确：100 - (125 - 47 + 8) = 100 - 86 = 14 人。",
+      "16 算成了 100 - 84。",
+      "20 忽略了重叠相减项。"
+    ]
+  },
+  {
+    "id": "AMC10-021",
+    "concept_id": "symmetric-polynomial-system",
+    "topic": "Algebra",
+    "type": "single",
+    "difficulty": 3,
+    "en": "Real numbers \\(x\\) and \\(y\\) satisfy the system \\(x + y = 5\\) and \\(x^4 + y^4 = 97\\). What is the value of the product \\(xy\\)?",
+    "zh": "实数 \\(x\\) 和 \\(y\\) 满足方程组 \\(x + y = 5\\) 且 \\(x^4 + y^4 = 97\\)。求乘积 \\(xy\\) 的值。",
+    "choices_en": [
+      "4",
+      "6",
+      "8",
+      "9",
+      "12"
+    ],
+    "choices_zh": [
+      "4",
+      "6",
+      "8",
+      "9",
+      "12"
+    ],
+    "answer": 1,
+    "explanation_en": "Let \\(p = xy\\). Then \\(x^2 + y^2 = (x + y)^2 - 2xy = 25 - 2p\\). Further, \\(x^4 + y^4 = (x^2 + y^2)^2 - 2(xy)^2 = (25 - 2p)^2 - 2p^2 = 625 - 100p + 2p^2 = 97\\). Rearranging gives \\(2p^2 - 100p + 528 = 0 \\implies p^2 - 50p + 264 = 0\\). Factoring: \\((p - 6)(p - 44) = 0\\). Since \\(x\\) and \\(y\\) are real, \\((x + y)^2 \\ge 4xy \\implies 25 \\ge 4p \\implies p \\le 6.25\\). Therefore, \\(p = 6\\) (rejecting \\(p = 44\\)).",
+    "explanation_zh": "设 \\(p = xy\\)。则 \\(x^2 + y^2 = (x+y)^2 - 2p = 25 - 2p\\)。进而 \\(x^4 + y^4 = (x^2+y^2)^2 - 2p^2 = (25-2p)^2 - 2p^2 = 625 - 100p + 2p^2 = 97\\)。化简二次方程：\\(2p^2 - 100p + 528 = 0 \\implies p^2 - 50p + 264 = 0\\)，因式分解得 \\((p - 6)(p - 44) = 0\\)。由于 \\(x, y\\) 为实数，判别式要求 \\((x+y)^2 \\ge 4xy \\implies 25 \\ge 4p \\implies p \\le 6.25\\)。因此舍去 44，得 \\(xy = 6\\)。",
+    "why_wrong_en": [
+      "4 gives x^4 + y^4 = (25 - 8)^2 - 32 = 289 - 32 = 257 != 97.",
+      "Correct: p^2 - 50p + 264 = 0, p <= 6.25 gives p = 6.",
+      "8 violates the real-root condition (4p <= 25 => p <= 6.25).",
+      "9 violates the real-root condition.",
+      "12 violates the real-root condition."
+    ],
+    "why_wrong_zh": [
+      "4 代入检验得 x^4 + y^4 = 257 != 97。",
+      "正确：方程解得 p = 6 与 44，由实数根存在条件 p <= 6.25 得 p = 6。",
+      "8 违背实数解判别式条件（4p <= 25 即 p <= 6.25）。",
+      "9 会导致虚数根。",
+      "12 会导致虚数根。"
+    ]
+  },
+  {
+    "id": "AMC10-022",
+    "concept_id": "chinese-remainder-theorem",
+    "topic": "Number Theory",
+    "type": "single",
+    "difficulty": 3,
+    "en": "What is the smallest positive integer \\(N\\) that leaves a remainder of 2 when divided by 3, a remainder of 3 when divided by 5, and a remainder of 5 when divided by 7?",
+    "zh": "求满足下列同余条件的最小正整数 \\(N\\)：被 3 除余 2，被 5 除余 3，被 7 除余 5。",
+    "choices_en": [
+      "23",
+      "38",
+      "47",
+      "53",
+      "68"
+    ],
+    "choices_zh": [
+      "23",
+      "38",
+      "47",
+      "53",
+      "68"
+    ],
+    "answer": 4,
+    "explanation_en": "The system is: (1) \\(N \\equiv 2 \\pmod 3\\), (2) \\(N \\equiv 3 \\pmod 5\\), (3) \\(N \\equiv 5 \\pmod 7\\). From (3), \\(N = 7k + 5\\). Testing \\(k \\ge 0\\): \\(k=0 \\to 5\\); \\(k=1 \\to 12\\); \\(k=2 \\to 19\\); \\(k=3 \\to 26\\); \\(k=4 \\to 33\\); \\(k=5 \\to 40\\); \\(k=6 \\to 47\\); \\(k=7 \\to 54\\); \\(k=8 \\to 61\\); \\(k=9 \\to 68\\). Testing (2) \\(N \\equiv 3 \\pmod 5\\): values ending in 3 or 8 are \\(33, 68\\). Testing (1) \\(N \\equiv 2 \\pmod 3\\): \\(33 \\equiv 0 \\pmod 3\\) (fails); \\(68 = 3(22) + 2 \\equiv 2 \\pmod 3\\) (satisfies all). Smallest positive integer is 68.",
+    "explanation_zh": "同余方程组为：\\(N \\equiv 2 \\pmod 3\\)，\\(N \\equiv 3 \\pmod 5\\)，\\(N \\equiv 5 \\pmod 7\\)。由第三式知 \\(N = 7k + 5\\)。依次检验候选值 \\(k = 0, 1, 2, \\dots\\)：5, 12, 19, 26, 33, 40, 47, 54, 61, 68...。同时满足模 5 余 3（个位数为 3 或 8）的有 33, 68。验证模 3：33 能被 3 整除；而 \\(68 = 3 \\times 22 + 2\\) 恰好余 2。故最小正整数为 68。",
+    "why_wrong_en": [
+      "23 leaves remainder 2 mod 3 and 3 mod 5, but 23 = 7(3) + 2 leaves remainder 2 mod 7 (not 5).",
+      "38 leaves remainder 2 mod 3 and 3 mod 5, but 38 = 7(5) + 3 leaves remainder 3 mod 7.",
+      "47 = 7(6) + 5, but 47 = 5(9) + 2 leaves remainder 2 mod 5.",
+      "53 = 5(10) + 3, but 53 = 7(7) + 4 leaves remainder 4 mod 7.",
+      "Correct: 68 = 3(22) + 2, 68 = 5(13) + 3, and 68 = 7(9) + 5."
+    ],
+    "why_wrong_zh": [
+      "23 满足模 3 和模 5，但 23 除以 7 余 2，不满足模 7 余 5。",
+      "38 除以 7 余 3，不满足条件。",
+      "47 除以 5 余 2，不满足模 5 余 3。",
+      "53 除以 7 余 4，不满足条件。",
+      "正确：68 = 3*22+2 = 5*13+3 = 7*9+5，同时满足三式。"
+    ]
+  },
+  {
+    "id": "AMC10-023",
+    "concept_id": "coordinate-circle-distance",
+    "topic": "Geometry",
+    "type": "single",
+    "difficulty": 3,
+    "figure_svg": "<svg viewBox=\"0 0 360 180\" width=\"100%\" height=\"130\" style=\"max-width:340px;\"><line x1=\"30\" y1=\"150\" x2=\"320\" y2=\"150\" stroke=\"currentColor\" stroke-width=\"1.5\"/><line x1=\"50\" y1=\"20\" x2=\"50\" y2=\"160\" stroke=\"currentColor\" stroke-width=\"1.5\"/><circle cx=\"210\" cy=\"60\" r=\"50\" fill=\"none\" stroke=\"#06b6d4\" stroke-width=\"2\"/><circle cx=\"210\" cy=\"60\" r=\"3\" fill=\"#06b6d4\"/><text x=\"215\" y=\"55\" font-size=\"11\" fill=\"currentColor\">(8, 6)</text><line x1=\"50\" y1=\"150\" x2=\"210\" y2=\"60\" stroke=\"#f59e0b\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><circle cx=\"50\" cy=\"150\" r=\"4\" fill=\"#10b981\"/><text x=\"32\" y=\"162\" font-size=\"11\" fill=\"currentColor\">(0,0)</text><circle cx=\"170\" cy=\"82\" r=\"3\" fill=\"#10b981\"/><text x=\"80\" y=\"125\" font-size=\"11\" fill=\"#10b981\">d_min = 5</text></svg>",
+    "en": "In the Cartesian coordinate plane, a circle of radius \\(R = 5\\) is centered at point \\((8, 6)\\). What is the minimum Euclidean distance from the origin \\((0, 0)\\) to any point on this circle?",
+    "zh": "在平面直角坐标系中，圆心位于 \\((8, 6)\\) 的圆半径为 \\(R = 5\\)。从坐标原点 \\((0, 0)\\) 到该圆周上任意点的最短欧氏距离是多少？",
+    "choices_en": [
+      "3",
+      "5",
+      "7",
+      "8",
+      "10"
+    ],
+    "choices_zh": [
+      "3",
+      "5",
+      "7",
+      "8",
+      "10"
+    ],
+    "answer": 1,
+    "explanation_en": "The distance from the origin \\((0, 0)\\) to the circle center \\((8, 6)\\) is \\(d_{\\text{center}} = \\sqrt{8^2 + 6^2} = \\sqrt{64 + 36} = 10\\). The closest point on the circle lies on the line segment connecting the origin to the center. Therefore, the minimum distance is \\(d_{\\min} = d_{\\text{center}} - R = 10 - 5 = 5\\).",
+    "explanation_zh": "从坐标原点 \\((0, 0)\\) 到圆心 \\((8, 6)\\) 的距离为 \\(d_{\\text{圆心}} = \\sqrt{8^2 + 6^2} = \\sqrt{100} = 10\\)。圆周上离原点最近的点位于原点与圆心的连线上，因此最短距离为 \\(d_{\\min} = d_{\\text{圆心}} - R = 10 - 5 = 5\\)。",
+    "why_wrong_en": [
+      "3 calculates 8 - 5.",
+      "Correct: d_min = sqrt(8^2 + 6^2) - 5 = 10 - 5 = 5.",
+      "7 calculates 12 - 5.",
+      "8 is the x-coordinate of the center.",
+      "10 is the distance to the center, forgetting to subtract the circle radius R = 5."
+    ],
+    "why_wrong_zh": [
+      "3 误算了 8 - 5。",
+      "正确：最短距离 = sqrt(8^2 + 6^2) - 5 = 10 - 5 = 5。",
+      "7 属于数值计算失误。",
+      "8 仅为圆心的横坐标。",
+      "10 是原点到圆心的距离，漏减了圆的半径 R = 5。"
+    ]
+  },
+  {
+    "id": "AMC10-024",
+    "concept_id": "geometric-distribution-expectation",
+    "topic": "Combinatorics",
+    "type": "single",
+    "difficulty": 3,
+    "en": "A fair 6-sided die is rolled repeatedly until an even number appears. Let \\(X\\) be the total number of rolls made. What is the expected value \\(E[X]\\)?",
+    "zh": "一枚质地均匀的六面骰子被重复掷出，直到第一次出现偶数时停止。设总共掷出的次数为 \\(X\\)。求 \\(X\\) 的期望值 \\(E[X]\\)（平均掷骰次数）。",
+    "choices_en": [
+      "1.5",
+      "2",
+      "2.5",
+      "3",
+      "3.5"
+    ],
+    "choices_zh": [
+      "1.5",
+      "2",
+      "2.5",
+      "3",
+      "3.5"
+    ],
+    "answer": 1,
+    "explanation_en": "On each roll, the probability of rolling an even number \\(\\{2, 4, 6\\}\\) is \\(p = \\frac{3}{6} = \\frac{1}{2}\\). The random variable \\(X\\) follows a geometric distribution with parameter \\(p\\). The expected value of a geometric distribution is \\(E[X] = \\frac{1}{p} = \\frac{1}{1/2} = 2\\).",
+    "explanation_zh": "每次掷骰子出现偶数（2, 4, 6）的概率为 \\(p = \\frac{3}{6} = \\frac{1}{2}\\)。变量 \\(X\\) 服从成功概率为 \\(p\\) 的几何分布。几何分布的数学期望公式为 \\(E[X] = \\frac{1}{p} = \\frac{1}{1/2} = 2\\)。",
+    "why_wrong_en": [
+      "1.5 confuses probability with expectation.",
+      "Correct: E[X] = 1 / p = 1 / (1/2) = 2.",
+      "2.5 evaluates 1 + 1.5.",
+      "3 assumes p = 1/3.",
+      "3.5 is the expected face value of a single roll (1+2+3+4+5+6)/6."
+    ],
+    "why_wrong_zh": [
+      "1.5 混淆了概率概念。",
+      "正确：E[X] = 1 / p = 1 / (1/2) = 2 次。",
+      "2.5 估算偏高。",
+      "3 误以为出现偶数的概率为 1/3。",
+      "3.5 是单次掷骰子点数的期望值 (1+2+3+4+5+6)/6，而非等待时间。"
+    ]
+  },
+  {
+    "id": "AMC10-025",
+    "concept_id": "polynomial-reciprocal-roots",
+    "topic": "Algebra",
+    "type": "single",
+    "difficulty": 3,
+    "en": "Let \\(P(x) = x^3 - 6x^2 + 11x - 6\\). If the three roots of \\(P(x)\\) are \\(r_1, r_2, r_3\\), what is the value of \\(\\frac{1}{r_1} + \\frac{1}{r_2} + \\frac{1}{r_3}\\)?",
+    "zh": "设三次多项式 \\(P(x) = x^3 - 6x^2 + 11x - 6\\) 的三个实数根为 \\(r_1, r_2, r_3\\)。求 \\(\\frac{1}{r_1} + \\frac{1}{r_2} + \\frac{1}{r_3}\\) 的值。",
+    "choices_en": [
+      "\\(\\frac{5}{6}\\)",
+      "1",
+      "\\(\\frac{11}{6}\\)",
+      "2",
+      "\\(\\frac{13}{6}\\)"
+    ],
+    "choices_zh": [
+      "\\(\\frac{5}{6}\\)",
+      "1",
+      "\\(\\frac{11}{6}\\)",
+      "2",
+      "\\(\\frac{13}{6}\\)"
+    ],
+    "answer": 2,
+    "explanation_en": "By Vieta's formulas for a cubic polynomial \\(x^3 - e_1 x^2 + e_2 x - e_3 = 0\\): \\(e_2 = r_1 r_2 + r_2 r_3 + r_3 r_1 = 11\\), and \\(e_3 = r_1 r_2 r_3 = 6\\). Therefore, \\(\\frac{1}{r_1} + \\frac{1}{r_2} + \\frac{1}{r_3} = \\frac{r_1 r_2 + r_2 r_3 + r_3 r_1}{r_1 r_2 r_3} = \\frac{11}{6}\\). (Notice the roots are 1, 2, 3: \\(1 + \\frac{1}{2} + \\frac{1}{3} = \\frac{11}{6}\\)).",
+    "explanation_zh": "由三次方程韦达定理：两两根积和 \\(r_1 r_2 + r_2 r_3 + r_3 r_1 = 11\\)，三根乘积 \\(r_1 r_2 r_3 = 6\\)。倒数之和通分得 \\(\\frac{1}{r_1} + \\frac{1}{r_2} + \\frac{1}{r_3} = \\frac{r_1 r_2 + r_2 r_3 + r_3 r_1}{r_1 r_2 r_3} = \\frac{11}{6}\\)。（亦可直接求根发现根为 1, 2, 3，验证 \\(1 + \\frac{1}{2} + \\frac{1}{3} = \\frac{11}{6}\\)）。",
+    "why_wrong_en": [
+      "5/6 uses the wrong coefficient.",
+      "1 is an arithmetic guess.",
+      "Correct: (r1*r2 + r2*r3 + r3*r1) / (r1*r2*r3) = 11 / 6.",
+      "2 evaluates 12 / 6.",
+      "13/6 uses an incorrect numerator."
+    ],
+    "why_wrong_zh": [
+      "5/6 套错了二次项系数。",
+      "1 属于随意猜测。",
+      "正确：通分得 (r1*r2 + r2*r3 + r3*r1) / (r1*r2*r3) = 11 / 6。",
+      "2 算成了 12 / 6。",
+      "13/6 分子计算错误。"
+    ]
+  }
+]

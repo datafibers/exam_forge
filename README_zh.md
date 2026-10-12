@@ -116,9 +116,12 @@ python3 scripts/validate_bank.py examples/questions.json --profile examples/exam
 
 # 2. 编译生成单文件离线自适应网站
 python3 scripts/build_site.py examples/questions.json --profile examples/exam_profile.json --out practice.html
+
+# 3. 或一键编译 AMC 10 数学竞赛全真练习系统（25题、5选项 A-E、LaTeX公式、矢量几何图）
+python3 scripts/build_site.py amc10/questions.json --profile amc10/exam_profile.json --out amc10_practice.html
 ```
 
-在 Chrome、Safari 或 Edge 等现代浏览器双击打开生成的 `practice.html` 即可立即开始做题。学习记录完全保存在本地 `localStorage`，支持 JSON 导入/导出跨设备迁移。
+在 Chrome、Safari 或 Edge 等现代浏览器双击打开生成的 `practice.html` 或 `amc10_practice.html` 即可立即开始做题。学习记录完全保存在本地 `localStorage`，支持 JSON 导入/导出跨设备迁移。
 
 ---
 
@@ -133,8 +136,12 @@ exam_forge/
 ├── scripts/
 │   ├── validate_bank.py      # 题库格式、双语对称、查重与 Profile 校验器
 │   └── build_site.py         # 多主题、动态徽标的单文件 HTML 网页编译器
+├── amc10/                    # 完整 AMC 10 数学竞赛系统
+│   ├── exam_profile.json     # MAA 官方规则档案（75分钟、67%晋级基准、5阶段进阶）
+│   ├── generate_bank.py      # 25道原创高难度竞赛题生成脚本
+│   └── questions.json        # 经严格校验题库（含5选项 A-E、LaTeX、矢量几何图形与错因）
 ├── examples/
-│   ├── exam_profile.json     # 考试元数据档案模板（标准基准示例）
+│   ├── exam_profile.json     # 考试元数据档案模板（通用标准示例）
 │   ├── questions.json        # 经严格校验含公式、代码、多选、判断题的高质量题库范例
 │   └── resources.json        # 外部考资追踪与授权记录
 └── practice.html             # 生成的开箱即用单文件离线模拟考试网站

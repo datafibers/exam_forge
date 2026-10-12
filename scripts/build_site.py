@@ -1151,6 +1151,10 @@ const TOPIC_I18N = {
   'Strategy': '战略与商业模式',
   'Operations': '运营流程与算法',
   'STEM Math': '数理统计与模型',
+  'Algebra': '代数 (Algebra)',
+  'Geometry': '几何 (Geometry)',
+  'Number Theory': '数论 (Number Theory)',
+  'Combinatorics': '组合与概率 (Combinatorics)',
   'Business Law': '商业法规与合规',
   'Economics': '经济学原理',
   'Accounting': '财务会计',
@@ -2309,9 +2313,9 @@ document.addEventListener('keydown', (e) => {
 
   const key = e.key.toUpperCase();
   let optIndex = -1;
-  if (['A', 'B', 'C', 'D'].includes(key)) {
+  if (['A', 'B', 'C', 'D', 'E'].includes(key)) {
     optIndex = key.charCodeAt(0) - 65;
-  } else if (['1', '2', '3', '4'].includes(key)) {
+  } else if (['1', '2', '3', '4', '5'].includes(key)) {
     optIndex = parseInt(key, 10) - 1;
   }
 

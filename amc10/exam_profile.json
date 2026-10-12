@@ -1,0 +1,53 @@
+{
+  "exam_name": "American Mathematics Competitions 10 (AMC 10)",
+  "exam_code": "AMC10",
+  "exam_category": "Mathematics Competition & Olympiad Qualifying",
+  "description": "Adaptive competition training system for the MAA AMC 10, covering Algebra, Geometry, Number Theory, and Combinatorics with AIME qualification cutoff benchmarks.",
+  "official_url": "https://www.maa.org/math-competitions/amc-10-12",
+  "passing_score_pct": 67,
+  "exam_duration_mins": 75,
+  "mock_questions_count": 25,
+  "target_bank_size": 100,
+  "target_mock_tests": 4,
+  "logo_monogram": "AMC",
+  "theme_default": "cyber",
+  "verified_rules": true,
+  "scoring_rule": "6 points per correct answer, 1.5 points per blank, 0 points per wrong answer. Max 150 points. AIME benchmark ~100 points.",
+  "stages": [
+    {
+      "id": "diagnostic",
+      "name_en": "Diagnostic Baseline",
+      "name_zh": "阶段一：摸底诊断",
+      "desc_en": "Stratified cross-domain test across Algebra, Geometry, Number Theory, and Combinatorics.",
+      "desc_zh": "跨四大模块分层抽样，测出代数、几何、数论、组合的初始基准短板。"
+    },
+    {
+      "id": "drilling",
+      "name_en": "Domain Competency Drill",
+      "name_zh": "阶段二：专项精练",
+      "desc_en": "Deep dive into core theorems (Vieta, Power of Point, Modulo, Stars & Bars) with distractor reasoning.",
+      "desc_zh": "针对核心定理（韦达、圆幂、同余模运算、隔板法）展开图解精练与错因剖析。"
+    },
+    {
+      "id": "mistakes",
+      "name_en": "Mistake Elimination",
+      "name_zh": "阶段三：错题清零",
+      "desc_en": "Bayesian-smoothed reinforcement eliminating calculation pitfalls and perimeter traps until cleared.",
+      "desc_zh": "错题本贝叶斯加权攻坚，消灭计算陷阱与边界极端情况直至完全掌握。"
+    },
+    {
+      "id": "mock",
+      "name_en": "75-Min Timed Simulation",
+      "name_zh": "阶段四：全真限时模考",
+      "desc_en": "Strict 75-minute 25-question simulation benchmarking against the 100-pt AIME qualification cutoff.",
+      "desc_zh": "严格75分钟25题全真模拟，对标约100分（67%）AIME晋级资格线与考后全回复盘。"
+    },
+    {
+      "id": "sprint",
+      "name_en": "AIME-Ready Adaptive Sprint",
+      "name_zh": "阶段五：AIME晋级冲刺",
+      "desc_en": "Personalized test sets targeting historical weak domains for high-confidence contest day success.",
+      "desc_zh": "自适应个性化套卷，针对弱项模块智能动态配比，冲刺AIME晋级资格。"
+    }
+  ]
+}
