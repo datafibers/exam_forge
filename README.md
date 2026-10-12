@@ -116,12 +116,9 @@ python3 scripts/validate_bank.py examples/questions.json --profile examples/exam
 
 # 2. Build the single-file offline adaptive website
 python3 scripts/build_site.py examples/questions.json --profile examples/exam_profile.json --out practice.html
-
-# 3. Or build the AMC 10 Competition Portal (25 Qs, 5 choices A-E, LaTeX, SVG figures)
-python3 scripts/build_site.py amc10/questions.json --profile amc10/exam_profile.json --out amc10_practice.html
 ```
 
-Double-click `practice.html` or `amc10_practice.html` in Chrome, Safari, or Edge to begin practicing immediately. All user learning progress is saved locally in browser `localStorage` and can be exported/imported as JSON.
+Double-click `practice.html` in Chrome, Safari, or Edge to begin practicing immediately. All user learning progress is saved locally in browser `localStorage` and can be exported/imported as JSON.
 
 ---
 
@@ -136,12 +133,8 @@ exam_forge/
 ├── scripts/
 │   ├── validate_bank.py      # Schema, translation, deduplication, & profile validator
 │   └── build_site.py         # Multi-theme single-file HTML website compiler
-├── amc10/                    # Full AMC 10 competition system
-│   ├── exam_profile.json     # Official AMC 10 profile (75m, 67% AIME cutoff benchmark)
-│   ├── generate_bank.py      # Bank generator for 25 original competition problems
-│   └── questions.json        # 25 verified problems with LaTeX, 5 choices (A-E), SVG diagrams
 ├── examples/
-│   ├── exam_profile.json     # General exam metadata profile template
+│   ├── exam_profile.json     # Exam metadata profile (benchmark template)
 │   ├── questions.json        # Verified bilingual test bank with Math, Code, & distractors
 │   └── resources.json        # External resource tracking & licensing configuration
 └── practice.html             # Ready-to-use standalone offline mock testing portal
