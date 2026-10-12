@@ -63,6 +63,14 @@ flowchart LR
 4. **Stage 4 (Real-world Timed Simulation):** Strict exam timer and full item load with Pass/Fail benchmark verdict and session auto-recovery.
 5. **Stage 5 (Adaptive Sprint to Success):** Generates 5–10 personalized test sets (60% weak domains, 25% unattempted, 15% retention review).
 
+### 💡 How to Practice: Step-by-Step vs. Flexible Study
+- **Progressive Flow (Recommended):** Follow **Stage 01 ➔ 05** in sequence (Diagnostic → Domain Drills → Clear Mistakes → Timed Mock → Adaptive Sprint).
+- **Flexible & Non-Locking:** Stages are **never locked**. Click any Stage card on the dashboard, select any domain from the sidebar, or jump straight into a timed mock anytime.
+- **Two Distinct Experiences:**
+  - **Daily Drills (Stages 1, 2, 3, 5):** Instant feedback after each question with complete A–D distractor rationale (`why_wrong`). Keyboard shortcuts: `A`–`D` or `1`–`4`.
+  - **Timed Mock (Stage 4):** Official countdown timer, no answers revealed until submit, auto-saved against accidental refresh, followed by a Pass/Fail scorecard and tailored next steps.
+- **Local & Private:** All records, bookmarks (`⭐`), and mistake banks save automatically to browser `localStorage` (100% offline & private). Use Export/Import to transfer data across devices.
+
 ---
 
 ## 🤖 Dual Operating Modes & Usage Workflow
