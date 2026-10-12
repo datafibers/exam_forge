@@ -75,6 +75,8 @@ flowchart LR
 
 ## 🤖 双运行模式与使用流程架构 (Usage Workflow)
 
+> 📋 **智能前置调研问卷：** 每次调用该 skill 时，AI 均会发起一个交互式问卷确认题库来源、目标题量、考试时限与及格线等偏好。你随时可以直接点击 **「Skip / 跳过」**（或回复*“让 AI 决定”*），AI 将自动联网检索官方考纲并按官方高标准完成决策与构建。
+
 ![Exam Forge Pipeline & Usage Architecture](assets/workflow.svg)
 
 ```mermaid

@@ -37,13 +37,42 @@ Use when asked to create, rebuild, expand, or curate exam-practice websites, moc
 
 ---
 
-## Operating Modes & Workflow
+## Operating Workflow & Intake Protocol
 
-### Mode Selection
-- **If user provides study documents/links:** Follow **Mode A** (Ingest, verify permissions, extract or synthesize aligned variants).
-- **If user only specifies exam name & target count (No Question Bank Given):** Follow **Mode B** below.
+### Step 0: Mandatory Intake Survey (Always Initiated, Skippable)
+Whenever this skill is triggered, the Agent **MUST ALWAYS prompt the user with an interactive intake survey** (using the `ask_question` tool or structured prompt) before writing files.
 
-### Mode B Workflow: Autonomous Search & Redesign
+The survey allows the user to quickly align requirements, or click **Skip** / choose default to let AI make autonomous decisions based on official research:
+
+**Intake Survey Structure:**
+1. **Resource Mode:**
+   - `(Recommended) Mode B: Zero-Bank — Let AI autonomously research official blueprints & author original items`
+   - `Mode A: User-Provided — I have PDFs / study URLs / past questions to parse`
+2. **Target Question Capacity:**
+   - `(Recommended) Quick Sample / Standard Mock (20–25 questions)`
+   - `Full Competition / Comprehensive Exam (40–50 questions)`
+   - `Deep Domain Bank (80–100+ questions)`
+3. **Timer & Passing Benchmark:**
+   - `(Recommended) Autonomous Research: Auto-detect official MAA/CollegeBoard/DECA duration and pass cutoff`
+   - `Custom: 60 minutes, 75% passing mark`
+   - `Practice Only: Untimed, no pass threshold`
+4. **Language & Special Formats:**
+   - `(Recommended) Bilingual Parity (EN/ZH) with auto Math LaTeX / Code snippets`
+   - `English Only`
+   - `Chinese Only`
+
+**Handling the Survey Outcome:**
+- **If User Submits Answers:** Apply the chosen settings directly to `exam_profile.json` and bank generation parameters.
+- **If User Clicks "Skip" (or says "let AI decide"):** The Agent immediately proceeds with **AI Autonomous Defaults**: searches official blueprints via `search_web`, extracts authentic syllabus weights, sets official standard duration/cutoff, and generates a standard 20–25 item bilingual bank.
+
+---
+
+### Step 1: Mode Execution
+
+#### Mode A: User-Provided Resources
+Use when user provides PDFs, URLs, syllabi, or past paper files. Ingest, extract concepts, ensure no duplicates, and synthesize aligned scenario items.
+
+#### Mode B: Autonomous Search & Redesign (Zero-Bank)
 1. **Search & Blueprint Discovery:**
    - Use `search_web` to find the official curriculum guide, exam breakdown, topic percentages, duration, and question formats.
    - Fetch official details via `read_url_content`.
@@ -55,7 +84,7 @@ Use when asked to create, rebuild, expand, or curate exam-practice websites, moc
    - Provide realistic numerical parameters, plausible distractors, and complete bilingual explanations (`explanation_en/zh` and `why_wrong_en/zh`).
    - Avoid direct verbatim copies of copyrighted live past papers; author original homomorphic/scenario-based problems.
 4. **Build Profile & Validate Bank:**
-   - Save metadata to `examples/exam_profile.json` (or project root).
+   - Save metadata to `examples/exam_profile.json` (or `<exam_slug>/exam_profile.json`).
    - Save items to `questions.json`.
    - Run `python scripts/validate_bank.py questions.json --profile exam_profile.json`.
 5. **Compile & Deliver:**
