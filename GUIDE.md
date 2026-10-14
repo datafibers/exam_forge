@@ -4,6 +4,29 @@
 
 ---
 
+## 核心设计哲学：两大支柱 (Core Design Philosophy)
+
+`exam_forge` 的本质价值并非简单的“题库展示网页”，而是解决备考中最重要的两个核心痛点：
+
+### 支柱一：找准题目 / 按照大纲生成合适的题目（“准”与“严”）
+- **考纲蓝图深度对齐 (Domain Weights Mapping)**：优先基于官方考纲（如 College Board CED、DECA Guide、AWS Exam Blueprint），提取官方各章节考点权重（如 Domain A: 30%, Domain B: 40%），严格按真实比例生成题目，杜绝偏科与盲目出题。
+- **知识点颗粒度防同质 (`concept_id` 机制)**：杜绝机械套用模板换数字的“虚假题量”。每道题绑定独立的 `concept_id`，严格审计独立考点数与变式题比例，确保考点覆盖真实全面。
+- **高信度干扰项与评分要点 (Distractor Rigor & Rubrics)**：
+  - **客观题**：每个错误选项必须有明确的认知陷阱剖析（`why_wrong_en/zh`，如公式混淆、单位遗漏、概念偷换），让做错题目具有极高复盘价值。
+  - **问答题/主观题**：必须配齐核心踩分点（`rubric`）和详尽参考答案，为自评与对照提供精确标尺。
+- **认知层级递进 (Bloom's Taxonomy)**：严格按照认知层次分级（L1 基础概念记忆、L2 综合计算与应用、L3 陷阱辨析与高阶推理），保障试题信度与梯度。
+
+### 支柱二：循序渐进、高效的复习改进方法（“效”与“闭环”）
+- **五阶渐进式能力跃迁 (5-Stage Progressive Roadmap)**：
+  1. **阶段 1：摸底诊断 (Diagnostic)** — 跨模块分层抽样，快速测出能力基线与薄弱板块，避免盲目刷题。
+  2. **阶段 2：专题精练 (Topic Drilling)** — 按诊断结果对弱项模块专项攻坚，每题即时双语全解析吃透原理。
+  3. **阶段 3：错题消灭 (Mistake Elimination)** — 错题动态池管理，做对移出、做错复现，直击高频盲区。
+  4. **阶段 4：全真模考 (Timed Realistic Mock)** — 仿真官方时间限制与合格线（Passing Benchmark），训练配速与抗压。
+  5. **阶段 5：自适应冲刺 (Adaptive Sprint)** — 算法动态组合最佳提分卷（60% 薄弱章节 + 25% 未做新题 + 15% 记忆保持）。
+- **零摩擦与离线闭环 (Zero-Friction Offline Loop)**：单文件 HTML 纯离线运行，作答记录本地持久化并防意外刷新，随时导出/导入成绩，构建极简高效的备考复盘闭环。
+
+---
+
 ## 零、 交互式需求前置调研问卷 (Intake Survey & One-Click Skip)
 
 为了确保生成的练习系统与用户备考目标精准对齐，每次调用 `exam-practice-builder` 时，Agent **必须首先发起一个交互式问卷（Intake Survey）**。
@@ -109,7 +132,7 @@
 
 ## 三、 题库格式与多题型规范 (`questions.json`)
 
-题库支持 **单选 (Single)**、**多选 (Multiple)**、**判断题 (Boolean)**，并原生支持 **数学公式 (LaTeX/MathML)** 与 **代码块 (Markdown Code Blocks)**：
+题库支持 **单选 (Single)**、**多选 (Multiple)**、**判断题 (Boolean)**、**问答题 (Short)**，并原生支持 **数学公式 (LaTeX/MathML)** 与 **代码块 (Markdown Code Blocks)**：
 
 ### 1. 题目对象格式说明
 ```json
@@ -147,6 +170,7 @@
 - **单选 (`type`: "single" 或缺省)**：`answer` 为整数索引 `0, 1, 2, ...`。
 - **多选 (`type`: "multiple")**：`answer` 为数组 `[0, 2]`。界面会自动呈现复选框并要求提交验证。
 - **判断题 (`type`: "boolean")**：`choices_en` 填写 `["True", "False"]`，`answer` 为 `0` 或 `1`。
+- **问答题 (`type`: "short")**：无选项；不需要 `choices_*`/`answer`，改填 `answer_en`/`answer_zh`（参考答案，字符串），可选 `rubric_en`/`rubric_zh`（得分要点列表）。练习模式下输入答案后显示参考答案，由学习者自评「答对了/需加强」并计入错题本；限时模考中问答题不计入自动评分，仅在复盘时对照参考答案。
 - **数学公式**：使用 `$E = mc^2$` 或 `$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$`，前端自动渲染为优美的数学排版。
 - **代码块**：使用 ```java ... ``` 包裹代码，前端自动进行等宽字体格式化。
 

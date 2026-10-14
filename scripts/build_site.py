@@ -1042,6 +1042,18 @@ const I18N = {
     explanation: 'Detailed Concept Explanation',
     distractors: 'Why Distractors Fail (错因分析)',
     selectMulti: 'Multiple Choice: Select all correct options, then click Check Answer.',
+    writeAnswer: 'Please type your answer first.',
+    shortTag: 'SHORT ANSWER',
+    shortPlaceholder: 'Type your answer here...',
+    refAnswer: 'Reference Answer',
+    rubric: 'Key Points',
+    selfGradePrompt: 'Compare with the reference. How did you do?',
+    selfGotIt: 'I got it',
+    selfMissed: 'Needs work',
+    yourAnswer: 'Your Answer',
+    noAnswer: '(no answer)',
+    selfAssess: 'Self-assess',
+    shortNotScored: '{n} short-answer question(s) not auto-scored — compare with the reference answers below.',
     verdictPassed: 'BENCHMARK PASSED 🏆',
     verdictFailed: 'BENCHMARK NOT YET MET ⚠️',
     timeRemaining: 'Remaining',
@@ -1103,6 +1115,18 @@ const I18N = {
     explanation: '核心考点详细解析',
     distractors: '干扰项错因剖析 (Why Wrong)',
     selectMulti: '多选题：请选择所有符合题意的选项，然后点击提交。',
+    writeAnswer: '请先输入你的答案。',
+    shortTag: '问答题',
+    shortPlaceholder: '在此输入你的答案……',
+    refAnswer: '参考答案',
+    rubric: '得分要点',
+    selfGradePrompt: '对照参考答案，你答得如何？',
+    selfGotIt: '答对了',
+    selfMissed: '需加强',
+    yourAnswer: '你的答案',
+    noAnswer: '（未作答）',
+    selfAssess: '自评',
+    shortNotScored: '{n} 道问答题未计入自动评分——请对照下方参考答案自评。',
     verdictPassed: '考核达标 🏆 (达到合格线)',
     verdictFailed: '尚未达标 ⚠️ (距离及格线仍需加强)',
     timeRemaining: '剩余时间',
@@ -1180,6 +1204,10 @@ function shuffle(array) {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+function html_escape(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 /* ================= LATEX & CODE FORMATTER ================= */
@@ -1374,7 +1402,7 @@ function startSession(questions, isTimed, modeName) {
 
   // Pre-generate choice permutations
   questions.forEach((q, idx) => {
-    const rawLen = (state.lang === 'zh' ? q.choices_zh : q.choices_en).length;
+    const rawLen = ((state.lang === 'zh' ? q.choices_zh : q.choices_en) || []).length;
     let indices = Array.from({ length: rawLen }, (_, i) => i);
     if (state.shuffleChoices && q.type !== 'boolean') {
       indices = shuffle(indices);
@@ -1468,7 +1496,7 @@ function renderQuestionView() {
   chips.className = 'chips-row';
   chips.innerHTML = '<span class="chip">' + getTopicDisplayName(q.topic) + '</span>' +
     '<span class="chip">' + '★'.repeat(q.difficulty) + ' Level ' + q.difficulty + '</span>' +
-    '<span class="chip qtype">' + (qType === 'multiple' ? 'MULTIPLE CHOICE' : (qType === 'boolean' ? 'TRUE / FALSE' : 'SINGLE CHOICE')) + '</span>';
+    '<span class="chip qtype">' + (qType === 'multiple' ? 'MULTIPLE CHOICE' : (qType === 'boolean' ? 'TRUE / FALSE' : (qType === 'short' ? t('shortTag') : 'SINGLE CHOICE'))) + '</span>';
 
   const isBm = state.bookmarks.includes(q.id);
   const bmBtn = document.createElement('button');
@@ -1510,7 +1538,7 @@ function renderQuestionView() {
   }
 
   // Choices Handling
-  const rawChoices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+  const rawChoices = (state.lang === 'zh' ? q.choices_zh : q.choices_en) || [];
   const optionIndices = questionOptionPermutations[currentQuestionIndex] || rawChoices.map((_, i) => i);
 
   const choicesContainer = document.createElement('div');
@@ -1578,6 +1606,21 @@ function renderQuestionView() {
   });
   work.appendChild(choicesContainer);
 
+  if (qType === 'short') {
+    const ta = document.createElement('textarea');
+    ta.id = 'shortAnswerInput';
+    ta.rows = 6;
+    ta.placeholder = t('shortPlaceholder');
+    ta.value = (typeof userAnswers[currentQuestionIndex] === 'string') ? userAnswers[currentQuestionIndex] : '';
+    ta.style.cssText = 'width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid var(--panel-border);background:var(--opt-bg);color:inherit;font:inherit;line-height:1.5;resize:vertical;margin-bottom:14px;';
+    ta.oninput = () => {
+      if (ta.value.trim()) userAnswers[currentQuestionIndex] = ta.value;
+      else delete userAnswers[currentQuestionIndex];
+      if (isTimed) syncTimedMockSessionStorage();
+    };
+    work.appendChild(ta);
+  }
+
   // Footer Actions
   const actionsRow = document.createElement('div');
   actionsRow.className = 'actions-row';
@@ -1634,7 +1677,12 @@ function renderQuestionView() {
 
     checkBtn.onclick = () => {
       const selected = userAnswers[currentQuestionIndex];
-      if (selected === undefined || (qType === 'multiple' && (!selected || selected.length === 0))) {
+      if (qType === 'short') {
+        if (typeof selected !== 'string' || !selected.trim()) {
+          alert(t('writeAnswer'));
+          return;
+        }
+      } else if (selected === undefined || (qType === 'multiple' && (!selected || selected.length === 0))) {
         alert(t('selectMulti'));
         return;
       }
@@ -1642,15 +1690,7 @@ function renderQuestionView() {
       activeSession.isChecked = true;
       checkBtn.remove();
 
-      // Check correctness
-      let isCorrect = false;
-      if (qType === 'single' || qType === 'boolean') {
-        isCorrect = (selected === q.answer);
-      } else if (qType === 'multiple') {
-        const targetSet = new Set(q.answer);
-        const userSet = new Set(selected);
-        isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
-      }
+      const finalize = (isCorrect) => {
 
       // Log in session
       activeSession.practiceLogs.push({
@@ -1729,6 +1769,50 @@ function renderQuestionView() {
       };
       actionsRow.appendChild(nextBtn);
       renderDashboardStats();
+      };
+
+      if (qType === 'short') {
+        // Self-grading: reveal reference answer, then let the learner judge their own answer
+        const ta = document.getElementById('shortAnswerInput');
+        if (ta) ta.disabled = true;
+        const refText = state.lang === 'zh' ? q.answer_zh : q.answer_en;
+        const refCard = document.createElement('div');
+        refCard.className = 'feedback-card';
+        refCard.innerHTML = '<h3>✦ ' + t('refAnswer') + '</h3>' +
+          '<div style="line-height:1.5;">' + renderRichText(refText) + '</div>';
+        const rubric = state.lang === 'zh' ? q.rubric_zh : q.rubric_en;
+        if (Array.isArray(rubric) && rubric.length) {
+          refCard.innerHTML += '<h4 style="margin:12px 0 6px;font-size:14px;color:var(--text-muted);">' + t('rubric') + '</h4><ul style="margin:0;padding-left:20px;">' +
+            rubric.map(r => '<li>' + renderRichText(r) + '</li>').join('') + '</ul>';
+        }
+        refCard.innerHTML += '<p style="margin:14px 0 8px;font-weight:600;">' + t('selfGradePrompt') + '</p>';
+        const gradeRow = document.createElement('div');
+        gradeRow.className = 'actions-row';
+        const gotBtn = document.createElement('button');
+        gotBtn.className = 'btn';
+        gotBtn.textContent = '✓ ' + t('selfGotIt');
+        const missBtn = document.createElement('button');
+        missBtn.className = 'btn secondary';
+        missBtn.textContent = '✗ ' + t('selfMissed');
+        const onGrade = (ok) => { gradeRow.remove(); finalize(ok); };
+        gotBtn.onclick = () => onGrade(true);
+        missBtn.onclick = () => onGrade(false);
+        gradeRow.appendChild(gotBtn);
+        gradeRow.appendChild(missBtn);
+        refCard.appendChild(gradeRow);
+        work.appendChild(refCard);
+      } else {
+        // Check correctness
+        let isCorrect = false;
+        if (qType === 'single' || qType === 'boolean') {
+          isCorrect = (selected === q.answer);
+        } else if (qType === 'multiple') {
+          const targetSet = new Set(q.answer);
+          const userSet = new Set(selected);
+          isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+        }
+        finalize(isCorrect);
+      }
     };
 
     actionsRow.appendChild(checkBtn);
@@ -1754,6 +1838,7 @@ function finishTimedMock() {
   let correctCount = 0;
   const topicStats = {};
   const questionLogs = [];
+  let shortCount = 0;
 
   s.questions.forEach((q, idx) => {
     const qType = q.type || 'single';
@@ -1768,6 +1853,12 @@ function finishTimedMock() {
         const userSet = new Set(chosen);
         isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
       }
+    }
+
+    if (qType === 'short') {
+      shortCount++;
+      questionLogs.push({ q: q, chosen: chosen, isCorrect: false, origPerm: [] });
+      return;
     }
 
     if (isCorrect) correctCount++;
@@ -1790,13 +1881,15 @@ function finishTimedMock() {
 
   saveState();
 
-  const accuracyPct = Math.round((correctCount / s.total) * 100);
+  const gradedTotal = Math.max(1, s.total - shortCount);
+  const accuracyPct = Math.round((correctCount / gradedTotal) * 100);
   const isPassed = accuracyPct >= (META.passing_score || 75);
 
   const banner = document.createElement('div');
   banner.className = 'result-banner';
   banner.innerHTML = '<div class="panel-eyebrow">' + s.modeName.toUpperCase() + ' SCORECARD</div>' +
-    '<div class="result-score">' + correctCount + ' / ' + s.total + ' (' + accuracyPct + '%)</div>' +
+    '<div class="result-score">' + correctCount + ' / ' + (s.total - shortCount) + ' (' + accuracyPct + '%)</div>' +
+    (shortCount ? '<div style="font-size:12px;color:var(--text-muted);">' + t('shortNotScored').replace('{n}', shortCount) + '</div>' : '') +
     '<div class="verdict-stamp ' + (isPassed ? 'pass' : 'fail') + '">' +
       (isPassed ? t('verdictPassed') : t('verdictFailed')) +
     '</div>';
@@ -1831,14 +1924,14 @@ function finishTimedMock() {
 
     const stemText = state.lang === 'zh' ? q.zh : q.en;
     const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
-    const choices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+    const choices = (state.lang === 'zh' ? q.choices_zh : q.choices_en) || [];
     const distList = state.lang === 'zh' ? q.why_wrong_zh : q.why_wrong_en;
     const qType = q.type || 'single';
     const isBookmarked = state.bookmarks.includes(q.id);
 
     let cardHtml = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">' +
       '<div><strong>#' + (idx + 1) + ' [' + getTopicDisplayName(q.topic) + ']</strong> ' +
-      '<span class="chip ' + (item.isCorrect ? 'correct' : 'wrong') + '">' + (item.isCorrect ? '✓ ' + (state.lang === 'zh' ? '回答正确' : 'Correct') : '✗ ' + (state.lang === 'zh' ? '回答错误' : 'Incorrect')) + '</span></div>' +
+      '<span class="chip ' + (qType === 'short' ? '' : (item.isCorrect ? 'correct' : 'wrong')) + '">' + (qType === 'short' ? t('selfAssess') : (item.isCorrect ? '✓ ' + (state.lang === 'zh' ? '回答正确' : 'Correct') : '✗ ' + (state.lang === 'zh' ? '回答错误' : 'Incorrect'))) + '</span></div>' +
       '<button type="button" class="btn-bookmark' + (isBookmarked ? ' active' : '') + '" onclick="toggleBookmark(\'' + q.id + '\', this)">' +
       (isBookmarked ? '★ ' + t('bookmarked') : '☆ ' + t('bookmark')) + '</button>' +
       '</div>' +
@@ -1878,6 +1971,13 @@ function finishTimedMock() {
       }
       cardHtml += '</div>';
     });
+
+    if (qType === 'short') {
+      const refText = state.lang === 'zh' ? q.answer_zh : q.answer_en;
+      const mine = (typeof item.chosen === 'string' && item.chosen.trim()) ? item.chosen : t('noAnswer');
+      cardHtml += '<div class="rev-choice-item"><strong>' + t('yourAnswer') + ':</strong><div style="white-space:pre-wrap;">' + html_escape(mine) + '</div></div>' +
+        '<div class="rev-choice-item rev-correct"><strong>' + t('refAnswer') + ':</strong> ' + renderRichText(refText) + '</div>';
+    }
 
     cardHtml += '</div>' +
       '<div style="font-size:13px;background:var(--opt-bg);border:1px solid var(--panel-border);border-radius:10px;padding:12px;margin-top:10px;">' +
@@ -2045,7 +2145,7 @@ function renderPrintablePaperExam() {
     qDiv.style.breakInside = 'avoid';
 
     const stemText = state.lang === 'zh' ? q.zh : q.en;
-    const choices = state.lang === 'zh' ? q.choices_zh : q.choices_en;
+    const choices = (state.lang === 'zh' ? q.choices_zh : q.choices_en) || [];
 
     qDiv.innerHTML = '<div style="font-weight:700;margin-bottom:8px;font-size:15px;line-height:1.45;">' +
       (idx + 1) + '. [' + getTopicDisplayName(q.topic) + '] ' + renderRichText(stemText) +
@@ -2063,6 +2163,17 @@ function renderPrintablePaperExam() {
       optsDiv.appendChild(row);
     });
     qDiv.appendChild(optsDiv);
+    if ((q.type || 'single') === 'short') {
+      const lines = document.createElement('div');
+      lines.style.paddingLeft = '14px';
+      for (let li = 0; li < 5; li++) {
+        const ln = document.createElement('div');
+        ln.style.borderBottom = '1px solid #888';
+        ln.style.height = '26px';
+        lines.appendChild(ln);
+      }
+      qDiv.appendChild(lines);
+    }
     container.appendChild(qDiv);
   });
 
@@ -2079,7 +2190,12 @@ function renderPrintablePaperExam() {
     const qType = q.type || 'single';
 
     let ansLetters = '';
-    if (qType === 'multiple') {
+    let refHtml = '';
+    if (qType === 'short') {
+      ansLetters = t('shortTag');
+      const refText = state.lang === 'zh' ? q.answer_zh : q.answer_en;
+      refHtml = '<div style="margin:4px 0;"><strong>' + t('refAnswer') + ':</strong> ' + renderRichText(refText) + '</div>';
+    } else if (qType === 'multiple') {
       ansLetters = q.answer.map(i => String.fromCharCode(65 + i)).join(', ');
     } else {
       ansLetters = String.fromCharCode(65 + q.answer);
@@ -2090,7 +2206,7 @@ function renderPrintablePaperExam() {
     row.style.fontSize = '13px';
     row.style.breakInside = 'avoid';
     row.innerHTML = '<strong>#' + (idx + 1) + ' [' + ansLetters + ']:</strong> ' +
-      renderRichText(expText);
+      refHtml + renderRichText(expText);
     keySection.appendChild(row);
   });
   container.appendChild(keySection);

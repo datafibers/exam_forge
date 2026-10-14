@@ -8,6 +8,37 @@
 
 ---
 
+## 🎯 Core Design Philosophy: The Two Pillars (核心双核设计架构)
+
+`Exam Forge` is designed to solve the two most critical bottlenecks in exam preparation:
+
+```mermaid
+flowchart TD
+  subgraph P1["🎯 Pillar 1: Targeted & Syllabus-Aligned Authoring (准)"]
+    A["Official Blueprint & Weight Mapping (CED / Syllabus)"] --> B["Concept Atomicity & Anti-Homogeneity (concept_id)"]
+    B --> C["High-Rigor Distractors & Scoring Rubrics"]
+    C --> D["Cognitive Tiering (Bloom L1/L2/L3)"]
+  end
+  subgraph P2["📈 Pillar 2: Progressive & Efficient Learning Feedback Loop (效)"]
+    E["1. Diagnostic Baseline (Expose Blind Spots)"] --> F["2. Topic Drilling (Targeted Mastery)"]
+    F --> G["3. Mistake Elimination (Active Clearing)"]
+    G --> H["4. Real-world Timed Mock (Pacing & Passing Mark)"]
+    H --> I["5. Adaptive Sprint (Dynamic Review Sets)"]
+  end
+  P1 ==>|High-Fidelity Bank| P2
+```
+
+1. **Pillar 1: Authoring Authenticity & Syllabus Precision ("准")**
+   - **Curriculum Weight Calibration**: Autonomously search official blueprints (e.g. College Board CED, DECA Guide, AWS Exam Blueprint) and apportion question counts strictly by official topic weights.
+   - **Concept Atomicity (`concept_id`)**: Bind each item to a discrete knowledge atom to prevent superficial numerical clones.
+   - **Distractor Rigor & Rubrics**: Provide deep cognitive rationales for every incorrect choice (`why_wrong`), and structured scoring rubrics for open-ended short-answer questions.
+2. **Pillar 2: Progressive Mastery & Closed-Loop Efficiency ("效")**
+   - **5-Stage Progression**: Guide students from "Diagnostic Baseline ➔ Topic Drilling ➔ Mistake Elimination ➔ Realistic Timed Mock ➔ Final Adaptive Sprint" instead of random drilling.
+   - **Dynamic Adaptive Sprinting**: Local mastery algorithms assemble customized test sets (60% weak domains, 25% unattempted, and 15% retention review).
+   - **Zero-Friction Offline Loop**: Pure standalone HTML with `localStorage` persistence, accidental refresh recovery, and zero server dependencies.
+
+---
+
 ## 🌟 Key Features
 
 1. **Exam Profile & Target Metrics Integration**

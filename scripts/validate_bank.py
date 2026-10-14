@@ -3,6 +3,9 @@
 import argparse, collections, json, re, sys
 from pathlib import Path
 
+def difficulty_ok(q):
+    return q['difficulty'] in (1, 2, 3)
+
 def validate(bank_path, profile_path=None):
     try:
         bank = json.loads(Path(bank_path).read_text(encoding='utf-8'))
@@ -29,14 +32,21 @@ def validate(bank_path, profile_path=None):
         'choices_en', 'choices_zh', 'answer',
         'explanation_en', 'explanation_zh'
     ]
+    # Short-answer (问答题) questions have no choices; they carry reference answers instead.
+    short_required_fields = [
+        'id', 'topic', 'difficulty', 'en', 'zh',
+        'answer_en', 'answer_zh',
+        'explanation_en', 'explanation_zh'
+    ]
 
     for i, q in enumerate(bank):
         row_id = q.get('id', f'item_{i}')
         # Check required fields
-        for f in required_fields:
+        req = short_required_fields if q.get('type') == 'short' else required_fields
+        for f in req:
             if f not in q:
                 errors.append(f"[{row_id}] missing required field '{f}'")
-        if any(f not in q for f in required_fields):
+        if any(f not in q for f in req):
             continue
 
         # Check duplicate ID
@@ -70,9 +80,28 @@ def validate(bank_path, profile_path=None):
 
         # Question type handling
         qtype = q.get('type', 'single')
-        if qtype not in ('single', 'multiple', 'boolean'):
-            errors.append(f"[{row_id}] invalid type '{qtype}' (must be single, multiple, or boolean)")
+        if qtype not in ('single', 'multiple', 'boolean', 'short'):
+            errors.append(f"[{row_id}] invalid type '{qtype}' (must be single, multiple, boolean, or short)")
         types_count[qtype] += 1
+
+        if qtype == 'short':
+            for k in ('answer_en', 'answer_zh'):
+                if not isinstance(q[k], str) or not q[k].strip():
+                    errors.append(f"[{row_id}] field '{k}' is empty or not a string")
+            for k in ('rubric_en', 'rubric_zh'):
+                if k in q and (not isinstance(q[k], list) or not all(isinstance(x, str) and x.strip() for x in q[k])):
+                    errors.append(f"[{row_id}] {k} must be a list of non-empty strings")
+            if 'choices_en' in q or 'choices_zh' in q:
+                warnings.append(f"[{row_id}] short-answer question ignores choices_en/choices_zh")
+            if difficulty_ok(q):
+                diff_count[q['difficulty']] += 1
+            else:
+                errors.append(f"[{row_id}] invalid difficulty {q['difficulty']} (must be 1, 2, or 3)")
+            topics[q['topic']] += 1
+            concepts.add(q.get('concept_id', q['id']))
+            if q.get('variant_of'):
+                variants += 1
+            continue
 
         # Check choices
         ch_en, ch_zh = q['choices_en'], q['choices_zh']

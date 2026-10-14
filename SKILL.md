@@ -14,25 +14,37 @@ Produces a standalone, zero-dependency offline HTML site and editable source fil
 ## Trigger
 Use when asked to create, rebuild, expand, or curate exam-practice websites, mock testing portals, or question banks from study resources OR from an exam name alone. Do not trigger for simply answering one single practice question.
 
-## Core Pillars & Features
-1. **Exam Profile & Target Metrics:** Explicitly track exam identity, official syllabus URL, duration, official mock item count, passing score benchmark (e.g. 75%), and target concept bank size.
-2. **Autonomous Search & Redesign Pipeline (零题库自主重构能力):**
-   - When no questions are provided, Agent actively searches official testing authority blueprints (e.g., College Board CED, DECA Guide, AMC syllabus).
-   - Generates an accurate competency weight matrix.
-   - Authors 100% original, copyright-compliant scenario items up to the requested target count without scraping verbatim proprietary tests.
-3. **5-Stage Progressive Learning Framework:**
-   - **Stage 1 (Diagnostic Baseline):** Stratified sample to expose blind spots and establish baseline competency.
-   - **Stage 2 (Topic Competency Drilling):** Focused domain practice with bilingual distractor analysis (`why_wrong_en/zh`).
-   - **Stage 3 (Mistake Elimination):** Bayesian-smoothed mistake killer targeting high-frequency pitfalls until 100% resolved.
+## Core Pillars & Architectural Principles (核心双核设计架构)
+
+The system is fundamentally anchored on two decisive pillars: **Authoring Authenticity ("准")** and **Progressive Cognitive Mastery ("效")**.
+
+### Pillar 1: Targeted & Syllabus-Aligned Item Generation (找准题目与考纲严密对齐)
+1. **Official Blueprint & Competency Weight Mapping:**
+   - Autonomously search and dissect official testing authority blueprints (e.g., College Board CED, DECA Guide, AMC/USAMO, AWS/GCP blueprints).
+   - Extract domain weight percentages and proportionally allocate question quotas to prevent domain skew.
+2. **Concept Granularity & Anti-Homogeneity (`concept_id`):**
+   - Bind every item to a discrete knowledge atom (`concept_id`) to prevent shallow numerical re-skins of the same template.
+   - Enforce distinct concept audits through automated validation.
+3. **Cognitive Tiering (Bloom's Taxonomy) & Distractor Rigor:**
+   - Scaffold items across Difficulty 1 (Core Concepts), Difficulty 2 (Application & Calculation), and Difficulty 3 (Trap Analysis & Synthesis).
+   - High-rigor distractor rationales (`why_wrong_en/zh`) for multiple choice, and explicit scoring rubrics (`rubric_en/zh`) for short answers.
+
+### Pillar 2: Progressive & Efficient Learning Closed-Loop (循序渐进的高效复习改进体系)
+1. **5-Stage Progressive Learning Framework:**
+   - **Stage 1 (Diagnostic Baseline):** Stratified sampling across domains to expose blind spots without blind grinding.
+   - **Stage 2 (Topic Competency Drilling):** Focused domain practice with immediate bilingual distractor explanations.
+   - **Stage 3 (Mistake Elimination):** Dynamic mistake pool tracking (require consecutive mastery to graduate out).
    - **Stage 4 (Real-world Timed Mock):** Official duration countdown with pass/fail threshold verdict against the benchmark.
-   - **Stage 5 (Adaptive Sprint to Certification):** 5–10 personalized test sets balancing 60% weak domains, 25% unattempted, and 15% retention review.
+   - **Stage 5 (Adaptive Sprint to Certification):** Dynamic synthesis balancing 60% weak domains, 25% unattempted, and 15% retention review.
+2. **Zero-Friction Offline Feedback Loop:**
+   - Zero-dependency standalone HTML runtime; progress persisted in `localStorage` with refresh recovery and JSON export/import.
 4. **Multi-theme UI & Dynamic Exam Crest:**
    - 4 built-in themes: Cyber Dark, Academic Light, Midnight Navy, Forest Green.
    - Dynamic SVG Exam Crest logo generated from the exam monogram/initials (e.g. `DECA`, `AMC`, `AP`, `MATH`).
 5. **Math, Code, & Multi-Question Types Support:**
    - Render inline and block formulas (`$...$` and `$$...$$`) via native lightweight Math formatting.
    - Render programming code blocks (`` `code` `` and ```` ```python ... ``` ````).
-   - Support Single Choice, Multiple Choice (`type: "multiple"`), and True/False (`type: "boolean"`).
+   - Support Single Choice, Multiple Choice (`type: "multiple"`), True/False (`type: "boolean"`), and Short Answer (`type: "short"`, uses `answer_en`/`answer_zh` reference answers + optional `rubric_en`/`rubric_zh`, self-graded in practice, not auto-scored in timed mocks).
 6. **Anti-Memorization Option Shuffling:** Toggleable option permutation that maintains strict 1:1 mapping with answer keys and distractor reasoning.
 
 ---
