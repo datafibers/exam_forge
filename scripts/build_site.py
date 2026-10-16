@@ -2,7 +2,7 @@
 """Generate a standalone bilingual, multi-theme, progressive adaptive study website from validated question JSON and exam profile."""
 import argparse, html, json, sys
 from pathlib import Path
-from validate_bank import validate
+from validate_bank import normalize_question, validate
 
 def get_args():
     p = argparse.ArgumentParser(description="Build offline adaptive study website.")
@@ -1043,6 +1043,9 @@ const I18N = {
     distractors: 'Why Distractors Fail (错因分析)',
     selectMulti: 'Multiple Choice: Select all correct options, then click Check Answer.',
     writeAnswer: 'Please type your answer first.',
+    fillTag: 'FILL IN THE BLANK',
+    fillPlaceholder: 'Enter your answer (number or expression)...',
+    correctAnswerLabel: 'Accepted Answer',
     shortTag: 'SHORT ANSWER',
     shortPlaceholder: 'Type your answer here...',
     refAnswer: 'Reference Answer',
@@ -1053,7 +1056,9 @@ const I18N = {
     yourAnswer: 'Your Answer',
     noAnswer: '(no answer)',
     selfAssess: 'Self-assess',
-    shortNotScored: '{n} short-answer question(s) not auto-scored — compare with the reference answers below.',
+    shortNotScored: '{n} short-answer question(s) awaiting self-grading below — click "I got it" / "Needs work" on each card to include in score.',
+    mistakeGraduated: '✓ 2/2 consecutive mastery — graduated from Mistake Bank!',
+    mistakeNeedOneMore: '✦ 1/2 mastery streak — answer correctly 1 more time to graduate from Mistake Bank.',
     verdictPassed: 'BENCHMARK PASSED 🏆',
     verdictFailed: 'BENCHMARK NOT YET MET ⚠️',
     timeRemaining: 'Remaining',
@@ -1116,6 +1121,9 @@ const I18N = {
     distractors: '干扰项错因剖析 (Why Wrong)',
     selectMulti: '多选题：请选择所有符合题意的选项，然后点击提交。',
     writeAnswer: '请先输入你的答案。',
+    fillTag: '填空题',
+    fillPlaceholder: '在此输入答案（数值或表达式）……',
+    correctAnswerLabel: '标准答案',
     shortTag: '问答题',
     shortPlaceholder: '在此输入你的答案……',
     refAnswer: '参考答案',
@@ -1126,7 +1134,9 @@ const I18N = {
     yourAnswer: '你的答案',
     noAnswer: '（未作答）',
     selfAssess: '自评',
-    shortNotScored: '{n} 道问答题未计入自动评分——请对照下方参考答案自评。',
+    shortNotScored: '{n} 道问答题待自评——在下方复盘卡片点击「答对了 / 需加强」即可动态计入模考总分。',
+    mistakeGraduated: '✓ 已连续答对 2 次，彻底掌握并移出错题本！',
+    mistakeNeedOneMore: '✦ 连对进度 1/2 —— 再答对 1 次即可从错题本毕业。',
     verdictPassed: '考核达标 🏆 (达到合格线)',
     verdictFailed: '尚未达标 ⚠️ (距离及格线仍需加强)',
     timeRemaining: '剩余时间',
@@ -1213,7 +1223,7 @@ function html_escape(s) {
 /* ================= LATEX & CODE FORMATTER ================= */
 function renderRichText(text) {
   if (!text) return '';
-  let escaped = text
+  let escaped = String(text)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
@@ -1250,22 +1260,137 @@ function renderRichText(text) {
 }
 
 function formatMathString(f) {
-  return f
-    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="math-frac"><span class="num">$1</span><span class="denom">$2</span></span>')
-    .replace(/\\sqrt\{([^}]+)\}/g, '√($1)')
-    .replace(/\\Delta/g, 'Δ')
-    .replace(/\\alpha/g, 'α')
-    .replace(/\\beta/g, 'β')
-    .replace(/\\pi/g, 'π')
-    .replace(/\\times/g, '×')
-    .replace(/\\div/g, '÷')
-    .replace(/\\pm/g, '±')
-    .replace(/\\le/g, '≤')
-    .replace(/\\ge/g, '≥')
-    .replace(/\\neq/g, '≠')
-    .replace(/\\in/g, '∈')
-    .replace(/\^\{?([0-9a-zA-Z+\-]+)\}?/g, '<sup>$1</sup>')
-    .replace(/_\{?([0-9a-zA-Z+\-]+)\}?/g, '<sub>$1</sub>');
+  let s = String(f);
+  // Strip sizing prefixes like \left and \right
+  s = s.replace(/\\left\b/g, '').replace(/\\right\b/g, '');
+  // Matrices: \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+  s = s.replace(/\\begin\{(p|b|v|V)?matrix\}([\s\S]*?)\\end\{\1?matrix\}/g, function(_, kind, body) {
+    const open = kind === 'p' ? '(' : (kind === 'b' ? '[' : (kind === 'v' ? '|' : ''));
+    const close = kind === 'p' ? ')' : (kind === 'b' ? ']' : (kind === 'v' ? '|' : ''));
+    const rows = body.trim().split(/\\\\/).map(r => r.trim().split('&').map(c => c.trim()).join(', ')).join(' ; ');
+    return open + rows + close;
+  });
+  // Text & font wrappers (resolve inner-most braces iteratively)
+  for (let depth = 0; depth < 4; depth++) {
+    s = s.replace(/\\(?:text|mathrm|textrm|operatorname)\{([^{}]*)\}/g, '<span style="font-style:normal;">$1</span>');
+    s = s.replace(/\\(?:mathbf|boldsymbol)\{([^{}]*)\}/g, '<strong>$1</strong>');
+    s = s.replace(/\\(?:mathit|emph)\{([^{}]*)\}/g, '<em>$1</em>');
+    s = s.replace(/\\(?:vec|overrightarrow)\{([^{}]*)\}/g, '$1⃗');
+    s = s.replace(/\\(?:bar|overline)\{([^{}]*)\}/g, '<span style="text-decoration:overline;">$1</span>');
+    s = s.replace(/\\hat\{([^{}]*)\}/g, '$1̂');
+  }
+  // Resolve nested \frac{a}{b}, \sqrt[n]{x}, \sqrt{x}, ^{...}, _{...} from inner-most braces outward
+  for (let depth = 0; depth < 6; depth++) {
+    const prev = s;
+    s = s
+      .replace(/\\(?:d|t)?frac\{([^{}]*)\}\{([^{}]*)\}/g, '<span class="math-frac"><span class="num">$1</span><span class="denom">$2</span></span>')
+      .replace(/\\sqrt\[([^\[\]]*)\]\{([^{}]*)\}/g, '<sup>$1</sup>√($2)')
+      .replace(/\\sqrt\{([^{}]*)\}/g, '√($1)')
+      .replace(/\^\{([^{}]*)\}/g, '<sup>$1</sup>')
+      .replace(/_\{([^{}]*)\}/g, '<sub>$1</sub>');
+    if (s === prev) break;
+  }
+  // Single-character superscripts and subscripts
+  s = s
+    .replace(/\^([0-9a-zA-Z+\-])/g, '<sup>$1</sup>')
+    .replace(/_([0-9a-zA-Z+\-])/g, '<sub>$1</sub>');
+
+  // Mathematical operators & Greek symbols
+  const symMap = [
+    [/\\Delta/g, 'Δ'], [/\\Gamma/g, 'Γ'], [/\\Lambda/g, 'Λ'], [/\\Omega/g, 'Ω'],
+    [/\\Phi/g, 'Φ'], [/\\Pi/g, 'Π'], [/\\Sigma/g, 'Σ'], [/\\Theta/g, 'Θ'],
+    [/\\alpha/g, 'α'], [/\\beta/g, 'β'], [/\\gamma/g, 'γ'], [/\\delta/g, 'δ'],
+    [/\\epsilon/g, 'ε'], [/\\varepsilon/g, 'ε'], [/\\zeta/g, 'ζ'], [/\\eta/g, 'η'],
+    [/\\theta/g, 'θ'], [/\\iota/g, 'ι'], [/\\kappa/g, 'κ'], [/\\lambda/g, 'λ'],
+    [/\\mu/g, 'μ'], [/\\nu/g, 'ν'], [/\\xi/g, 'ξ'], [/\\pi/g, 'π'],
+    [/\\rho/g, 'ρ'], [/\\sigma/g, 'σ'], [/\\tau/g, 'τ'], [/\\phi/g, 'φ'],
+    [/\\varphi/g, 'φ'], [/\\chi/g, 'χ'], [/\\psi/g, 'ψ'], [/\\omega/g, 'ω'],
+    [/\\sum/g, '∑'], [/\\prod/g, '∏'], [/\\int/g, '∫'], [/\\oint/g, '∮'],
+    [/\\infty/g, '∞'], [/\\partial/g, '∂'], [/\\nabla/g, '∇'],
+    [/\\times/g, '×'], [/\\div/g, '÷'], [/\\cdot/g, '·'], [/\\pm/g, '±'], [/\\mp/g, '∓'],
+    [/\\le\b|\\leq\b/g, '≤'], [/\\ge\b|\\geq\b/g, '≥'], [/\\neq\b|\\ne\b/g, '≠'],
+    [/\\approx/g, '≈'], [/\\equiv/g, '≡'], [/\\sim/g, '∼'], [/\\propto/g, '∝'],
+    [/\\in\b/g, '∈'], [/\\notin\b/g, '∉'], [/\\subset/g, '⊂'], [/\\subseteq/g, '⊆'],
+    [/\\cup/g, '∪'], [/\\cap/g, '∩'], [/\\emptyset|\\varnothing/g, '∅'],
+    [/\\forall/g, '∀'], [/\\exists/g, '∃'], [/\\neg/g, '¬'],
+    [/\\Leftrightarrow|\\iff/g, '⇔'], [/\\Rightarrow|\\implies/g, '⇒'],
+    [/\\leftrightarrow/g, '↔'], [/\\rightarrow|\\to\b/g, '→'], [/\\leftarrow/g, '←'],
+    [/\\ldots|\\dots|\\cdots/g, '…'], [/\\,/g, ' '], [/\\;/g, ' '], [/\\quad/g, '  ']
+  ];
+  symMap.forEach(([re, rep]) => { s = s.replace(re, rep); });
+  return s;
+}
+
+/* ================= FILL-IN ANSWER CHECKER & MISTAKE GRADUATION ================= */
+function parseNumericOrFraction(str) {
+  const s = String(str).trim().replace(/,/g, '');
+  if (!s) return NaN;
+  if (s.endsWith('%')) {
+    const v = Number(s.slice(0, -1));
+    return Number.isFinite(v) ? v / 100 : NaN;
+  }
+  const fracMatch = s.match(/^([+-]?\d+(?:\.\d+)?)\s*\/\s*([+-]?\d+(?:\.\d+)?)$/);
+  if (fracMatch) {
+    const denom = Number(fracMatch[2]);
+    return denom !== 0 ? Number(fracMatch[1]) / denom : NaN;
+  }
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function formatAcceptedFillAnswer(q) {
+  if (state.lang === 'zh' && q.answer_zh !== undefined) return String(q.answer_zh);
+  if (state.lang === 'en' && q.answer_en !== undefined) return String(q.answer_en);
+  return Array.isArray(q.answer) ? q.answer.join(' / ') : String(q.answer);
+}
+
+function checkFillAnswer(q, userRaw) {
+  if (userRaw === undefined || userRaw === null) return false;
+  const userStr = String(userRaw).trim();
+  if (!userStr) return false;
+
+  const rawTargets = [];
+  if (Array.isArray(q.answer)) rawTargets.push(...q.answer);
+  else if (q.answer !== undefined) rawTargets.push(q.answer);
+  if (q.answer_en !== undefined) rawTargets.push(q.answer_en);
+  if (q.answer_zh !== undefined) rawTargets.push(q.answer_zh);
+
+  const norm = (x) => String(x).trim().toLowerCase().replace(/\s+/g, ' ');
+  const userNorm = norm(userStr);
+  const userNum = parseNumericOrFraction(userStr);
+  const tol = (typeof q.tolerance === 'number' && q.tolerance >= 0) ? q.tolerance : 1e-6;
+
+  for (const tgt of rawTargets) {
+    if (norm(tgt) === userNorm) return true;
+    const tgtNum = parseNumericOrFraction(tgt);
+    if (Number.isFinite(userNum) && Number.isFinite(tgtNum)) {
+      if (Math.abs(userNum - tgtNum) <= tol) return true;
+      // Also match if target is written as e.g. 75 and user wrote 75, or percent equivalence
+      if (String(tgt).trim().endsWith('%') && Math.abs(userNum - Number(String(tgt).trim().slice(0, -1))) <= tol) return true;
+    }
+  }
+  return false;
+}
+
+// Record attempt and enforce 2-consecutive-correct requirement to graduate from Mistake Bank
+function recordAttempt(qid, isCorrect) {
+  const prevInMistakes = state.mistakes.includes(qid);
+  const rec = [...(state.records[qid] || []), Boolean(isCorrect)].slice(-30);
+  state.records[qid] = rec;
+
+  if (!isCorrect) {
+    if (!prevInMistakes) state.mistakes.push(qid);
+    return 'added';
+  }
+  if (prevInMistakes) {
+    // Require 2 consecutive correct answers to graduate out of mistakes
+    if (rec.length >= 2 && rec[rec.length - 1] === true && rec[rec.length - 2] === true) {
+      state.mistakes = state.mistakes.filter(x => x !== qid);
+      return 'graduated';
+    }
+    return 'one_more';
+  }
+  return 'none';
 }
 
 /* ================= ADAPTIVE MASTERY ALGORITHM ================= */
@@ -1290,6 +1415,7 @@ function computeQuestionWeight(q) {
   const topStat = getTopicStats(q.topic);
   let w = 2.0;
   w += (1.0 - topStat.smoothed) * 3.0;
+  if (state.mistakes.includes(q.id)) w += 2.5;
   if (rec.length > 0) {
     const lastResult = rec[rec.length - 1];
     w += (lastResult === false ? 3.0 : 0.2);
@@ -1297,45 +1423,104 @@ function computeQuestionWeight(q) {
     w += 2.0;
   }
   if (q.difficulty === 3) w *= 1.2;
-  return w;
+  return Math.max(0.1, w);
+}
+
+// Weighted random sampling without replacement using computeQuestionWeight(q)
+function weightedSample(pool, n) {
+  const items = [...pool];
+  const picked = [];
+  const target = Math.min(n, items.length);
+  while (picked.length < target && items.length > 0) {
+    const weights = items.map(q => computeQuestionWeight(q));
+    const totalW = weights.reduce((a, b) => a + b, 0);
+    let r = Math.random() * totalW;
+    let chosenIdx = items.length - 1;
+    for (let i = 0; i < items.length; i++) {
+      r -= weights[i];
+      if (r <= 0) {
+        chosenIdx = i;
+        break;
+      }
+    }
+    picked.push(items.splice(chosenIdx, 1)[0]);
+  }
+  return picked;
 }
 
 function getStratifiedSample(pool, n) {
   const byTopic = {};
   getUniqueTopics().forEach(tp => { byTopic[tp] = []; });
-  pool.forEach(q => { if (byTopic[q.topic]) byTopic[q.topic].push(q); });
+  pool.forEach(q => {
+    if (!byTopic[q.topic]) byTopic[q.topic] = [];
+    byTopic[q.topic].push(q);
+  });
+  Object.keys(byTopic).forEach(tp => { byTopic[tp] = shuffle(byTopic[tp]); });
 
   const picked = [];
-  const topics = Object.keys(byTopic);
+  const topics = Object.keys(byTopic).filter(tp => byTopic[tp].length > 0);
+  const weights = META.domain_weights || {};
+  const hasWeights = topics.some(tp => typeof weights[tp] === 'number' && weights[tp] > 0);
+
+  if (hasWeights) {
+    const totalW = topics.reduce((acc, tp) => acc + (Number(weights[tp]) || 1), 0);
+    topics.forEach(tp => {
+      const w = Number(weights[tp]) || 1;
+      const quota = Math.min(byTopic[tp].length, Math.round((w / totalW) * n));
+      for (let k = 0; k < quota && picked.length < n; k++) {
+        picked.push(byTopic[tp].shift());
+      }
+    });
+  }
+
   let idx = 0;
-  while (picked.length < n && picked.length < pool.length) {
+  let guard = 0;
+  while (picked.length < n && picked.length < pool.length && guard < pool.length * 4) {
     const tp = topics[idx % topics.length];
     if (byTopic[tp] && byTopic[tp].length > 0) {
       picked.push(byTopic[tp].shift());
     }
     idx++;
+    guard++;
   }
   return shuffle(picked);
 }
 
 function getAdaptiveSample(pool, n) {
-  const mistakes = pool.filter(q => state.mistakes.includes(q.id));
-  const unattempted = pool.filter(q => !(state.records[q.id] && state.records[q.id].length));
-  const others = pool.filter(q => !state.mistakes.includes(q.id) && (state.records[q.id] && state.records[q.id].length));
+  // Rank topics by smoothed accuracy ascending to identify weak domains
+  const topicsRanked = getUniqueTopics()
+    .map(tp => ({ tp, smoothed: getTopicStats(tp).smoothed }))
+    .sort((a, b) => a.smoothed - b.smoothed);
+  const weakTopicCount = Math.max(1, Math.ceil(topicsRanked.length / 2));
+  const weakTopics = new Set(
+    topicsRanked
+      .filter((x, idx) => idx < weakTopicCount || x.smoothed < 0.75)
+      .map(x => x.tp)
+  );
 
-  const countMistakes = Math.min(mistakes.length, Math.ceil(n * 0.6));
+  // 1. Weak domains + active mistakes (target 60%)
+  const weakPool = pool.filter(q => state.mistakes.includes(q.id) || weakTopics.has(q.topic));
+  const countWeak = Math.min(weakPool.length, Math.ceil(n * 0.6));
+  const pickedWeak = weightedSample(weakPool, countWeak);
+  const pickedIds = new Set(pickedWeak.map(q => q.id));
+
+  // 2. Unattempted items (target 25%)
+  const unattempted = pool.filter(q => !pickedIds.has(q.id) && !(state.records[q.id] && state.records[q.id].length));
   const countUnattempted = Math.min(unattempted.length, Math.ceil(n * 0.25));
-  const remaining = n - countMistakes - countUnattempted;
+  const pickedUnattempted = weightedSample(unattempted, countUnattempted);
+  pickedUnattempted.forEach(q => pickedIds.add(q.id));
 
-  const picked = [
-    ...shuffle(mistakes).slice(0, countMistakes),
-    ...shuffle(unattempted).slice(0, countUnattempted),
-    ...shuffle(others).slice(0, remaining)
-  ];
+  // 3. Spaced retention review from previously attempted items (target 15%)
+  const retentionPool = pool.filter(q => !pickedIds.has(q.id) && (state.records[q.id] && state.records[q.id].length));
+  const remaining = Math.max(0, n - pickedWeak.length - pickedUnattempted.length);
+  const pickedRetention = weightedSample(retentionPool, remaining);
+  pickedRetention.forEach(q => pickedIds.add(q.id));
+
+  const picked = [...pickedWeak, ...pickedUnattempted, ...pickedRetention];
 
   if (picked.length < n) {
-    const remainingPool = pool.filter(q => !picked.some(x => x.id === q.id));
-    picked.push(...shuffle(remainingPool).slice(0, n - picked.length));
+    const remainingPool = pool.filter(q => !pickedIds.has(q.id));
+    picked.push(...weightedSample(remainingPool, n - picked.length));
   }
   return shuffle(picked);
 }
@@ -1494,9 +1679,13 @@ function renderQuestionView() {
   // Chips Row with Bookmark Toggle
   const chips = document.createElement('div');
   chips.className = 'chips-row';
+  const qTypeLabel = qType === 'multiple' ? 'MULTIPLE CHOICE'
+    : (qType === 'boolean' ? 'TRUE / FALSE'
+    : (qType === 'short' ? t('shortTag')
+    : (qType === 'fill' ? t('fillTag') : 'SINGLE CHOICE')));
   chips.innerHTML = '<span class="chip">' + getTopicDisplayName(q.topic) + '</span>' +
     '<span class="chip">' + '★'.repeat(q.difficulty) + ' Level ' + q.difficulty + '</span>' +
-    '<span class="chip qtype">' + (qType === 'multiple' ? 'MULTIPLE CHOICE' : (qType === 'boolean' ? 'TRUE / FALSE' : (qType === 'short' ? t('shortTag') : 'SINGLE CHOICE'))) + '</span>';
+    '<span class="chip qtype">' + qTypeLabel + '</span>';
 
   const isBm = state.bookmarks.includes(q.id);
   const bmBtn = document.createElement('button');
@@ -1606,7 +1795,27 @@ function renderQuestionView() {
   });
   work.appendChild(choicesContainer);
 
-  if (qType === 'short') {
+  if (qType === 'fill') {
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.id = 'fillAnswerInput';
+    inp.placeholder = t('fillPlaceholder');
+    inp.value = (typeof userAnswers[currentQuestionIndex] === 'string') ? userAnswers[currentQuestionIndex] : '';
+    inp.style.cssText = 'width:100%;box-sizing:border-box;padding:12px 14px;border-radius:10px;border:1px solid var(--panel-border);background:var(--opt-bg);color:inherit;font:inherit;font-size:15px;margin-bottom:14px;';
+    inp.oninput = () => {
+      if (inp.value.trim()) userAnswers[currentQuestionIndex] = inp.value;
+      else delete userAnswers[currentQuestionIndex];
+      if (isTimed) syncTimedMockSessionStorage();
+    };
+    inp.onkeydown = (ev) => {
+      if (ev.key === 'Enter') {
+        ev.preventDefault();
+        const primaryBtn = $('actionPrimaryBtn');
+        if (primaryBtn) primaryBtn.click();
+      }
+    };
+    work.appendChild(inp);
+  } else if (qType === 'short') {
     const ta = document.createElement('textarea');
     ta.id = 'shortAnswerInput';
     ta.rows = 6;
@@ -1677,7 +1886,7 @@ function renderQuestionView() {
 
     checkBtn.onclick = () => {
       const selected = userAnswers[currentQuestionIndex];
-      if (qType === 'short') {
+      if (qType === 'short' || qType === 'fill') {
         if (typeof selected !== 'string' || !selected.trim()) {
           alert(t('writeAnswer'));
           return;
@@ -1691,84 +1900,98 @@ function renderQuestionView() {
       checkBtn.remove();
 
       const finalize = (isCorrect) => {
+        // Log in session
+        activeSession.practiceLogs.push({
+          q: q,
+          isCorrect: isCorrect,
+          chosen: selected,
+          origPerm: questionOptionPermutations[currentQuestionIndex]
+        });
 
-      // Log in session
-      activeSession.practiceLogs.push({
-        q: q,
-        isCorrect: isCorrect,
-        chosen: selected,
-        origPerm: questionOptionPermutations[currentQuestionIndex]
-      });
+        // Record result with 2-consecutive-correct mistake graduation
+        const mistakeStatus = recordAttempt(q.id, isCorrect);
+        saveState();
 
-      // Record result
-      state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
-      if (!isCorrect && !state.mistakes.includes(q.id)) {
-        state.mistakes.push(q.id);
-      } else if (isCorrect && state.mistakes.includes(q.id)) {
-        state.mistakes = state.mistakes.filter(x => x !== q.id);
-      }
-      saveState();
+        // Colorize options with accessible icons
+        optionButtons.forEach(item => {
+          item.btn.disabled = true;
+          const isAns = (qType === 'multiple') ? q.answer.includes(item.origIdx) : (item.origIdx === q.answer);
+          const isChosen = (qType === 'multiple') ? (selected && selected.includes(item.origIdx)) : (item.origIdx === selected);
 
-      // Colorize options with accessible icons
-      optionButtons.forEach(item => {
-        item.btn.disabled = true;
-        const isAns = (qType === 'multiple') ? q.answer.includes(item.origIdx) : (item.origIdx === q.answer);
-        const isChosen = (qType === 'multiple') ? (selected && selected.includes(item.origIdx)) : (item.origIdx === selected);
-
-        if (isAns) {
-          item.btn.classList.add('correct');
-          item.btn.querySelector('.opt-indicator').textContent = '✓';
-        } else if (isChosen && !isAns) {
-          item.btn.classList.add('wrong');
-          item.btn.querySelector('.opt-indicator').textContent = '✗';
-        }
-      });
-
-      // Show Feedback
-      const feedback = document.createElement('div');
-      feedback.className = 'feedback-card';
-      const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
-      feedback.innerHTML = '<h3>✦ ' + t('explanation') + '</h3>' +
-        '<p style="margin:0 0 12px;line-height:1.5;">' + renderRichText(expText) + '</p>';
-
-      const distList = state.lang === 'zh' ? q.why_wrong_zh : q.why_wrong_en;
-      if (Array.isArray(distList) && distList.length) {
-        const distHeader = document.createElement('h4');
-        distHeader.style.margin = '14px 0 6px';
-        distHeader.style.fontSize = '14px';
-        distHeader.style.color = 'var(--text-muted)';
-        distHeader.textContent = t('distractors');
-        feedback.appendChild(distHeader);
-
-        optionButtons.forEach(optItem => {
-          const note = distList[optItem.origIdx];
-          if (note) {
-            const div = document.createElement('div');
-            div.className = 'why-wrong-item';
-            const letter = String.fromCharCode(65 + optItem.displayIdx);
-            div.innerHTML = '<strong>' + letter + '</strong>: ' + renderRichText(note);
-            feedback.appendChild(div);
+          if (isAns) {
+            item.btn.classList.add('correct');
+            item.btn.querySelector('.opt-indicator').textContent = '✓';
+          } else if (isChosen && !isAns) {
+            item.btn.classList.add('wrong');
+            item.btn.querySelector('.opt-indicator').textContent = '✗';
           }
         });
-      }
-      work.appendChild(feedback);
 
-      // Next / Finish button
-      const nextBtn = document.createElement('button');
-      nextBtn.className = 'btn';
-      nextBtn.id = 'actionPrimaryBtn';
-      const isLast = (currentQuestionIndex === activeSession.total - 1);
-      nextBtn.textContent = isLast ? t('finish') : t('next');
-      nextBtn.onclick = () => {
-        currentQuestionIndex++;
-        if (currentQuestionIndex >= activeSession.total) {
-          finishPracticeSession();
-        } else {
-          renderQuestionView();
+        if (qType === 'fill') {
+          const inp = document.getElementById('fillAnswerInput');
+          if (inp) {
+            inp.disabled = true;
+            inp.style.borderColor = isCorrect ? 'var(--ok)' : 'var(--danger)';
+          }
         }
-      };
-      actionsRow.appendChild(nextBtn);
-      renderDashboardStats();
+
+        // Show Feedback
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback-card';
+        const expText = state.lang === 'zh' ? q.explanation_zh : q.explanation_en;
+        let fbHtml = '';
+        if (qType === 'fill') {
+          fbHtml += '<div style="margin-bottom:10px;padding:8px 12px;border-radius:8px;background:var(--opt-bg);border:1px solid ' + (isCorrect ? 'var(--ok)' : 'var(--danger)') + ';">' +
+            '<strong>' + (isCorrect ? '✓ ' + (state.lang === 'zh' ? '回答正确' : 'Correct') : '✗ ' + (state.lang === 'zh' ? '回答错误' : 'Incorrect')) + '</strong> · ' +
+            t('correctAnswerLabel') + ': <code>' + html_escape(formatAcceptedFillAnswer(q)) + '</code></div>';
+        }
+        if (mistakeStatus === 'graduated') {
+          fbHtml += '<div style="margin-bottom:10px;font-size:12px;color:var(--ok);font-weight:700;">' + t('mistakeGraduated') + '</div>';
+        } else if (mistakeStatus === 'one_more') {
+          fbHtml += '<div style="margin-bottom:10px;font-size:12px;color:var(--accent);font-weight:600;">' + t('mistakeNeedOneMore') + '</div>';
+        }
+        fbHtml += '<h3>✦ ' + t('explanation') + '</h3>' +
+          '<p style="margin:0 0 12px;line-height:1.5;">' + renderRichText(expText) + '</p>';
+        feedback.innerHTML = fbHtml;
+
+        const distList = state.lang === 'zh' ? q.why_wrong_zh : q.why_wrong_en;
+        if (Array.isArray(distList) && distList.length) {
+          const distHeader = document.createElement('h4');
+          distHeader.style.margin = '14px 0 6px';
+          distHeader.style.fontSize = '14px';
+          distHeader.style.color = 'var(--text-muted)';
+          distHeader.textContent = t('distractors');
+          feedback.appendChild(distHeader);
+
+          optionButtons.forEach(optItem => {
+            const note = distList[optItem.origIdx];
+            if (note) {
+              const div = document.createElement('div');
+              div.className = 'why-wrong-item';
+              const letter = String.fromCharCode(65 + optItem.displayIdx);
+              div.innerHTML = '<strong>' + letter + '</strong>: ' + renderRichText(note);
+              feedback.appendChild(div);
+            }
+          });
+        }
+        work.appendChild(feedback);
+
+        // Next / Finish button
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'btn';
+        nextBtn.id = 'actionPrimaryBtn';
+        const isLast = (currentQuestionIndex === activeSession.total - 1);
+        nextBtn.textContent = isLast ? t('finish') : t('next');
+        nextBtn.onclick = () => {
+          currentQuestionIndex++;
+          if (currentQuestionIndex >= activeSession.total) {
+            finishPracticeSession();
+          } else {
+            renderQuestionView();
+          }
+        };
+        actionsRow.appendChild(nextBtn);
+        renderDashboardStats();
       };
 
       if (qType === 'short') {
@@ -1810,6 +2033,8 @@ function renderQuestionView() {
           const targetSet = new Set(q.answer);
           const userSet = new Set(selected);
           isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+        } else if (qType === 'fill') {
+          isCorrect = checkFillAnswer(q, selected);
         }
         finalize(isCorrect);
       }
@@ -1838,7 +2063,7 @@ function finishTimedMock() {
   let correctCount = 0;
   const topicStats = {};
   const questionLogs = [];
-  let shortCount = 0;
+  let ungradedShortCount = 0;
 
   s.questions.forEach((q, idx) => {
     const qType = q.type || 'single';
@@ -1852,24 +2077,21 @@ function finishTimedMock() {
         const targetSet = new Set(q.answer);
         const userSet = new Set(chosen);
         isCorrect = (targetSet.size === userSet.size && [...targetSet].every(x => userSet.has(x)));
+      } else if (qType === 'fill') {
+        isCorrect = checkFillAnswer(q, chosen);
       }
     }
 
     if (qType === 'short') {
-      shortCount++;
-      questionLogs.push({ q: q, chosen: chosen, isCorrect: false, origPerm: [] });
+      ungradedShortCount++;
+      questionLogs.push({ q: q, chosen: chosen, isCorrect: false, selfGraded: false, origPerm: [] });
       return;
     }
 
     if (isCorrect) correctCount++;
 
-    // Update records & mistakes
-    state.records[q.id] = [...(state.records[q.id] || []), isCorrect].slice(-30);
-    if (!isCorrect && !state.mistakes.includes(q.id)) {
-      state.mistakes.push(q.id);
-    } else if (isCorrect && state.mistakes.includes(q.id)) {
-      state.mistakes = state.mistakes.filter(x => x !== q.id);
-    }
+    // Update records & mistakes with 2-streak graduation
+    recordAttempt(q.id, isCorrect);
 
     // Topic aggregation
     if (!topicStats[q.topic]) topicStats[q.topic] = { total: 0, correct: 0 };
@@ -1881,18 +2103,23 @@ function finishTimedMock() {
 
   saveState();
 
-  const gradedTotal = Math.max(1, s.total - shortCount);
-  const accuracyPct = Math.round((correctCount / gradedTotal) * 100);
-  const isPassed = accuracyPct >= (META.passing_score || 75);
-
   const banner = document.createElement('div');
   banner.className = 'result-banner';
-  banner.innerHTML = '<div class="panel-eyebrow">' + s.modeName.toUpperCase() + ' SCORECARD</div>' +
-    '<div class="result-score">' + correctCount + ' / ' + (s.total - shortCount) + ' (' + accuracyPct + '%)</div>' +
-    (shortCount ? '<div style="font-size:12px;color:var(--text-muted);">' + t('shortNotScored').replace('{n}', shortCount) + '</div>' : '') +
-    '<div class="verdict-stamp ' + (isPassed ? 'pass' : 'fail') + '">' +
-      (isPassed ? t('verdictPassed') : t('verdictFailed')) +
-    '</div>';
+  const scoreHeader = document.createElement('div');
+  banner.appendChild(scoreHeader);
+
+  const renderScoreHeader = () => {
+    const gradedTotal = Math.max(1, s.total - ungradedShortCount);
+    const accuracyPct = Math.round((correctCount / gradedTotal) * 100);
+    const isPassed = accuracyPct >= (META.passing_score || 75);
+    scoreHeader.innerHTML = '<div class="panel-eyebrow">' + s.modeName.toUpperCase() + ' SCORECARD</div>' +
+      '<div class="result-score">' + correctCount + ' / ' + (s.total - ungradedShortCount) + ' (' + accuracyPct + '%)</div>' +
+      (ungradedShortCount ? '<div style="font-size:12px;color:var(--text-muted);">' + t('shortNotScored').replace('{n}', ungradedShortCount) + '</div>' : '') +
+      '<div class="verdict-stamp ' + (isPassed ? 'pass' : 'fail') + '">' +
+        (isPassed ? t('verdictPassed') : t('verdictFailed')) +
+      '</div>';
+  };
+  renderScoreHeader();
 
   // Topic Matrix Table
   const tableHeader = document.createElement('h3');
@@ -1902,12 +2129,15 @@ function finishTimedMock() {
 
   const table = document.createElement('table');
   table.className = 'table-matrix';
-  table.innerHTML = '<thead><tr><th>Domain</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody>' +
-    Object.keys(topicStats).map(tp => {
-      const st = topicStats[tp];
-      const rate = Math.round((st.correct / st.total) * 100);
-      return '<tr><td>' + getTopicDisplayName(tp) + '</td><td>' + st.correct + ' / ' + st.total + '</td><td>' + rate + '%</td></tr>';
-    }).join('') + '</tbody>';
+  const renderTopicTable = () => {
+    table.innerHTML = '<thead><tr><th>Domain</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody>' +
+      Object.keys(topicStats).map(tp => {
+        const st = topicStats[tp];
+        const rate = Math.round((st.correct / st.total) * 100);
+        return '<tr><td>' + getTopicDisplayName(tp) + '</td><td>' + st.correct + ' / ' + st.total + '</td><td>' + rate + '%</td></tr>';
+      }).join('') + '</tbody>';
+  };
+  renderTopicTable();
   banner.appendChild(table);
 
   // Full Question Review with Options, Distractor Reasoning, and Bookmarking
@@ -1931,7 +2161,7 @@ function finishTimedMock() {
 
     let cardHtml = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">' +
       '<div><strong>#' + (idx + 1) + ' [' + getTopicDisplayName(q.topic) + ']</strong> ' +
-      '<span class="chip ' + (qType === 'short' ? '' : (item.isCorrect ? 'correct' : 'wrong')) + '">' + (qType === 'short' ? t('selfAssess') : (item.isCorrect ? '✓ ' + (state.lang === 'zh' ? '回答正确' : 'Correct') : '✗ ' + (state.lang === 'zh' ? '回答错误' : 'Incorrect'))) + '</span></div>' +
+      '<span id="revChip_' + idx + '" class="chip ' + (qType === 'short' ? '' : (item.isCorrect ? 'correct' : 'wrong')) + '">' + (qType === 'short' ? t('selfAssess') : (item.isCorrect ? '✓ ' + (state.lang === 'zh' ? '回答正确' : 'Correct') : '✗ ' + (state.lang === 'zh' ? '回答错误' : 'Incorrect'))) + '</span></div>' +
       '<button type="button" class="btn-bookmark' + (isBookmarked ? ' active' : '') + '" onclick="toggleBookmark(\'' + q.id + '\', this)">' +
       (isBookmarked ? '★ ' + t('bookmarked') : '☆ ' + t('bookmark')) + '</button>' +
       '</div>' +
@@ -1972,11 +2202,25 @@ function finishTimedMock() {
       cardHtml += '</div>';
     });
 
-    if (qType === 'short') {
+    if (qType === 'fill') {
+      const mine = (typeof item.chosen === 'string' && item.chosen.trim()) ? item.chosen : t('noAnswer');
+      cardHtml += '<div class="rev-choice-item ' + (item.isCorrect ? 'rev-correct' : 'rev-wrong') + '"><strong>' + t('yourAnswer') + ':</strong> <code>' + html_escape(mine) + '</code></div>' +
+        '<div class="rev-choice-item rev-correct"><strong>' + t('correctAnswerLabel') + ':</strong> <code>' + html_escape(formatAcceptedFillAnswer(q)) + '</code></div>';
+    } else if (qType === 'short') {
       const refText = state.lang === 'zh' ? q.answer_zh : q.answer_en;
       const mine = (typeof item.chosen === 'string' && item.chosen.trim()) ? item.chosen : t('noAnswer');
       cardHtml += '<div class="rev-choice-item"><strong>' + t('yourAnswer') + ':</strong><div style="white-space:pre-wrap;">' + html_escape(mine) + '</div></div>' +
         '<div class="rev-choice-item rev-correct"><strong>' + t('refAnswer') + ':</strong> ' + renderRichText(refText) + '</div>';
+      const rubric = state.lang === 'zh' ? q.rubric_zh : q.rubric_en;
+      if (Array.isArray(rubric) && rubric.length) {
+        cardHtml += '<div class="rev-choice-item"><strong>' + t('rubric') + ':</strong><ul style="margin:4px 0 0;padding-left:18px;">' +
+          rubric.map(r => '<li>' + renderRichText(r) + '</li>').join('') + '</ul></div>';
+      }
+      cardHtml += '<div id="shortGradeBox_' + idx + '" style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+        '<span style="font-size:13px;font-weight:600;">' + t('selfGradePrompt') + '</span>' +
+        '<button type="button" class="btn sm" id="btnShortGot_' + idx + '">✓ ' + t('selfGotIt') + '</button>' +
+        '<button type="button" class="btn secondary sm" id="btnShortMiss_' + idx + '">✗ ' + t('selfMissed') + '</button>' +
+        '</div>';
     }
 
     cardHtml += '</div>' +
@@ -1986,6 +2230,37 @@ function finishTimedMock() {
 
     card.innerHTML = cardHtml;
     banner.appendChild(card);
+
+    if (qType === 'short') {
+      setTimeout(() => {
+        const gotB = $('btnShortGot_' + idx);
+        const missB = $('btnShortMiss_' + idx);
+        const box = $('shortGradeBox_' + idx);
+        const chipEl = $('revChip_' + idx);
+        const applyShortGrade = (ok) => {
+          if (item.selfGraded) return;
+          item.selfGraded = true;
+          item.isCorrect = ok;
+          ungradedShortCount = Math.max(0, ungradedShortCount - 1);
+          if (ok) correctCount++;
+          if (!topicStats[q.topic]) topicStats[q.topic] = { total: 0, correct: 0 };
+          topicStats[q.topic].total++;
+          if (ok) topicStats[q.topic].correct++;
+          recordAttempt(q.id, ok);
+          saveState();
+          if (chipEl) {
+            chipEl.className = 'chip ' + (ok ? 'correct' : 'wrong');
+            chipEl.textContent = ok ? '✓ ' + (state.lang === 'zh' ? '回答正确' : 'Correct') : '✗ ' + (state.lang === 'zh' ? '回答错误' : 'Incorrect');
+          }
+          if (box) box.remove();
+          renderScoreHeader();
+          renderTopicTable();
+          renderDashboardStats();
+        };
+        if (gotB) gotB.onclick = () => applyShortGrade(true);
+        if (missB) missB.onclick = () => applyShortGrade(false);
+      }, 0);
+    }
   });
 
   const backBtn = document.createElement('button');
@@ -2109,7 +2384,7 @@ function finishPracticeSession() {
     $('btnRecDrill').onclick = () => {
       $('selTopic').value = weakestTopic;
       const pool = BANK.filter(q => q.topic === weakestTopic);
-      startSession(shuffle(pool).slice(0, Number($('selSize').value)), false, 'Topic: ' + weakestTopic);
+      startSession(weightedSample(pool, Number($('selSize').value) || 20), false, 'Topic: ' + weakestTopic);
     };
   }
   if ($('btnRecMistakes')) {
@@ -2163,7 +2438,14 @@ function renderPrintablePaperExam() {
       optsDiv.appendChild(row);
     });
     qDiv.appendChild(optsDiv);
-    if ((q.type || 'single') === 'short') {
+    const qType = q.type || 'single';
+    if (qType === 'fill') {
+      const blank = document.createElement('div');
+      blank.style.paddingLeft = '14px';
+      blank.style.marginTop = '8px';
+      blank.innerHTML = '<strong>' + t('yourAnswer') + ':</strong> ________________________';
+      qDiv.appendChild(blank);
+    } else if (qType === 'short') {
       const lines = document.createElement('div');
       lines.style.paddingLeft = '14px';
       for (let li = 0; li < 5; li++) {
@@ -2195,6 +2477,8 @@ function renderPrintablePaperExam() {
       ansLetters = t('shortTag');
       const refText = state.lang === 'zh' ? q.answer_zh : q.answer_en;
       refHtml = '<div style="margin:4px 0;"><strong>' + t('refAnswer') + ':</strong> ' + renderRichText(refText) + '</div>';
+    } else if (qType === 'fill') {
+      ansLetters = formatAcceptedFillAnswer(q);
     } else if (qType === 'multiple') {
       ansLetters = q.answer.map(i => String.fromCharCode(65 + i)).join(', ');
     } else {
@@ -2205,7 +2489,7 @@ function renderPrintablePaperExam() {
     row.style.marginBottom = '12px';
     row.style.fontSize = '13px';
     row.style.breakInside = 'avoid';
-    row.innerHTML = '<strong>#' + (idx + 1) + ' [' + ansLetters + ']:</strong> ' +
+    row.innerHTML = '<strong>#' + (idx + 1) + ' [' + html_escape(ansLetters) + ']:</strong> ' +
       refHtml + renderRichText(expText);
     keySection.appendChild(row);
   });
@@ -2251,17 +2535,17 @@ function triggerStageAction(stageId) {
     const top = $('selTopic').value;
     const pool = top === 'all' ? BANK : BANK.filter(q => q.topic === top);
     const size = Number($('selSize').value) || 20;
-    startSession(shuffle(pool).slice(0, size), false, 'Topic Drilling');
+    startSession(weightedSample(pool, size), false, 'Topic Drilling');
   } else if (stageId === 'mistakes') {
     const pool = BANK.filter(q => state.mistakes.includes(q.id));
     if (!pool.length) {
       alert(t('noMistakes'));
       return;
     }
-    startSession(shuffle(pool), false, 'Mistake Elimination');
+    startSession(weightedSample(pool, pool.length), false, 'Mistake Elimination');
   } else if (stageId === 'mock') {
     const count = META.mock_questions_count || 20;
-    const pool = shuffle(BANK).slice(0, count);
+    const pool = getStratifiedSample(BANK, count);
     startSession(pool, true, 'Timed Simulation Mock');
   } else if (stageId === 'sprint') {
     renderAdaptivePlansHub();
@@ -2334,7 +2618,7 @@ function renderDashboardStats() {
       if (activeSession && !confirm(t('confirmExit'))) return;
       $('selTopic').value = tp;
       const pool = BANK.filter(q => q.topic === tp);
-      startSession(shuffle(pool).slice(0, Number($('selSize').value)), false, 'Topic: ' + getTopicDisplayName(tp));
+      startSession(weightedSample(pool, Number($('selSize').value) || 20), false, 'Topic: ' + getTopicDisplayName(tp));
     };
     list.appendChild(item);
   });
@@ -2498,6 +2782,7 @@ if ($('btnReset')) {
   $('btnReset').onclick = () => {
     if (confirm(t('confirmReset'))) {
       state.records = {};
+      state.qStats = {};
       state.mistakes = [];
       state.bookmarks = [];
       saveState();
@@ -2584,7 +2869,8 @@ def main():
     if not validate(args.bank, args.profile):
         sys.exit(1)
 
-    bank_data = json.loads(Path(args.bank).read_text(encoding='utf-8'))
+    raw_bank_data = json.loads(Path(args.bank).read_text(encoding='utf-8'))
+    bank_data = [normalize_question(q) for q in raw_bank_data]
     
     prof = {}
     if args.profile and Path(args.profile).exists():
@@ -2603,6 +2889,7 @@ def main():
     mock_questions_count = prof.get('mock_questions_count', 20)
     logo_mono = prof.get('logo_monogram') or exam_code
     default_theme = prof.get('theme_default', 'cyber')
+    domain_weights = prof.get('domain_weights') if isinstance(prof.get('domain_weights'), dict) else {}
     
     stages = prof.get('stages', [
         {"id": "diagnostic", "name_en": "Stage 1: Diagnostic Baseline", "name_zh": "阶段一：摸底诊断", "desc_en": "Establish topic baseline with sampled questions.", "desc_zh": "抽样摸底，测试初始知识短板。"},
@@ -2625,6 +2912,7 @@ def main():
         "mock_duration_mins": mock_duration_mins,
         "mock_questions_count": mock_questions_count,
         "default_theme": default_theme,
+        "domain_weights": domain_weights,
         "stages": stages
     }, ensure_ascii=False).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
 

@@ -12,6 +12,14 @@
   "logo_monogram": "IQCP",
   "theme_default": "cyber",
   "verified_rules": false,
+  "domain_weights": {
+    "Finance": 30,
+    "STEM Math": 20,
+    "Strategy": 20,
+    "Marketing": 10,
+    "Operations": 10,
+    "Business Law": 10
+  },
   "stages": [
     {
       "id": "diagnostic",

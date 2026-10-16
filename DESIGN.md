@@ -27,9 +27,9 @@ flowchart TD
 ```
 
 ### Pillar 1: Authoring Authenticity & Syllabus Precision ("准")
-1. **Curriculum Weight Calibration:**
+1. **Curriculum Weight Calibration (`domain_weights`):**
    - Instead of generating questions randomly, the engine analyzes official examination specifications (e.g., College Board CED, DECA Guide, AWS Exam Guides, AMC syllabi).
-   - Domain percentages (e.g., Domain A: 30%, Domain B: 40%, Domain C: 30%) determine the precise quota of questions authored per topic.
+   - Domain percentages (`domain_weights` in `exam_profile.json`, e.g., Domain A: 30%, Domain B: 40%, Domain C: 30%) are validated against the actual question bank and drive proportional sampling in Timed Mocks.
 2. **Concept Atomicity (`concept_id`):**
    - Each problem is tagged with an atomic `concept_id` representing a distinct, non-fungible syllabus skill.
    - Prevents AI hallucination and repetitive numerical clones (e.g., 50 questions that merely change numbers in the same formula).
@@ -37,9 +37,10 @@ flowchart TD
    - **Difficulty 1 (Recall & Definition):** Fundamental terms, core theorems, baseline assumptions.
    - **Difficulty 2 (Application & Calculation):** Multi-step problem solving, quantitative evaluations, scenario diagnosis.
    - **Difficulty 3 (Synthesis & Edge-Case Traps):** Boundary conditions, cross-topic integration, counter-intuitive distractor reasoning.
-4. **Distractor Rigor & Open-Ended Rubrics:**
-   - Every multiple-choice distractor provides explicit diagnostic explanations (`why_wrong_en/zh`) pinpointing the underlying misconception (sign inversion, formula misuse, misread constraints).
-   - Short-answer questions (`type: "short"`) include canonical reference answers (`answer_en/zh`) and structured rubrics (`rubric_en/zh`) for self-evaluation.
+4. **5 Question Types, Distractor Rigor & Rubrics:**
+   - Supports **Single-Choice** (`single`), **Multiple-Choice** (`multiple`), **True/False** (`boolean`), **Objective Fill-in-the-Blank / Numerical** (`fill` with fraction/percentage parsing and `tolerance`), and **Open-Ended Short Answer** (`short`).
+   - Every choice-based distractor provides explicit diagnostic explanations (`why_wrong_en/zh`) pinpointing the underlying misconception.
+   - Short-answer questions (`type: "short"`) include canonical reference answers (`answer_en/zh`), structured rubrics (`rubric_en/zh`), and interactive self-grading in Timed Mocks.
 
 ---
 
@@ -53,9 +54,9 @@ flowchart LR
   classDef goal fill:#0f172a,stroke:#10b981,stroke-width:2.5px,color:#34d399;
 
   S1["🎯 <b>Stage 1: Diagnostic</b><br/>Stratified Baseline Sample"]:::stage
-  S2["📚 <b>Stage 2: Topic Drill</b><br/>Domain Deep-Dive"]:::stage
-  S3["🔥 <b>Stage 3: Mistake Killer</b><br/>Dynamic Pitfall Elimination"]:::stage
-  S4["⏱️ <b>Stage 4: Timed Mock</b><br/>Official Countdown & Benchmark"]:::stage
+  S2["📚 <b>Stage 2: Topic Drill</b><br/>Weighted Domain Deep-Dive"]:::stage
+  S3["🔥 <b>Stage 3: Mistake Killer</b><br/>2-Streak Graduation"]:::stage
+  S4["⏱️ <b>Stage 4: Timed Mock</b><br/>Syllabus-Weighted Simulation"]:::stage
   S5["🏆 <b>Stage 5: Adaptive Sprint</b><br/>Targeted Score Booster"]:::goal
 
   S1 -->|Weaknesses Identified| S2
@@ -64,14 +65,14 @@ flowchart LR
   S4 -->|Benchmark Assessed| S5
 ```
 
-1. **Stage 1 (Diagnostic Baseline):** Stratified sampling across all curriculum domains to map baseline competency without time pressure.
-2. **Stage 2 (Topic Competency Drilling):** Laser-focused practice on selected domains with instant bilingual explanations and distractor reasoning.
-3. **Stage 3 (Targeted Mistake Elimination):** Dynamic error queue prioritizing recurring misconceptions. Items remain in the mistake pool until mastered consecutively.
-4. **Stage 4 (Real-world Timed Simulation):** Strict exam countdown and full question volume. Evaluated against official passing thresholds (e.g., 75% benchmark) with accidental refresh recovery.
+1. **Stage 1 (Diagnostic Baseline):** Syllabus-weighted stratified sampling across all curriculum domains to map baseline competency without time pressure.
+2. **Stage 2 (Topic Competency Drilling):** Weighted sampling (`computeQuestionWeight`) on selected domains prioritizing weak concepts, unattempted items, and spaced time decay.
+3. **Stage 3 (Targeted Mistake Elimination):** Dynamic error queue requiring **2 consecutive correct attempts** (`streak >= 2`) before graduating an item out of the mistake bank.
+4. **Stage 4 (Real-world Timed Simulation):** Strict exam countdown and official domain-weighted question volume, with interactive post-exam self-grading for short-answer items and accidental refresh recovery.
 5. **Stage 5 (Adaptive Sprint to Certification):** Synthesizes optimized practice sets dynamically weighted:
-   - **60% Weak Domains:** Concentrated practice on areas with the lowest accuracy.
+   - **60% Weak Domains & Active Mistakes:** Concentrated weighted practice on areas with the lowest Bayesian-smoothed accuracy.
    - **25% Unattempted Items:** Fresh problems to eliminate blind spots.
-   - **15% Spaced Retention:** Spaced review of previously answered items to prevent memory decay.
+   - **15% Spaced Retention:** Time-decay weighted review of previously answered items to prevent memory decay.
 
 ---
 
@@ -82,14 +83,14 @@ flowchart LR
 ```mermaid
 flowchart TD
   subgraph Inputs["1. Exam Resources / Prompts"]
-    M1["📄 <b>Mode A: User Resources</b><br/>PDFs, Syllabi, Past Papers"]
+    M1["📄 <b>Mode A: User Resources</b><br/>PDFs, Syllabi, Study Notes, Past Papers"]
     M2["🔍 <b>Mode B: Autonomous Search</b><br/>Web Blueprint & CED Retrieval"]
   end
 
   subgraph Engine["2. Exam Forge Pipeline (Standard Python)"]
-    E1["⚙️ <b>Concept Extraction & Deduplication</b><br/>100% Original Scenario Authoring"]
-    E2["🎲 <b>Option Shuffling & Distractor Logic</b><br/>Strict why_wrong Reasoning (A-D)"]
-    E3["🛡️ <b>Quality Gate Validator</b><br/><code>scripts/validate_bank.py</code>"]
+    E1["⚙️ <b>Concept Extraction & Batch Merger</b><br/><code>scripts/merge_bank.py</code>"]
+    E2["🎲 <b>Single/Bilingual Normalization & Distractors</b><br/><code>normalize_question()</code>"]
+    E3["🛡️ <b>Quality & Weight Validator</b><br/><code>scripts/validate_bank.py</code>"]
     E4["⚡ <b>Zero-Dependency Compiler</b><br/><code>scripts/build_site.py</code>"]
   end
 

@@ -132,7 +132,7 @@
 
 ## 三、 题库格式与多题型规范 (`questions.json`)
 
-题库支持 **单选 (Single)**、**多选 (Multiple)**、**判断题 (Boolean)**、**问答题 (Short)**，并原生支持 **数学公式 (LaTeX/MathML)** 与 **代码块 (Markdown Code Blocks)**：
+题库支持 **单选 (Single)**、**多选 (Multiple)**、**判断题 (Boolean)**、**填空/数值题 (Fill)**、**问答题 (Short)** 共 5 种题型，支持单语自动回退（只写英文或只写中文均可正常校验与编译），并原生支持 **数学公式 (LaTeX/MathML)** 与 **代码块 (Markdown Code Blocks)**：
 
 ### 1. 题目对象格式说明
 ```json
@@ -170,9 +170,10 @@
 - **单选 (`type`: "single" 或缺省)**：`answer` 为整数索引 `0, 1, 2, ...`。
 - **多选 (`type`: "multiple")**：`answer` 为数组 `[0, 2]`。界面会自动呈现复选框并要求提交验证。
 - **判断题 (`type`: "boolean")**：`choices_en` 填写 `["True", "False"]`，`answer` 为 `0` 或 `1`。
-- **问答题 (`type`: "short")**：无选项；不需要 `choices_*`/`answer`，改填 `answer_en`/`answer_zh`（参考答案，字符串），可选 `rubric_en`/`rubric_zh`（得分要点列表）。练习模式下输入答案后显示参考答案，由学习者自评「答对了/需加强」并计入错题本；限时模考中问答题不计入自动评分，仅在复盘时对照参考答案。
-- **数学公式**：使用 `$E = mc^2$` 或 `$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$`，前端自动渲染为优美的数学排版。
-- **代码块**：使用 ```java ... ``` 包裹代码，前端自动进行等宽字体格式化。
+- **客观填空 / 数值题 (`type`: "fill")**：无选项；填写 `answer`（可为数值如 `3.14`、字符串如 `"O(n log n)"`、或多等价答案数组如 `["0.5", "1/2", "50%"]`），可选 `tolerance`（数值容差，如 `0.01`）。在日常练习与限时模考中均支持**自动判分**（支持数值、分数、百分数自动折算匹配）。
+- **主观问答题 (`type`: "short")**：无选项；填写 `answer_en`/`answer_zh`（参考答案，字符串），可选 `rubric_en`/`rubric_zh`（得分要点列表）。练习模式下输入答案后显示参考答案与得分要点，由学习者自评；限时模考交卷后，在复盘卡片上提供「答对了 / 需加强」自评按钮，点击后**实时动态合入模考总成绩与模块统计**。
+- **数学公式**：支持嵌套分式 `$\frac{1}{1+\frac{1}{x}}$`、根式 `$\sqrt[n]{x}$`、矩阵 `$\begin{pmatrix} a & b \\ c & d \end{pmatrix}$`、求和/积分/极限（`$\sum, \int, \lim$`）与全套希腊字母。
+- **代码块**：使用 ```python ... ``` 包裹代码，前端自动进行等宽字体格式化。
 
 ---
 
@@ -182,30 +183,37 @@
 
 ### 1. 校验题库与考试配置
 ```bash
-python scripts/validate_bank.py examples/questions.json --profile examples/exam_profile.json
+python3 scripts/validate_bank.py examples/questions.json --profile examples/exam_profile.json
 ```
-- 会校验所有 ID 唯一性、题干排重、中英完整性、错因归因匹配度以及各模块分布统计。
+- 会校验所有 ID 唯一性、题干排重、中英完整性（或单语回退）、错因归因匹配度，并对比 `exam_profile.json` 中的 `domain_weights` 考纲权重与实际题库分布。
 
-### 2. 生成离线自适应网站
+### 2. 大题库分批生成与去重合并（适用于 40~100+ 题）
 ```bash
-python scripts/build_site.py examples/questions.json \
+python3 scripts/merge_bank.py batch_1.json batch_2.json --out questions.json --profile examples/exam_profile.json
+```
+- 自动合并多个批次生成的 JSON 题库文件，按 `id` 和归一化题干自动去重，并立即执行完整校验。
+
+### 3. 生成离线自适应网站
+```bash
+python3 scripts/build_site.py examples/questions.json \
   --profile examples/exam_profile.json \
   --out practice.html
 ```
 也可以直接在命令行覆盖部分参数：
 ```bash
-python scripts/build_site.py examples/questions.json \
+python3 scripts/build_site.py examples/questions.json \
   --title "AP Computer Science A Mock" \
   --pass-score 75 \
   --mins 90 \
   --out ap_csa_practice.html
 ```
 
-### 3. 打开与使用
+### 4. 打开与使用
 直接在 Chrome、Safari、Edge 等主流现代浏览器双击打开生成的 `practice.html`。
 - **完全离线**：断网可用，无 CDN 延迟。
 - **主题切换**：支持 4 种风格（Cyber Dark 赛博黑、Academic Light 学院白、Midnight Navy 午夜深蓝、Forest Green 森林绿）。
 - **动态防作弊**：支持一键开启 **🎲 选项乱序**（选项随机打乱且保证答案与错因精准对应）。
+- **错题连续掌握毕业制**：错题本中的题目需**连续答对 2 次**才会从错题本毕业移出，防止靠运气蒙对一次就漏掉薄弱点。
 - **跨设备同步**：通过“导出进度 / 导入进度”迁移学习记录。
 
 ---

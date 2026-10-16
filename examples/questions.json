@@ -243,5 +243,42 @@
       "未在隐私政策中透明披露便转售数据构成严重的违法侵权。",
       "无司法令状便向执法机关移交用户数据库属于严重违法侵权行为。"
     ]
+  },
+  {
+    "id": "DEMO-009",
+    "concept_id": "calculus-marginal-cost-vertex",
+    "topic": "STEM Math",
+    "type": "fill",
+    "difficulty": 2,
+    "en": "For the quadratic profit function \\(P(x) = -2x^2 + 12x - 10\\), at what production quantity \\(x\\) does the firm achieve its maximum profit? (Formula: \\(x^* = \\frac{-b}{2a}\\), enter a number)",
+    "zh": "对于二次利润函数 \\(P(x) = -2x^2 + 12x - 10\\)，当产量 \\(x\\) 为多少时企业达到最大利润？（顶点公式：\\(x^* = \\frac{-b}{2a}\\)，请输入数值）",
+    "answer": 3,
+    "tolerance": 0.01,
+    "explanation_en": "For \\(P(x) = ax^2 + bx + c\\) with \\(a = -2 < 0\\), the parabola opens downward and reaches its global maximum at the vertex \\(x^* = \\frac{-b}{2a} = \\frac{-12}{2(-2)} = 3\\), yielding a maximum profit of \\(P(3) = 8\\).",
+    "explanation_zh": "对于二次函数 \\(P(x) = ax^2 + bx + c\\)，由于 \\(a = -2 < 0\\)，抛物线开口向下，在对称轴顶点 \\(x^* = \\frac{-b}{2a} = \\frac{-12}{2 \\times (-2)} = 3\\) 处取得最大利润 \\(P(3) = 8\\)。"
+  },
+  {
+    "id": "DEMO-010",
+    "concept_id": "moat-network-effects-analysis",
+    "topic": "Strategy",
+    "type": "short",
+    "difficulty": 3,
+    "en": "Briefly explain why a two-sided marketplace with strong network effects (e.g., ride-sharing or payment networks) exhibits higher long-term pricing power than an undifferentiated SaaS utility, and identify one major cold-start risk.",
+    "zh": "简述为什么具有强网络效应的双边市场平台（如网约车或支付网络）比同质化工具型 SaaS 具有更强的长期定价权，并指出其面临的一项核心冷启动风险。",
+    "answer_en": "Each additional buyer increases utility for sellers and vice versa (cross-side network effects), creating high switching costs and liquidity moats that competitors cannot replicate merely by copying software features. However, during the cold-start phase, the platform faces the 'chicken-and-egg' liquidity problem where neither side joins without the other.",
+    "answer_zh": "双边市场具备跨边网络效应：每增加一名买家都会提升卖家侧的匹配价值（反之亦然），从而构筑极高的流动性壁垒与转换成本，竞争对手无法仅靠模仿软件功能来挖角用户。但在早期冷启动阶段，平台面临典型的「先有鸡还是先有蛋」的双边流动性枯竭风险。",
+    "rubric_en": [
+      "Identifies cross-side/direct network effects where new users increase value for existing participants",
+      "Explains how liquidity/switching costs create a defensible moat against feature cloning",
+      "Notes the cold-start ('chicken-and-egg') liquidity risk or multi-homing vulnerability"
+    ],
+    "rubric_zh": [
+      "点出跨边/直接网络效应（新增用户能提升存量用户的网络价值）",
+      "阐明双边流动性壁垒与高转换成本如何抵御单纯的功能抄袭",
+      "指出冷启动阶段「先有鸡还是先有蛋」的双边供给失衡或多归属（Multi-homing）风险"
+    ],
+    "explanation_en": "Defensible moats stem from structural market dynamics (network effects, high switching costs, economies of scale) rather than easily replicated UI features.",
+    "explanation_zh": "真正可持续的商业护城河源于结构性市场壁垒（网络效应、高迁移成本、规模经济），而非容易被快速模仿的软件界面功能。"
   }
 ]
+

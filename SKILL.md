@@ -41,10 +41,15 @@ The system is fundamentally anchored on two decisive pillars: **Authoring Authen
 4. **Multi-theme UI & Dynamic Exam Crest:**
    - 4 built-in themes: Cyber Dark, Academic Light, Midnight Navy, Forest Green.
    - Dynamic SVG Exam Crest logo generated from the exam monogram/initials (e.g. `DECA`, `AMC`, `AP`, `MATH`).
-5. **Math, Code, & Multi-Question Types Support:**
-   - Render inline and block formulas (`$...$` and `$$...$$`) via native lightweight Math formatting.
+5. **Math, Code, & 5 Question Types Support:**
+   - Render inline and block formulas (`$...$` and `$$...$$`, including nested fractions, roots, matrices, integrals, summations, and Greek symbols) via native lightweight Math formatting.
    - Render programming code blocks (`` `code` `` and ```` ```python ... ``` ````).
-   - Support Single Choice, Multiple Choice (`type: "multiple"`), True/False (`type: "boolean"`), and Short Answer (`type: "short"`, uses `answer_en`/`answer_zh` reference answers + optional `rubric_en`/`rubric_zh`, self-graded in practice, not auto-scored in timed mocks).
+   - Support 5 question types:
+     - Single Choice (`type: "single"`)
+     - Multiple Choice (`type: "multiple"`)
+     - True/False (`type: "boolean"`)
+     - Objective Fill-in-the-Blank / Numerical (`type: "fill"`, supports exact string/number/fraction/percent matching and numeric `tolerance`, auto-graded in both Practice & Timed Mock)
+     - Open-Ended Short Answer (`type: "short"`, uses `answer_en`/`answer_zh` reference answers + optional `rubric_en`/`rubric_zh`, self-graded in practice and interactive self-grading in timed mock review).
 6. **Anti-Memorization Option Shuffling:** Toggleable option permutation that maintains strict 1:1 mapping with answer keys and distractor reasoning.
 
 ---
@@ -91,19 +96,19 @@ Use when user provides PDFs, URLs, syllabi, or past paper files. Ingest, extract
    - Use `search_web` to find the official curriculum guide, exam breakdown, topic percentages, duration, and question formats.
    - Fetch official details via `read_url_content`.
 2. **Construct Competency & Weight Matrix:**
-   - Apportion the requested question count according to official domain percentages (e.g., Domain A: 30%, Domain B: 40%, Domain C: 30%).
+   - Apportion the requested question count according to official domain percentages (e.g., Domain A: 30%, Domain B: 40%, Domain C: 30%) and record `domain_weights` in `exam_profile.json`.
    - Establish unique `concept_id` tags for each distinct knowledge point to prevent superficial clones.
-3. **Redesign & Original Question Synthesis:**
+3. **Redesign & Original Question Synthesis (Batch Generation for Large Banks):**
    - Author original, syllabus-calibrated questions adhering to Bloom's cognitive taxonomy.
-   - Provide realistic numerical parameters, plausible distractors, and complete bilingual explanations (`explanation_en/zh` and `why_wrong_en/zh`).
-   - Avoid direct verbatim copies of copyrighted live past papers; author original homomorphic/scenario-based problems.
+   - Provide realistic numerical parameters, plausible distractors, and complete explanations (`explanation_en/zh` and `why_wrong_en/zh`; single-language banks are also supported and auto-fallback cleanly).
+   - **For banks > 30 questions:** Generate questions in modular batches of 20–25 items per file (e.g. `batch_1.json`, `batch_2.json`) to prevent output truncation and quality decay, then merge and deduplicate via `python3 scripts/merge_bank.py batch_*.json --out questions.json --profile exam_profile.json`.
 4. **Build Profile & Validate Bank:**
-   - Save metadata to `examples/exam_profile.json` (or `<exam_slug>/exam_profile.json`).
+   - Save metadata (including `domain_weights`) to `examples/exam_profile.json` (or `<exam_slug>/exam_profile.json`).
    - Save items to `questions.json`.
-   - Run `python scripts/validate_bank.py questions.json --profile exam_profile.json`.
+   - Run `python3 scripts/validate_bank.py questions.json --profile exam_profile.json`.
 5. **Compile & Deliver:**
-   - Run `python scripts/build_site.py questions.json --profile exam_profile.json --out practice.html`.
-   - Deliver the standalone HTML and audit report (topic distribution, verified concepts, passing benchmark).
+   - Run `python3 scripts/build_site.py questions.json --profile exam_profile.json --out practice.html`.
+   - Deliver the standalone HTML and audit report (topic distribution vs. syllabus weights, verified concepts, passing benchmark).
 
 ---
 

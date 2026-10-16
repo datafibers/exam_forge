@@ -36,7 +36,7 @@ Exam Forge is built on two foundational principles (see [DESIGN.md](DESIGN.md) f
 
 - ⏱️ **Realistic Timed Mocks:** Official exam countdown, Pass/Fail benchmark verdicts (e.g., 75% cutoff), and session auto-recovery against accidental browser refreshes.
 - 📐 **Math LaTeX & Code Snippets:** Native formula rendering (`$...$` and `$$...$$`) and monospace code blocks for STEM and CS examinations.
-- 📝 **Multi-Question Types:** Native support for Single Choice, Multiple Choice (`type: "multiple"`), True/False (`type: "boolean"`), and Short Answer (`type: "short"`) with self-grading rubrics.
+- 📝 **Multi-Question Types:** Native support for Single Choice, Multiple Choice (`type: "multiple"`), True/False (`type: "boolean"`), Fill-in-the-Blank / Numerical (`type: "fill"`), and Short Answer (`type: "short"`) with self-grading rubrics.
 - 🎲 **Anti-Memorization Option Shuffling:** Randomizes choice order while keeping answer keys and distractor reasoning strictly synchronized.
 - 🎨 **Multi-Theme UI & Dynamic Crest:** 4 built-in themes (Cyber Dark, Academic Light, Midnight Navy, Forest Green) with an auto-generated SVG monogram crest.
 - 🖨️ **Printable Paper Mode (`@media print`):** Formats clean paper exam sheets with candidate header and an answer key appendix for offline classrooms.
@@ -77,6 +77,7 @@ exam_forge/
 ├── README_zh.md              # 简体中文说明文档
 ├── scripts/
 │   ├── validate_bank.py      # Schema, translation, deduplication, & profile validator
+│   ├── merge_bank.py         # Modular batch merger & deduplicator for large banks
 │   └── build_site.py         # Multi-theme single-file HTML website compiler
 ├── examples/
 │   ├── exam_profile.json     # Exam metadata profile (benchmark template)
